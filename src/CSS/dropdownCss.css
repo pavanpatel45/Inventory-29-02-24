@@ -1,0 +1,83 @@
+body{
+  background-color: #f3f3f3;
+  user-select: none;
+  -moz-user-select: none;  
+  -ms-user-select: none;
+}
+.select-box-1 select {
+    appearance: none;  
+    -webkit-appearance: none;  
+    -moz-appearance: none; /* Hide default arrow in older Firefox */
+    background-color: white; /* Adjust as needed */
+    border: 1px solid #ccc; /* Adjust as needed */
+    padding: 5px 30px 5px 10px; /* Adjust as needed */
+
+  }
+  /* Style the custom arrow */
+  .select-box-1::after {
+    content: '⌄';  
+    font-size: 20px;  
+    color: #555;  
+    pointer-events: none;  
+    position: absolute;
+    left:92%;
+  }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  select:focus{
+    outline: none; 
+  }
+  input:focus{
+    outline: none; 
+  }
+  .floating-label{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .floating-label label{
+    margin-top: 0%;
+    margin-left: -0.5%;
+    font-size: small;
+    position: absolute;
+    padding-right: 5px;
+    padding-left:5px;
+    color: darkgrey;
+    pointer-events: none;
+    transition: 0.5s;
+  }
+ 
+  .orderBoxButton:hover{
+    background-color:#2CAE66;
+    color:white !important;
+  }
+  .dialogBoxText:hover{
+    background-color: #DDF8E9;
+    color: #2d2d2d !important;
+  }
+  .dialogBoxCancelButton:hover{
+    background-color:#EC3030;
+    color:white !important;
+  }
+  .navbarSalesButton:hover{
+    background-color:#2CAE66         !important;
+    color:white !important;
+  }
+  .scrollbar::-webkit-scrollbar {
+    width: 0;   
+    background: transparent;  
+}
+ 
+.scrollbar::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
+.even-row:hover {
+  background-color: #E2FFE5; 
+}
+a.action{
+  border:1px solid black;
+}

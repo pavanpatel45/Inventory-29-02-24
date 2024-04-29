@@ -1,0 +1,124 @@
+[
+    {
+      "material_name": "Aerosil (Hydrophilic Fumed)",
+      "code": "DIN02",
+      "batch_id": "MMUM-28224",
+      "category": "Fillers and Binders",
+      "expiry_date": "Feb 28, 2024",
+      "quantity": "31",
+      "price": "390.00",
+      "availability": "In Stock",
+      "committed": "40"
+    },
+    {
+      "material_name": "Di-Calcium Phosphate",
+      "code": "STT90",
+      "batch_id": "MIND-26224",
+      "category": "Fillers and Binders",
+      "expiry_date": "Feb 28, 2024",
+      "quantity": "31",
+      "price": "390.00",
+      "availability": "In Stock",
+      "committed": "40"
+    },
+    {
+      "material_name": "DM Water",
+      "code": "DlN02",
+      "batch_id": "MMUM-28224",
+      "category": "Solvents",
+      "expiry_date": "Feb 28, 2024",
+      "quantity": "31",
+      "price": "390.00",
+      "availability": "Out of Stock",
+      "committed": "40"
+    },
+    {
+      "material_name": "Gelatin",
+      "code": "STT90",
+      "batch_id": "MIND-08224",
+      "category": "Stabilizers and Lubricants",
+      "expiry_date": "Feb 28, 2024",
+      "quantity": "31",
+      "price": "390.00",
+      "availability": "Few Left",
+      "committed": "40"
+    },
+    {
+      "material_name": "IPA",
+      "code": "DlN02",
+      "batch_id": "MIND-16224",
+      "category": "Solvents",
+      "expiry_date": "Feb 28, 2024",
+      "quantity": "31",
+      "price": "390.00",
+      "availability": "Few Left",
+      "committed": "40"
+    },
+    {
+      "material_name": "Magnesium Stearate",
+      "code": "MS203",
+      "batch_id": "MIND-20625",
+      "category": "Stabilizers and Lubricants",
+      "expiry_date": "Feb 28, 2024",
+      "quantity": "31",
+      "price": "390.00",
+      "availability": "In Stock",
+      "committed": "40"
+    },
+    {
+      "material_name": "Sodium Nitrite",
+      "code": "BOO78",
+      "batch_id": "MMUM-06224",
+      "category": "Stabilizers and Lubricants",
+      "expiry_date": "Feb 28, 2024",
+      "quantity": "31",
+      "price": "390.00",
+      "availability": "In Stock",
+      "committed": "40"
+    },
+    {
+      "material_name": "MCCP (Microcrystalline Cellulose Powder)",
+      "code": "STT90",
+      "batch_id": "MIND-03224",
+      "category": "Fillers and Binders",
+      "expiry_date": "Feb 28, 2024",
+      "quantity": "31",
+      "price": "390.00",
+      "availability": "Few Left",
+      "committed": "40"
+    },
+    {
+      "material_name": "MDC (Methylene Chloride)",
+      "code": "DlN02",
+      "batch_id": "MMUM-24224",
+      "category": "Solvents",
+      "expiry_date": "Feb 28, 2024",
+      "quantity": "31",
+      "price": "390.00",
+      "availability": "Out of Stock",
+      "committed": "40"
+    },
+    {
+      "material_name": "MPS",
+      "code": "STT90",
+      "batch_id": "MMUM-28124",
+      "category": "Preservatives",
+      "expiry_date": "Feb 28, 2024",
+      "quantity": "31",
+      "price": "390.00",
+      "availability": "In Stock",
+      "committed": "40"
+    },
+    {
+      "material_name": "PPS",
+      "code": "DlN02",
+      "batch_id": "MMUM-24224",
+      "category": "Preservatives",
+      "expiry_date": "Feb 28, 2024",
+      "quantity": "31",
+      "price": "390.00",
+      "availability": "Out of Stock",
+      "committed": "40"
+    }
+  ]
+  

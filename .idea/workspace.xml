@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="9200e60f-ac6b-4f0d-b832-bf099e61d796" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CSS/dropdownCss.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/CSS/dropdownCss.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Dropdown.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Dropdown.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/InputBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/InputBox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/NavbarForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/NavbarForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/NavbarSales.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/NavbarSales.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/NavbarSide.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/NavbarSide.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/OrderBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/OrderBox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Icons/icon6.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Icons/icon6.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/orders/ordersSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/orders/ordersSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/orders/CreateOrder.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/orders/CreateOrder.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/orders/SalesOrders.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/orders/SalesOrders.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/orders/ViewOrder.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/orders/ViewOrder.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 0
+}]]></component>
+  <component name="ProjectId" id="2etzuC3rerQtvqrFCLyPBwANB0O" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "kotlin-language-version-configured": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9200e60f-ac6b-4f0d-b832-bf099e61d796" name="Changes" comment="" />
+      <created>1712738895372</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1712738895372</updated>
+    </task>
+    <servers />
+  </component>
+</project>

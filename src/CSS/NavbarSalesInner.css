@@ -1,0 +1,9 @@
+a.active div .navbar-circle{
+    background-color: blue;
+}
+a div .navbar-border-bottom{
+    border-bottom:2px solid white;
+}
+a.active div .navbar-border-bottom{
+    border-bottom:2px solid blue;
+}
