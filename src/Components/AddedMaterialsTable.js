@@ -9,8 +9,6 @@ function  AddedMaterialsTable() {
     console.log("edit icon was clicked");
   };
   
-
-
   const data = React.useMemo(() => dummy, []);
   const columns = React.useMemo(
     () => [
