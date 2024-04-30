@@ -38,3 +38,15 @@
   line-height: 22px;
   font-family: Roboto;
   }
+
+  .NavbarCreateOrder{
+    background-color: #B3B3B3 !important;
+    height: 42px;
+    width:138px;
+    border-radius: 8px;
+    color: white;
+    font-family: roboto;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22px;
+  }

@@ -7,20 +7,11 @@ import Dropdown from "./Dropdown";
 import Navbar from "./NavbarForm";
 import Button from "./Button";
 import AddedMaterialsTable from "./AddedMaterialsTable";
+import "../CSS/NavbarMaterials.css"
+import plus from "../Icons/plus.svg"
 
 export default function PurchaseOrder() {
-  const buttonStyle = {
-    backgroundColor: "#2CAE66",
-    borderRadius: "8px",
-    width: "138px",
-    height: "42px",
-    paddingLeft: "16px",
-    paddingRight: "16px",
-    fontFamily: "Roboto",
-    fontSize: "14px",
-    fontWeight: "500",
-    lineHeight: "22px",
-  };
+ 
 
   const [formData, setFormData] = useState({
     PoNo: "",
@@ -39,7 +30,7 @@ export default function PurchaseOrder() {
         <div className="p-8">
           <Navbar
             title="Purchase Order"
-            //   buttonStyle={buttonStyle}
+          className="NavbarForm"
             btnTitle="Next"
           />
           <div className="grid gap-y-4 pt-8">
@@ -164,7 +155,7 @@ export default function PurchaseOrder() {
               </div>
             </div>
             <div className="flex justify-end mt-4">
-              <Button btnTitle="Add+" />
+              <Button btnTitle="Add" className="NavbarForm" icon={plus}/>
             </div>
           </div>
         </div>

@@ -15,6 +15,7 @@ export default function CreateProduct() {
         <Navbar
           title="Create Product"
           btnTitle="Next"
+          className="NavbarForm"
         />
 
         <div className="flex flex-row mt-7 ">

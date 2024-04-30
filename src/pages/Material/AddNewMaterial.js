@@ -3,14 +3,15 @@ import InputBox from "../../Components/InputBox";
 import DropDown from "../../Components/Dropdown";
 import Navbar from "../../Components/NavbarForm";
 import CheckBox from "../../Components/CheckBox";
+import "../../CSS/NavbarMaterials.css"
 export default function AddNewMaterial() {
   return (
     <form >
       <div className="p-3 bg-white">
         <Navbar
           title="Create Product"
-        //   buttonStyle={button    Style}
           btnTitle="Next"
+          className="NavbarForm"
         />
 
         {/* <div className="flex flex-row mt-7 ">
