@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import "../CSS/OrderDropdown.css";
 
 function OrderDropdown() {
   const [isOpen, setIsOpen] = useState(true);
@@ -10,50 +11,22 @@ function OrderDropdown() {
   return (
     <div>
       {isOpen && (
-        <div
-          style={{
-            border: "10px",
-            borderColor: "#B7B7B7",
-            marginTop: "5px",
-            padding: "10px",
-            width: "180px",
-            height: "106px",
-            borderRadius: "8px",
-          }}
-        >
-          <div
-            style={{
-              background: "white",
-              color: "#696969",
-              fontWeight: "400",
-              fontSize: "15px",
-              fontFamily: "Roboto",
-              letterSpacing: "1%",
-            }}
-          >
+        <div className="outer-box">
+          <div className="box-text">
             <ul>
-             <Link to="createOrder">
-                <li
-                  className="dropHover pb-2 flex justify-center pt-1 border border-r-2"
-                  style={{ height: "32px", width: "170px" }}
-                >
+              <Link to="createOrder">
+                <li className="dropHover flex justify-start items-center ">
                   Create New Order
                 </li>
               </Link>
-             <Link to="makeOrder">
-                <li
-                  className="dropHover flex justify-center pt-1  pb-2 border  border-r-2"
-                  style={{ height: "32px", width: "170px" }}
-                >
+              <Link to="makeOrder">
+                <li className="dropHover flex justify-start items-center ">
                   Make Order{" "}
                 </li>
-             </Link>
+              </Link>
 
               <Link to="/sales/purchaseOrder">
-                <li
-                  className="dropHover flex justify-center pt-1  pb-2 border border-r-2"
-                  style={{ height: "32px", width: "170px" }}
-                >
+                <li className="dropHover flex justify-start items-center">
                   Purchase Order{" "}
                 </li>
               </Link>

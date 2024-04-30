@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import checkbox from "../Icons/checkbox.svg";
+import "../CSS/CheckBox.css";
 
 function CheckBox() {
   const [yesChecked, setYesChecked] = useState(false);
@@ -19,49 +21,47 @@ function CheckBox() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row items-center">
+    <div className="checkbox-container">
       <div>
         <label
           htmlFor="refrigeration"
-          className="text-base md:text-lg"
-          style={{
-            color: "#2D2D2D",
-            borderColor: "#A1A1A1",
-            fontWeight: "500",
-            lineHeight: "20px",
-          }}
+          className="checkbox-label"
         >
           Refrigeration
         </label>
       </div>
-      <div className="flex items-center mt-2 md:mt-0 md:ml-4">
+      <div className="flex pb-2 mt-2 md:mt-0 md:ml-4">
         <label className="flex items-center">
+          {yesChecked && (
+            <img
+              src={checkbox}
+              alt="icon"
+              className="checkbox-image"
+            />
+          )}
           <input
             type="checkbox"
             checked={yesChecked}
             onChange={handleYesChange}
-            className="rounded-full h-5 w-5 md:h-6 md:w-6 mr-2 border border-solid border-1 border-gray-600"
-            style={{
-              appearance: "none",
-              WebkitAppearance: "none",
-              backgroundColor: yesChecked ? "black" : "white",
-            }}
+            className="checkbox-input"
           />
-          <span className="text-base md:text-lg">Yes</span>
+          <span className="checkbox-label">Yes</span>
         </label>
         <label className="flex items-center ml-4">
+          {noChecked && (
+            <img
+              src={checkbox}
+              alt="icon"
+              className="checkbox-image"
+            />
+          )}
           <input
             type="checkbox"
             checked={noChecked}
             onChange={handleNoChange}
-            className="rounded-full h-5 w-5 md:h-6 md:w-6 mr-2 border border-solid border-1 border-gray-600"
-            style={{
-              appearance: "none",
-              WebkitAppearance: "none",
-              backgroundColor: noChecked ? "black" : "white",
-            }}
+            className="checkbox-input"
           />
-          <span className="text-base md:text-lg">No</span>
+          <span className="checkbox-label">No</span>
         </label>
       </div>
     </div>
@@ -69,3 +69,4 @@ function CheckBox() {
 }
 
 export default CheckBox;
+ 

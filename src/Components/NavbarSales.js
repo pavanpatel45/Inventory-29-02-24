@@ -17,18 +17,18 @@ export default function NavbarSales({ title, handleCreateOrder }) {
       </div>
       <div className="flex flex-box gap-2">
         <div
-          className="rounded-full w-8 h-8 flex items-center justify-center navbarSalesButton"
+          className="rounded-full w-8 h-8 flex items-center justify-center navbarSalesButton cursor-pointer"
           style={{ backgroundColor: "#EFEFEF" }}>
-          <img src={search} height="16px" width="16px" />
+          <img src={search} height="16px" width="16px"  />
         </div>
         <div
-          className="rounded-full w-8 h-8 flex items-center justify-center navbarSalesButton"
+          className="rounded-full w-8 h-8 flex items-center justify-center navbarSalesButton cursor-pointer"
           style={{ backgroundColor: "#EFEFEF" }}
         >
           <img src={location} height="12px" width="12px" />
         </div>
         <div
-          className="rounded-full w-8 h-8 flex items-center justify-center navbarSalesButton"
+          className="rounded-full w-8 h-8 flex items-center justify-center navbarSalesButton cursor-pointer"
           style={{ backgroundColor: "#EFEFEF" }}
         >
           <img src={data} height="12px" width="12px" />

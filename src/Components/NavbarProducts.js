@@ -1,51 +1,39 @@
-import React,{useState} from "react";
-import {Link} from 'react-router-dom'
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Box from "./Box";
-import Button from './Button'
-import search from '../Icons/search.png'
-import exprt from '../Icons/export.png'
-import loc from '../Icons/location.png'
-import downArrow from '../Icons/down-arrow.png'
-export default function NavbarProducts({
-  className,
-}) {
+import Button from "./Button";
+import search from "../Icons/search.png";
+import exprt from "../Icons/export.png";
+import plus from "../Icons/plus.svg";
+import loc from "../Icons/location.png";
+import downArrow from "../Icons/down-arrow.png";
+import "../CSS/NavbarMaterials.css";
+
+export default function NavbarMaterials({ className }) {
   const [exportOption, setExportOption] = useState("");
 
   const handleChange = (e) => {
     setExportOption(e.target.value);
   };
+
   return (
-    <div className="flex flex-row justify-between items-center py-2">
+    <div className="flex flex-row justify-between items-center py-2 ml-4 mt-3 bg-white">
       <div className="flex flex-row gap-2 ">
-        <div>&larr;</div>
-        <div className="font-medium">Products View</div>
+        
+        <div className="font-medium">Product View</div>
       </div>
 
       <div className="flex justify-end">
-        <div className="flex justify-end">
-          <div
-            className="border border-1 border-r mr-6 flex flex-row items-center relative h-10 w-44"
-            style={{ borderRadius: "8px", backgroundColor: "#EFEFEF" }}
-          >
-            <img src={search} alt="icon" className="ml-3" />
-            <input
-              type="text"
-              className="ml-3"
-              style={{
-                fontWeight: "500",
-                fontSize: "14px",
-                lineHeight: "22px",
-                fontFamily: "Roboto",
-                backgroundColor: "transparent",
-              }}
-              placeholder="Search"
-            />
-          </div>
+        <div
+          className="border border-1 border-r mr-6 flex flex-row items-center relative box-style"
+          style={{ borderRadius: "100px" }}
+        >
+          <img src={search} alt="icon" className="ml-3" />
+          <input type="text" className="ml-3 txt-style" placeholder="Search" />
         </div>
 
         <Box
-          style={{ borderRadius: "8px", backgroundColor: "#EFEFEF" }}
-          className="h-10 w-44"
+          className="box-style"
           icon1={loc}
           icon2={downArrow}
           title="All Locations"
@@ -59,8 +47,7 @@ export default function NavbarProducts({
         />
 
         <Box
-          style={{ borderRadius: "8px", backgroundColor: "#EFEFEF" }}
-          className="h-10 w-32"
+          className="box-style"
           icon1={exprt}
           icon2={downArrow}
           title="Export"
@@ -73,11 +60,10 @@ export default function NavbarProducts({
           options={["EXCEL", "CSV", "PDF"]}
         />
 
-       <Link to="CreateBatch"> <Button
-          btnTitle={"Add +"}
-          // className="p-2 border-1 border-solid border-black rounded-md pt-0 pb-0"
-          // style={buttonStyle}
-        /></Link>
+        <Link to="CreateBatchProduct">
+          <Button btnTitle={"Add"} className="style" icon={plus}>
+            </Button>
+        </Link>
       </div>
     </div>
   );

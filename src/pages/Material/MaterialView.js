@@ -5,10 +5,10 @@ import NavbarMaterials from '../../Components/NavbarMaterials'
 
 export default function MaterialView() {
   return (
-    <>
+    <div className='flex flex-col'>
        <NavbarMaterials/>
        <Material/>
        <FooterPagination/>
-    </>
+    </div>
   )
 }
