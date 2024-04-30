@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useTable } from "react-table";
 import dummy from "./dummy.json";
-import NavbarMaterials from "./NavbarMaterials";
 import InStock from "./InStock";
 import OutOfStock from "./OutOfStock";
 import FewLeft from "./FewLeft";
@@ -16,18 +15,7 @@ function Material() {
     console.log("shopping-bag icon was clicked");
   };
 
-  const buttonStyle = {
-    backgroundColor: "#2CAE66",
-    borderRadius: "8px",
-    width: "86px",
-    height: "42px",
-    paddingLeft: "16px",
-    marginRight: "16px",
-    fontFamily: "Roboto",
-    fontSize: "14px",
-    fontWeight: "500",
-    lineHeight: "22px",
-  };
+ 
 
   const data = React.useMemo(() => dummy, []);
   const columns = React.useMemo(
@@ -208,7 +196,7 @@ function Material() {
       </div>
       </div>   */}
 
-      <div className=" overflow-auto " style={{ height:"72.7vh"}}>
+      <div className=" overflow-auto ml-4 pt-3 " style={{ height:"72.7vh"}}>
         <table className="table-auto border-collapse ">
           <thead>
             {headerGroups.map((headerGroup) => (

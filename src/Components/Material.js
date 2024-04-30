@@ -185,7 +185,7 @@ function Material() {
 
   return (
     <div>
-      <div className=" overflow-auto ml-4 pt-3 table-container">
+      <div className=" overflow-auto ml-4 pt-3 border-solid border-red-500">
         <table className="table-auto border-collapse ">
           <thead>
             {headerGroups.map((headerGroup) => (
