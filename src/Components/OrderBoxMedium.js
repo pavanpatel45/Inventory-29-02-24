@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {Link} from 'react-router-dom'
-import uparrow from "../Icons/up-arrow.png";
-import downarrow from "../Icons/down-arrow.png";
+import uparrow from "../Icons/ArrowLineopen.svg";
+import downarrow from "../Icons/ArrowLineclose.svg";
 import productImg from "../Icons/product.png";
 export default function OrderBox({ order, key, handleChangeStatus }) {
   const [isOpen, setIsOpen] = useState(false);
