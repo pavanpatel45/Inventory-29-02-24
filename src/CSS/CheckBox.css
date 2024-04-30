@@ -1,0 +1,48 @@
+.checkbox-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.checkbox-label {
+    font-size: 1rem; /* Adjust font size as needed */
+    color: #2D2D2D;
+    font-weight: 500;
+    line-height: 20px;
+}
+
+.checkbox-input {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 1px solid gray;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+.checkbox-input:checked {
+    display: none;
+}
+
+.checkbox-image {
+    margin-right: 0.5rem; 
+    width: 20px; 
+    height: 20px; 
+}
+
+@media only screen and (max-width: 768px) {
+    .checkbox-label {
+        font-size: 0.8rem; /* Adjust font size for smaller screens */
+    }
+
+    .checkbox-input {
+        width: 16px; /* Adjust size of checkbox for smaller screens */
+        height: 16px; /* Adjust size of checkbox for smaller screens */
+    }
+
+    .checkbox-image {
+        width: 16px; /* Adjust size of image for smaller screens */
+        height: 16px; /* Adjust size of image for smaller screens */
+    }
+}

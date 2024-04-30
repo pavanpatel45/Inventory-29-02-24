@@ -1,12 +1,12 @@
 import * as React from "react";
 import { useTable } from "react-table";
 import dummy from "./dummy.json";
-import NavbarMaterials from "./NavbarMaterials";
+
 import InStock from "./InStock";
 import OutOfStock from "./OutOfStock";
 import FewLeft from "./FewLeft";
-import edit from '../Icons/edit.png'
-import bag from '../Icons/shopping-bag.png'
+import edit from "../Icons/edit.png";
+import bag from "../Icons/shopping-bag.png";
 
 function Material() {
   const handleImageClick1 = () => {
@@ -195,20 +195,8 @@ function Material() {
     useTable({ columns, data });
 
   return (
-    <>
-     {/* <div className="flex flex-col overflow-hidden">
     <div>
-    </div>
-    <div>
-       <NavbarMaterials
-        title="Materials View"
-        buttonStyle={buttonStyle}
-        btnTitle="Add +"
-      />
-      </div>
-      </div>   */}
-
-      <div className=" overflow-auto " style={{ height:"72.7vh"}}>
+      <div className=" overflow-auto ml-4 pt-3" >
         <table className="table-auto border-collapse ">
           <thead>
             {headerGroups.map((headerGroup) => (
@@ -236,12 +224,10 @@ function Material() {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {rows.map((row,index) => {
+            {rows.map((row, index) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()} 
-                className={"even-row"}
-                >
+                <tr {...row.getRowProps()} className={"even-row"}>
                   {row.cells.map((cell) => (
                     <td
                       {...cell.getCellProps()}
@@ -263,7 +249,7 @@ function Material() {
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 }
 export default Material;

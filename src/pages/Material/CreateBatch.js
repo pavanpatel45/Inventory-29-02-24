@@ -3,16 +3,19 @@ import InputBox from "../../Components/InputBox";
 import DropDown from "../../Components/Dropdown";
 import Navbar from "../../Components/NavbarCreateBatch";
 import Button from "../../Components/Button";
+import "../../CSS/CreateBatch.css"
 
 export default function CreateBatch() {
  
+  
 
   return (
+    
     <form  >
       <div className="p-8 bg-white">
         <Navbar
           title="Create Batch"
-          btnTitle="Add Material +"
+          btnTitle="Add Material"
         />
         <div className="grid gap-y-4 pt-8">
           <div className="grid gap-2">
@@ -71,20 +74,7 @@ export default function CreateBatch() {
 <div className="flex flex-row justify-end">
               <Button
                 btnTitle="Save"
-                className="border-1 border-solid border-black rounded-md pt-0 pb-0"
-                style={{
-                  backgroundColor: "#B3B3B3",
-                  width: "138px",
-                  height: "42px",
-                  borderRadius: "8px",
-                  paddingLeft: "16px",
-                  paddingRight: "16px",
-                  marginTop: "8px",
-                  fontFamily: "Roboto",
-                  fontSize: "14px",
-                  fontWeight: "500",
-                  lineHeight: "22px",
-                }}
+                className=" pt-0 pb-0 text-style"
               />
             </div>
         </div>

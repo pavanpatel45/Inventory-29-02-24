@@ -53,7 +53,7 @@ const router = createBrowserRouter(
         </Route>
         <Route path="products">
            <Route index element={<ProductView/>}/>
-           <Route path="CreateBatch" element={<CreateBatchProduct/>}/>
+           <Route path="CreateBatchProduct" element={<CreateBatchProduct/>}/>
            <Route path="CreateProduct" element={<CreateProduct/>}/>
         </Route>
     </Route>

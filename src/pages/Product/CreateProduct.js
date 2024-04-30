@@ -8,25 +8,12 @@ import CheckBox from "../../Components/CheckBox";
 export default function CreateProduct() {
 
 
-  const buttonStyle = {
-    backgroundColor: "#2CAE66",
-    borderRadius: "8px",
-    width: "138px",
-    height: "42px",
-    paddingLeft: "16px",
-    paddingRight: "16px",
-    fontFamily: "Roboto",
-    fontSize: "14px",
-    fontWeight: "500",
-    lineHeight: "22px",
-  };
-
+  
   return (
     <form >
       <div className="p-8">
         <Navbar
           title="Create Product"
-          buttonStyle={buttonStyle}
           btnTitle="Next"
         />
 

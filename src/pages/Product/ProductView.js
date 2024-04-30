@@ -5,10 +5,10 @@ import NavbarProducts from '../../Components/NavbarProducts'
 
 export default function ProductView() {
   return (
-    <>
+    <div className='flex flex-col'>
        <NavbarProducts/>
        <Products/>
        <FooterPagination/>
-    </>
+    </div>
   )
 }

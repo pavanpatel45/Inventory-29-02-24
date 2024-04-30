@@ -1,0 +1,40 @@
+.style{
+    background-color: #2cae66!important;
+    width: 86px;
+    color: white;
+    height: 42px;
+    border-radius: 8px;
+     font-family: Roboto;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+    
+  }
+  
+
+  .box-style{
+    border-radius: 8px ;
+    background-color: #EFEFEF;
+     height:42px;
+      width:190px;
+  }
+  
+  .txt-style{
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+    font-family: Roboto;
+    background-color: transparent;
+  }
+
+  .NavbarForm{
+    height: 42px;
+    width:138px;
+  border-radius: 8px;
+  background-color: #2CAE66 !important;
+  color: white;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  font-family: Roboto;
+  }
