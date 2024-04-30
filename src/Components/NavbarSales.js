@@ -5,6 +5,8 @@ import location from "../Icons/location.svg";
 import data from "../Icons/data.svg";
 import plus from "../Icons/plus.svg"
 import OrderDropdown from "./OrderDropdown";
+
+
 export default function NavbarSales({ title, handleCreateOrder }) {
   const [showDropdown, setShowDropdown] = useState(false);
   const handleIconClick = () => {
@@ -13,7 +15,7 @@ export default function NavbarSales({ title, handleCreateOrder }) {
   return (
     <div className="flex flex-row justify-between items-center bg-white pl-4 pr-4 pt-2 pb-2">
       <div className="flex flex-row gap-3 " style={{ font: "16px" }}>
-        <div style={{ color: "#2D2D2D" }}>{title}</div>
+        <div style={{ color: "#2D2D2D", fontSize:"16px", fontWeight:"500" }}>{title}</div>
       </div>
       <div className="flex flex-box gap-3">
         <div>
