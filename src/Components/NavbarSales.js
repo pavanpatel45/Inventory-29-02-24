@@ -12,7 +12,6 @@ export default function NavbarSales({ title, handleCreateOrder }) {
   return (
     <div className="flex flex-row justify-between items-center bg-white pl-4 pr-4 pt-2 pb-2">
       <div className="flex flex-row gap-3 " style={{ font: "16px" }}>
-        <div>&larr;</div>
         <div style={{ color: "#2D2D2D" }}>{title}</div>
       </div>
       <div className="flex flex-box gap-2">

@@ -5,6 +5,7 @@ import { addOrder } from "../../features/orders/ordersSlice";
 import InputBox from "../../Components/InputBox";
 import NavbarForm from "../../Components/NavbarForm";
 import Dropdown from "../../Components/Dropdown";
+import "../../CSS/NavbarMaterials.css"
 
 export default function CreateOrder() {
   const dispatch = useDispatch();
@@ -73,7 +74,10 @@ export default function CreateOrder() {
   return (
     <form onSubmit={handleSubmit}>
       <div className="p-3 bg-white pb-4">
-        <NavbarForm title="Create Order" />
+         
+        <NavbarForm title="Create Order" btnTitle="Save" className="NavbarCreateOrder" />
+        
+       
         <div className="grid gap-y-4">
           {/* Order Details Block Start */}
           <div className="grid gap-2">

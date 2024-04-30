@@ -3,7 +3,7 @@ import InputBox from "../../Components/InputBox";
 import DropDown from "../../Components/Dropdown";
 import Navbar from "../../Components/NavbarForm";
 import CheckBox from "../../Components/CheckBox";
-import { useSearchParams } from "react-router-dom";
+import "../../CSS/NavbarMaterials.css"
 export default function AddNewMaterial() {
   const [formData,setFormData] = useState({
     materialName:'',
@@ -30,8 +30,8 @@ export default function AddNewMaterial() {
       <div className="p-3 bg-white">
         <Navbar
           title="Create Product"
-        //   buttonStyle={button    Style}
           btnTitle="Next"
+          className="NavbarForm"
         />
 
         {/* <div className="flex flex-row mt-7 ">
