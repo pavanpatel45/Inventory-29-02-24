@@ -1,12 +1,13 @@
 import * as React from "react";
 import { useTable } from "react-table";
 import dummy from "./dummy.json";
-
+import "../CSS/OrderDropdown.css";
 import InStock from "./InStock";
 import OutOfStock from "./OutOfStock";
 import FewLeft from "./FewLeft";
 import edit from "../Icons/edit.png";
 import bag from "../Icons/shopping-bag.png";
+import "../CSS/OrderDropdown.css";
 
 function Material() {
   const handleImageClick1 = () => {
@@ -14,19 +15,6 @@ function Material() {
   };
   const handleImageClick2 = () => {
     console.log("shopping-bag icon was clicked");
-  };
-
-  const buttonStyle = {
-    backgroundColor: "#2CAE66",
-    borderRadius: "8px",
-    width: "86px",
-    height: "42px",
-    paddingLeft: "16px",
-    marginRight: "16px",
-    fontFamily: "Roboto",
-    fontSize: "14px",
-    fontWeight: "500",
-    lineHeight: "22px",
   };
 
   const data = React.useMemo(() => dummy, []);
@@ -95,6 +83,7 @@ function Material() {
               <option default className="hidden">
                 Category
               </option>
+
               <option value="Option 1">Option 1</option>
               <option value="Option 2">Option 2</option>
               <option value="Option 3">Option 3</option>
@@ -196,7 +185,7 @@ function Material() {
 
   return (
     <div>
-      <div className=" overflow-auto ml-4 pt-3" >
+      <div className=" overflow-auto ml-4 pt-3 table-container">
         <table className="table-auto border-collapse ">
           <thead>
             {headerGroups.map((headerGroup) => (
