@@ -1,17 +1,9 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-// import { addMakeOrder } from "../features/makeOrderSlice";
+import React, { useEffect, useState } from "react";
 import InputBox from "../Components/InputBox";
 import DropDown from "../Components/Dropdown";
 import Navbar from "../Components/NavbarForm";
 
 export default function CreateOrder() {
-  const dispatch = useDispatch();
-  const allOrders = useSelector((state) => state.orders);
-  console.log("all Orders at createOrder", allOrders);
-
-
-
   const buttonStyle = {
     backgroundColor: "#B3B3B3",
     borderRadius: "8px",
@@ -24,7 +16,17 @@ export default function CreateOrder() {
     fontWeight: "500",
     lineHeight: "22px",
   };
-
+  const [formData,setFormData] = useState({
+    makeOrderId:'',
+    estDeliveryDate:'',
+    moCreatedBy:'',
+    productName:'',
+    quantity:'',
+    price:''
+  })
+  useEffect(()=>{
+    console.log("Form Data",formData);
+  },[formData])
   return (
     <form >
       <div className="p-8">
@@ -36,6 +38,14 @@ export default function CreateOrder() {
                 type="text"
                 title="Make Order ID*"
                 name="makeOrderId"
+                value = {formData.makeOrderId}
+                onChange ={(e) => {
+                  console.log("this data is changing");
+                  setFormData((prevData) => ({
+                      ...prevData,
+                      makeOrderId: e.target.value
+                  }))
+                }}
               />
 
               <InputBox
