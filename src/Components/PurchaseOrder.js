@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import { addMakeOrder } from "../features/makeOrderSlice";
 import { useForm } from "react-hook-form";
@@ -32,9 +32,11 @@ export default function PurchaseOrder() {
     requiredQuantity: "",
     unit: "",
   });
-
+  //  useEffect(()=>{
+  //   console.log("form Data: ",formData);
+  //  },[formData])
   return (
-    <div>
+    <div className="bg-white">
       <form>
         <div className="p-8">
           <Navbar
@@ -56,6 +58,8 @@ export default function PurchaseOrder() {
                       PoNo: e.target.value,
                     }))
                   }
+                  labelCss={
+                    formData.PoNo.length > 0 ? 'label-up' : 'label-down'}
                 />
 
                 <InputBox
@@ -69,6 +73,8 @@ export default function PurchaseOrder() {
                       estArrivalDate: e.target.value,
                     }))
                   }
+                  labelCss={
+                    formData.estArrivalDate.length > 0 ? 'label-up' : 'label-down'}
                 />
 
                 <Dropdown
@@ -81,6 +87,8 @@ export default function PurchaseOrder() {
                       orderBy: e.target.value,
                     }))
                   }
+                  labelCss={
+                    formData.orderBy.length > 0 ? 'label-up' : 'label-down'}
                 />
               </div>
             </div>
@@ -98,6 +106,8 @@ export default function PurchaseOrder() {
                       vendor: e.target.value,
                     }))
                   }
+                  labelCss={
+                    formData.vendor.length > 0 ? 'label-up' : 'label-down'}
                 />
                 <InputBox
                   type="text"
@@ -111,6 +121,8 @@ export default function PurchaseOrder() {
                       note: e.target.value,
                     }))
                   }
+                  labelCss={
+                    formData.note.length > 0 ? 'label-up' : 'label-down'}
                 />
               </div>
             </div>
@@ -134,6 +146,8 @@ export default function PurchaseOrder() {
                         materialName: e.target.value,
                       }))
                     }
+                    labelCss={
+                      formData.materialName.length > 0 ? 'label-up' : 'label-down'}
                   />
 
                   <InputBox
@@ -147,6 +161,8 @@ export default function PurchaseOrder() {
                         requiredQuantity: e.target.value,
                       }))
                     }
+                    labelCss={
+                      formData.requiredQuantity.length > 0 ? 'label-up' : 'label-down'}
                   />
                   <InputBox
                     type="number"
@@ -159,6 +175,8 @@ export default function PurchaseOrder() {
                         unit: e.target.value,
                       }))
                     }
+                    labelCss={
+                      formData.unit.length > 0 ? 'label-up' : 'label-down'}
                   />
                 </div>
               </div>

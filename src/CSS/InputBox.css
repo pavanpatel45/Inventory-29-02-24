@@ -9,11 +9,12 @@
     margin-left: -1rem;
     font-size: small;
     position: absolute;
-    padding-right: 5px;
+    padding-right: 50px;
     padding-left: 5px;
     color: darkgrey;
     pointer-events: none;
     transition: 0.5s;
+    /* width:500px; */
 }
 
 .floating-label .label-up {

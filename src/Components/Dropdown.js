@@ -13,6 +13,7 @@ export default function Dropdown({
       <select
         className="p-2 rounded-md"
         id={name}
+        name={name}
         {...props}
         style={{border:"1px solid #999999",color:"#2D2D2D"}}
       >

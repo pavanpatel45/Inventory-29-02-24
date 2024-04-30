@@ -3,7 +3,7 @@ import InputBox from "../Components/InputBox";
 import DropDown from "../Components/Dropdown";
 import Navbar from "../Components/NavbarForm";
 
-export default function CreateOrder() {
+export default function MakeOrder() {
   const buttonStyle = {
     backgroundColor: "#B3B3B3",
     borderRadius: "8px",
@@ -24,9 +24,19 @@ export default function CreateOrder() {
     quantity:'',
     price:''
   })
-  useEffect(()=>{
-    console.log("Form Data",formData);
-  },[formData])
+  // useEffect(()=>{
+  //   console.log("Form Data",formData);
+  // },[formData])
+  const handleInputChange = (e) => {
+    console.log(e);
+    const { name, value } = e.target;
+    console.log("Input value changed:", name,":",value);
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+  
   return (
     <form >
       <div className="p-8">
@@ -39,24 +49,28 @@ export default function CreateOrder() {
                 title="Make Order ID*"
                 name="makeOrderId"
                 value = {formData.makeOrderId}
-                onChange ={(e) => {
-                  console.log("this data is changing");
-                  setFormData((prevData) => ({
-                      ...prevData,
-                      makeOrderId: e.target.value
-                  }))
-                }}
+                onChange={handleInputChange}
+                labelCss={
+                  formData.makeOrderId.length > 0 ? 'label-up' : 'label-down'}
               />
 
               <InputBox
                 type="date"
                 title="Est. Delivery Date*"
                 name="estDeliveryDate"
+                value = {formData.estDeliveryDate}
+                onChange={handleInputChange}
+                labelCss={
+                  formData.estDeliveryDate.length > 0 ? 'label-up' : 'label-down'}
               />
 
               <DropDown
                 title="MO Created By*"
                 name="moCreatedBy"
+                value = {formData.moCreatedBy}
+                onChange={handleInputChange}
+                labelCss={
+                  formData.moCreatedBy.length > 0 ? 'label-up' : 'label-down'}
               />
             </div>
           </div>
@@ -66,16 +80,28 @@ export default function CreateOrder() {
               <DropDown
                 title="Product Name/Code*"
                 name="productName"
+                value = {formData.productName}
+                onChange={handleInputChange}
+                labelCss={
+                  formData.productName.length > 0 ? 'label-up' : 'label-down'}
               />
               <InputBox
                 type="number"
                 title="Quantity*"
                 name="quantity"
+                value = {formData.quantity}
+                onChange={handleInputChange}
+                labelCss={
+                  formData.quantity  ? 'label-up' : 'label-down'}
               />
               <InputBox
                 type="number"
                 title="Price*"
                 name="price"
+                value = {formData.price}
+                onChange={handleInputChange}
+                labelCss={
+                  formData.price ? 'label-up' : 'label-down'}
               />
             </div>
           </div>

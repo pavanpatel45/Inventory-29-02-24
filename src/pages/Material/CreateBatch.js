@@ -6,9 +6,24 @@ import Button from "../../Components/Button";
 import "../../CSS/CreateBatch.css"
 
 export default function CreateBatch() {
- 
-  
-
+  const [formData,setFormData]= useState({
+    productName :'',
+    storageLocation:'',
+    batchId:'',
+    makeOrder:'',
+    expiryDate:'',
+    quantity:'',
+    price:'',
+  });
+  const handleInputChange = (e) => {
+    console.log(e);
+    const { name, value } = e.target;
+    console.log("Input value changed:", name,":",value);
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
   return (
     
     <form  >
@@ -24,17 +39,26 @@ export default function CreateBatch() {
                 type="text"
                 title="Product Name/Code*"
                 name="productName"
+                onChange={handleInputChange}
+                labelCss={
+                  formData.productName.length > 0 ? 'label-up' : 'label-down'}
               />
 
               <DropDown
                 title="Storage Location*"
                 name="storageLocation"
+                onChange={handleInputChange}
+                labelCss={
+                  formData.storageLocation.length > 0 ? 'label-up' : 'label-down'}
               />
 
               <InputBox
                 type="text"
                 title="Batch ID*"
                 name="batchId"
+                onChange={handleInputChange}
+                labelCss={
+                  formData.batchId.length > 0 ? 'label-up' : 'label-down'}
               />
             </div>
           </div>
@@ -46,17 +70,26 @@ export default function CreateBatch() {
                 type="text"
                 title="Make Order#*"
                 name="makeOrder"
+                onChange={handleInputChange}
+                labelCss={
+                  formData.makeOrder.length > 0 ? 'label-up' : 'label-down'}
               />
 
               <InputBox
                 type="date"
                 title="Expiry Date*"
                 name="expiryDate"
+                onChange={handleInputChange}
+                labelCss={
+                  formData.expiryDate.length > 0 ? 'label-up' : 'label-down'}
               />
               <InputBox
                 type="number"
                 title="Quantity(Units)*"
                 name="quantity"
+                onChange={handleInputChange}
+                labelCss={
+                  formData.quantity  ? 'label-up' : 'label-down'}
               />
             </div>
           </div>
@@ -68,6 +101,9 @@ export default function CreateBatch() {
                 type="number"
                 title="Price($)*"
                 name="price"
+                onChange={handleInputChange}
+                labelCss={
+                  formData.price  ? 'label-up' : 'label-down'}
               />
 </div>
 </div>

@@ -1,14 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import InputBox from "../../Components/InputBox";
 import DropDown from "../../Components/Dropdown";
 import Navbar from "../../Components/NavbarForm";
 import ImageUpload from "../../Components/ImageUpload";
 import CheckBox from "../../Components/CheckBox";
+import { useSearchParams } from "react-router-dom";
 
 export default function CreateProduct() {
-
-
-  
+  const [formData,setFormData] = useState({
+    productName:'',
+    productNameCode:'',
+    category:'',
+    subCategory:'',
+    upc:'',
+    glNumber:'',
+    minimumQuantity:'',
+    measurementType:'',
+    Description:'',
+  });
+  const handleInputChange = (e) => {
+    console.log(e);
+    const { name, value } = e.target;
+    console.log("Input value changed:", name, ":", value);
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
   return (
     <form >
       <div className="p-8">
@@ -85,22 +103,34 @@ export default function CreateProduct() {
               type="text"
               title="Product Name*"
               name="productName"
+              onChange={handleInputChange}
+                labelCss={
+                  formData.productName.length > 0 ? 'label-up' : 'label-down'}
             />
 
             <InputBox
               type="text"
               title="Product Name/Code*"
               name="productNameCode"
+              onChange={handleInputChange}
+                labelCss={
+                  formData.productNameCode.length > 0 ? 'label-up' : 'label-down'}
             />
 
             <DropDown
               title="Category*"
               name="category"
+              onChange={handleInputChange}
+                labelCss={
+                  formData.category.length > 0 ? 'label-up' : 'label-down'}
             />
 
             <DropDown
               title="Sub Category*"
               name="subCategory"
+              onChange={handleInputChange}
+                labelCss={
+                  formData.subCategory.length > 0 ? 'label-up' : 'label-down'}
             />
           </div>
         </div>
@@ -121,11 +151,17 @@ export default function CreateProduct() {
               type="number"
               title="UPC*"
               name="upc"
+              onChange={handleInputChange}
+                labelCss={
+                  formData.upc  ? 'label-up' : 'label-down'}
             />
             <InputBox
               type="text"
               title="GL Number*"
               name="glNumber"
+              onChange={handleInputChange}
+                labelCss={
+                  formData.glNumber.length > 0 ? 'label-up' : 'label-down'}
             />
 
             <div className="row-span-2 flex items-center">
@@ -136,18 +172,27 @@ export default function CreateProduct() {
               type="number"
               title="Minimum Quantity*"
               name="minimumQuantity"
+              onChange={handleInputChange}
+                labelCss={
+                  formData.minimumQuantity  ? 'label-up' : 'label-down'}
             />
 
             <DropDown
               title="Measurement Type*"
               name="measurementType"
+              onChange={handleInputChange}
+                labelCss={
+                  formData.measurementType.length > 0 ? 'label-up' : 'label-down'}
             />
 
             <InputBox
               type="text"
               title="Description (150 Words)"
               className="col-span-3"
-              name="minimumQuantity"
+              name="Description"
+              onChange={handleInputChange}
+                labelCss={
+                  formData.Description.length > 0 ? 'label-up' : 'label-down'}
             />
           </div>
         </div>

@@ -1,9 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import InputBox from "../../Components/InputBox";
 import DropDown from "../../Components/Dropdown";
 import Navbar from "../../Components/NavbarForm";
 import CheckBox from "../../Components/CheckBox";
+import { useSearchParams } from "react-router-dom";
 export default function AddNewMaterial() {
+  const [formData,setFormData] = useState({
+    materialName:'',
+    shortName:'',
+    category:'',
+    subCategory:'',
+    upc:'',
+    glNumber:'',
+    minimumQuantity:'',
+    measurementType:'',
+    Description:'',
+  })
+  const handleInputChange = (e) => {
+    console.log(e);
+    const { name, value } = e.target;
+    console.log("Input value changed:", name,":",value);
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
   return (
     <form >
       <div className="p-3 bg-white">
@@ -74,27 +95,35 @@ export default function AddNewMaterial() {
             <InputBox
               type="text"
               title="Material Name*"
-              name="productName"
-             
+              name="materialName"
+              onChange={handleInputChange}
+              labelCss={
+                formData.materialName.length > 0 ? 'label-up' : 'label-down'}
             />
 
             <InputBox
               type="text"
               title="Short Name*"
-              name="productNameCode"
-            
+              name="shortName"
+              onChange={handleInputChange}
+              labelCss={
+                formData.shortName.length > 0 ? 'label-up' : 'label-down'}
             />
 
             <DropDown
               title="Category*"
               name="category"
-            
+              onChange={handleInputChange}
+              labelCss={
+                formData.categorylength > 0 ? 'label-up' : 'label-down'}
             />
 
             <DropDown
               title="Sub Category*"
               name="subCategory"
-            
+              onChange={handleInputChange}
+              labelCss={
+                formData.subCategory.length > 0 ? 'label-up' : 'label-down'}
             />
           </div>
         </div>
@@ -115,13 +144,17 @@ export default function AddNewMaterial() {
               type="number"
               title="UPC*"
               name="upc"
-            
+              onChange={handleInputChange}
+              labelCss={
+                formData.upc.length > 0 ? 'label-up' : 'label-down'}
             />
             <InputBox
               type="text"
               title="GL Number*"
               name="glNumber"
-           
+              onChange={handleInputChange}
+              labelCss={
+                formData.glNumber.length > 0 ? 'label-up' : 'label-down'}
             />
 
             <div className="row-span-2 flex items-center">
@@ -132,21 +165,27 @@ export default function AddNewMaterial() {
               type="number"
               title="Minimum Quantity*"
               name="minimumQuantity"
-             
+              onChange={handleInputChange}
+              labelCss={
+                formData.minimumQuantity.length > 0 ? 'label-up' : 'label-down'}
             />
 
             <DropDown
               title="Measurement Type*"
               name="measurementType"
-            
+              onChange={handleInputChange}
+              labelCss={
+                formData.measurementType.length > 0 ? 'label-up' : 'label-down'}
             />
 
             <InputBox
               type="text"
               title="Description (150 Words)"
               className="col-span-3"
-              name="minimumQuantity"
-              
+              name="Description"
+              onChange={handleInputChange}
+              labelCss={
+                formData.Description.length > 0 ? 'label-up' : 'label-down'}
             />
           </div>
         </div>
