@@ -1,0 +1,59 @@
+.floating-label {
+    position: relative;
+    /* display: flex; */
+    /* flex-direction: column; */
+}
+
+.floating-label .label-down {
+    margin-top: 1.2rem;
+    margin-left: -1rem;
+    font-size: small;
+    position: absolute;
+    padding-right: 5px;
+    padding-left: 5px;
+    color: darkgrey;
+    pointer-events: none;
+    transition: 0.5s;
+}
+
+.floating-label .label-up {
+    margin-top:-0.1rem;
+    margin-left: 0rem;
+    font-size: small;
+    position: absolute;
+    padding-right: 5px;
+    padding-left: 5px;
+    color: darkgrey;
+    pointer-events: none;
+    transition: 0.5s;
+    padding-top:0px;
+    padding-bottom: 0px;
+}
+.floating-label input:focus + label{
+    margin-top: -0.1rem;
+    margin-left: 0rem;
+    font-size: small;
+    position: absolute;
+    padding-right: 5px;
+    padding-left: 5px;
+    color: darkgrey;
+    pointer-events: none;
+    transition: 0.5s;
+    padding-top:0px;
+    padding-bottom: 0px;
+   
+}
+.floating-label select:focus + label{
+    margin-top:-0.1rem;
+    margin-left: 0rem;
+    font-size: small;
+    position: absolute;
+    padding-right: 5px;
+    padding-left: 5px;
+    color: darkgrey;
+    pointer-events: none;
+    transition: 0.5s;
+    padding-top:0px;
+    padding-bottom: 0px;
+   
+}

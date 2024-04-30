@@ -22,11 +22,11 @@ export default function CreateOrder() {
     customerDetails: {
       Address: "",
       City: "",
-      Country: " ",
-      PostalCode: " ",
-      State: " ",
-      customerName: " ",
-      email: " ",
+      Country: "",
+      PostalCode: "",
+      State: "",
+      customerName: "",
+      email: "",
       mobileNumber: "",
     },
     orderDetails: {
@@ -62,11 +62,11 @@ export default function CreateOrder() {
       deliveryDate: "",
     },
   });
-  const handleBillingCheckChange = (e) => {};
-  const handleDeliveryCheckChange = (e) => {};
+  const handleBillingCheckChange = (e) => { };
+  const handleDeliveryCheckChange = (e) => { };
   const handleSubmit = (e) => {
     e.preventDefault();
-    formData.id =  generateUniqueId();
+    formData.id = generateUniqueId();
     console.log("data at submit", formData);
     dispatch(addOrder(formData));
   };
@@ -93,6 +93,8 @@ export default function CreateOrder() {
                     },
                   }))
                 }
+                labelCss={
+                  formData.orderDetails.receivedDate.length > 0 ? 'label-up' : 'label-down'}
               />
 
               <Dropdown
@@ -108,6 +110,8 @@ export default function CreateOrder() {
                     },
                   }))
                 }
+                labelCss={
+                  formData.orderDetails.Location.length > 0 ? 'label-up' : 'label-down'}
               />
               <InputBox
                 type="text"
@@ -124,6 +128,8 @@ export default function CreateOrder() {
                     },
                   }))
                 }
+                labelCss={
+                  formData.orderDetails.Note.length > 0 ? 'label-up' : 'label-down'}
               />
             </div>
           </div>
@@ -145,6 +151,8 @@ export default function CreateOrder() {
                     },
                   }))
                 }
+                labelCss={
+                  formData.productDetails.Name.length > 0 ? 'label-up' : 'label-down'}
               />
               <InputBox
                 type="text"
@@ -160,6 +168,8 @@ export default function CreateOrder() {
                     },
                   }))
                 }
+                labelCss={
+                  formData.productDetails.code.length > 0 ? 'label-up' : 'label-down'}
               />
               <InputBox
                 type="number"
@@ -176,6 +186,8 @@ export default function CreateOrder() {
                     },
                   }));
                 }}
+                labelCss={
+                  formData.productDetails.quantity ? 'label-up' : 'label-down'}
               />
               <InputBox
                 type="number"
@@ -192,6 +204,8 @@ export default function CreateOrder() {
                     },
                   }));
                 }}
+                labelCss={
+                  formData.productDetails.price ? 'label-up' : 'label-down'}
               />
             </div>
           </div>
@@ -214,6 +228,8 @@ export default function CreateOrder() {
                     },
                   }))
                 }
+                labelCss={
+                  formData.customerDetails.customerName.length > 0 ? 'label-up' : 'label-down'}
               />
               <InputBox
                 type="email"
@@ -229,6 +245,8 @@ export default function CreateOrder() {
                     },
                   }))
                 }
+                labelCss={
+                  formData.customerDetails.email.length > 0 ? 'label-up' : 'label-down'}
               />
               <InputBox
                 type="number"
@@ -245,6 +263,8 @@ export default function CreateOrder() {
                     },
                   }));
                 }}
+                labelCss={
+                  formData.customerDetails.mobileNumber ? 'label-up' : 'label-down'}
               />
               <InputBox
                 type="text"
@@ -261,6 +281,8 @@ export default function CreateOrder() {
                     },
                   }));
                 }}
+                labelCss={
+                  formData.customerDetails.Address.length> 0 ? 'label-up' : 'label-down'}
               />
 
               <InputBox
@@ -277,6 +299,8 @@ export default function CreateOrder() {
                     },
                   }));
                 }}
+                labelCss={
+                  formData.customerDetails.PostalCode ? 'label-up' : 'label-down'}
               />
 
               <Dropdown
@@ -292,6 +316,8 @@ export default function CreateOrder() {
                     },
                   }));
                 }}
+                labelCss={
+                  formData.customerDetails.City.length > 0 ? 'label-up' : 'label-down'}
               />
 
               <Dropdown
@@ -307,6 +333,8 @@ export default function CreateOrder() {
                     },
                   }));
                 }}
+                labelCss={
+                  formData.customerDetails.State.length > 0 ? 'label-up' : 'label-down'}
               />
 
               <Dropdown
@@ -322,6 +350,8 @@ export default function CreateOrder() {
                     },
                   }));
                 }}
+                labelCss={
+                  formData.customerDetails.Country.length > 0 ? 'label-up' : 'label-down'}
               />
             </div>
           </div>
@@ -353,6 +383,8 @@ export default function CreateOrder() {
                     },
                   }))
                 }
+                labelCss={
+                  formData.paymentDetails.paymentMethod.length > 0 ? 'label-up' : 'label-down'}
               />
 
               <InputBox
@@ -370,6 +402,8 @@ export default function CreateOrder() {
                     },
                   }));
                 }}
+                labelCss={
+                  formData.paymentDetails.cardNo ? 'label-up' : 'label-down'}
               />
 
               <InputBox
@@ -386,6 +420,8 @@ export default function CreateOrder() {
                     },
                   }))
                 }
+                labelCss={
+                  formData.paymentDetails.cardHolderName.length > 0 ? 'label-up' : 'label-down'}
               />
 
               <Dropdown
@@ -401,6 +437,8 @@ export default function CreateOrder() {
                     },
                   }))
                 }
+                labelCss={
+                  formData.paymentDetails.paymentStatus.length > 0 ? 'label-up' : 'label-down'}
               />
 
               <InputBox
@@ -417,6 +455,8 @@ export default function CreateOrder() {
                     },
                   }))
                 }
+                labelCss={
+                  formData.paymentDetails.paymentDate.length > 0 ? 'label-up' : 'label-down'}
               />
 
               <InputBox
@@ -434,6 +474,8 @@ export default function CreateOrder() {
                     },
                   }));
                 }}
+                labelCss={
+                  formData.paymentDetails.amount ? 'label-up' : 'label-down'}
               />
 
               <InputBox
@@ -451,6 +493,8 @@ export default function CreateOrder() {
                     },
                   }))
                 }
+                labelCss={
+                  formData.paymentDetails.paymentAddress.length > 0 ? 'label-up' : 'label-down'}
               />
 
               <InputBox
@@ -468,6 +512,8 @@ export default function CreateOrder() {
                     },
                   }));
                 }}
+                labelCss={
+                  formData.paymentDetails.PostalCode ? 'label-up' : 'label-down'}
               />
 
               <Dropdown
@@ -483,6 +529,8 @@ export default function CreateOrder() {
                     },
                   }))
                 }
+                labelCss={
+                  formData.paymentDetails.City.length > 0 ? 'label-up' : 'label-down'}
               />
 
               <Dropdown
@@ -498,6 +546,8 @@ export default function CreateOrder() {
                     },
                   }))
                 }
+                labelCss={
+                  formData.paymentDetails.State.length > 0 ? 'label-up' : 'label-down'}
               />
 
               <Dropdown
@@ -513,6 +563,8 @@ export default function CreateOrder() {
                     },
                   }))
                 }
+                labelCss={
+                  formData.paymentDetails.Country.length > 0 ? 'label-up' : 'label-down'}
               />
             </div>
           </div>
@@ -544,6 +596,8 @@ export default function CreateOrder() {
                     },
                   }))
                 }
+                labelCss={
+                  formData.shipmentDetails.deliveryDate.length > 0 ? 'label-up' : 'label-down'}
               />
 
               <InputBox
@@ -561,6 +615,8 @@ export default function CreateOrder() {
                     },
                   }))
                 }
+                labelCss={
+                  formData.shipmentDetails.Address.length > 0 ? 'label-up' : 'label-down'}
               />
 
               <InputBox
@@ -578,6 +634,8 @@ export default function CreateOrder() {
                     },
                   }));
                 }}
+                labelCss={
+                  formData.shipmentDetails.PostalCode ? 'label-up' : 'label-down'}
               />
 
               <Dropdown
@@ -593,6 +651,8 @@ export default function CreateOrder() {
                     },
                   }))
                 }
+                labelCss={
+                  formData.shipmentDetails.City.length > 0 ? 'label-up' : 'label-down'}
               />
 
               <Dropdown
@@ -608,6 +668,8 @@ export default function CreateOrder() {
                     },
                   }))
                 }
+                labelCss={
+                  formData.shipmentDetails.State.length > 0 ? 'label-up' : 'label-down'}
               />
 
               <Dropdown
@@ -623,6 +685,8 @@ export default function CreateOrder() {
                     },
                   }))
                 }
+                labelCss={
+                  formData.shipmentDetails.Country.length> 0 ? 'label-up' : 'label-down'}
               />
             </div>
           </div>
