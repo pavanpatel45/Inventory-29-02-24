@@ -4,7 +4,7 @@ import Box from "./Box";
 import Button from "./Button";
 import search from "../Icons/search.png";
 import exprt from "../Icons/export.png";
-import plus from "../Icons/plus.svg";
+import plus from "../Icons/plus-outline.svg";
 import loc from "../Icons/location.png";
 import downArrow from "../Icons/down-arrow.png";
 import "../CSS/NavbarMaterials.css";

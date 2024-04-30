@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from './Button'
 import {Link} from 'react-router-dom'
-import plus from "../Icons/plus.svg"
+import plus from "../Icons/plus-outline.svg"
 import "../CSS/CreateBatch.css"
 
 export default function NavbarCreateBatch({title,btnTitle}) {
