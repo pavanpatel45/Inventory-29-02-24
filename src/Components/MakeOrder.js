@@ -29,7 +29,7 @@ export default function CreateOrder() {
   
   return (
     <form >
-      <div className="p-8">
+      <div className="p-8 bg-white">
         <Navbar title="Make Order" className="NavbarForm" btnTitle="Next" />
         <div className="grid gap-y-4 pt-8" >
           <div className="grid gap-2">

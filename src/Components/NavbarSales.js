@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import search from "../Icons/search.png";
-import location from "../Icons/location.png";
-import data from "../Icons/data.png";
+import search from "../Icons/search.svg";
+import location from "../Icons/location.svg";
+import data from "../Icons/data.svg";
+import plus from "../Icons/plus.svg"
 import OrderDropdown from "./OrderDropdown";
 export default function NavbarSales({ title, handleCreateOrder }) {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -14,37 +15,20 @@ export default function NavbarSales({ title, handleCreateOrder }) {
       <div className="flex flex-row gap-3 " style={{ font: "16px" }}>
         <div style={{ color: "#2D2D2D" }}>{title}</div>
       </div>
-      <div className="flex flex-box gap-2">
-        <div
-          className="rounded-full w-8 h-8 flex items-center justify-center navbarSalesButton cursor-pointer"
-          style={{ backgroundColor: "#EFEFEF" }}>
-          <img src={search} height="16px" width="16px"  />
+      <div className="flex flex-box gap-3">
+        <div>
+          <img src={search}   />
         </div>
-        <div
-          className="rounded-full w-8 h-8 flex items-center justify-center navbarSalesButton cursor-pointer"
-          style={{ backgroundColor: "#EFEFEF" }}
-        >
-          <img src={location} height="12px" width="12px" />
+        <div>
+          <img src={location}   />
         </div>
-        <div
-          className="rounded-full w-8 h-8 flex items-center justify-center navbarSalesButton cursor-pointer"
-          style={{ backgroundColor: "#EFEFEF" }}
-        >
-          <img src={data} height="12px" width="12px" />
+        <div >
+          <img src={data} />
         </div>
 
-        <div
-          className="rounded-full w-8 h-8 text-2xl flex items-top justify-center navbarSalesButton"
-          style={{
-            backgroundColor: "#EFEFEF",
-            color: "#5A5A5A",
-            alignItems: "center",
-          }}
-        >
-          <span className="pb-2 cursor-pointer fixed" onClick={handleIconClick}>
-            +
-          </span>
-          <div className="relative top-16 right-28">
+        <div>
+          <img src={plus} onClick={handleIconClick}/>
+          <div style={{position:"absolute" ,top:"6.8rem", right:"4rem"}} >
             {showDropdown && <OrderDropdown />}
           </div>
         </div>

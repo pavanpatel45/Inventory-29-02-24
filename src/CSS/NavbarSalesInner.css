@@ -1,9 +1,22 @@
-a.active div .navbar-circle{
-    background-color: blue;
+a.active div .navbar-circle-blue{
+    background-color: #3968F9;
 }
-a div .navbar-border-bottom{
+a.active div .navbar-circle-yellow{
+    background-color:#FCE51B;
+}
+a.active div .navbar-circle-red{
+    background-color:#E72626;
+}
+a.active div .navbar-circle-green{
+    background-color:green;
+}
+ .navbar-circle{
+    background-color:#DADADA;
+}
+a .navbar-border-bottom{
     border-bottom:2px solid white;
 }
-a.active div .navbar-border-bottom{
-    border-bottom:2px solid blue;
+a.active  .navbar-border-bottom{
+    border-bottom:2px solid #2DA060;
+    font-weight: 600;
 }
