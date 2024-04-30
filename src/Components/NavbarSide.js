@@ -10,8 +10,8 @@ import icon7 from '../Icons/icon7.png'
 import icon8 from '../Icons/icon8.png'
 import icon9 from '../Icons/icon9.png'
 import logoutIcon from '../Icons/logoutIcon.png'
-import leftArrow from '../Icons/leftArrow.png'
-import rightArrow from '../Icons/rightArrow.png'
+import leftArrow from '../Icons/arrow-left.svg'
+import rightArrow from '../Icons/arrow-left.svg'
 import NavbarSideIcon from './NavbarSideIcon'
 import NavbarSideIconOpen from './NavbarSideIconOpen'
 import "../CSS/NavbarSide.css"
@@ -22,10 +22,10 @@ export default function NavbarSide({active,setActive}) {
   return (
     <div className={`bg-white flex flex-col ${active ? ' w-64' : 'w-20'} h-screen items-center justify-between`}>
        <div className=' flex items-center flex-column gap-2 '>
-          <div className={`bg-blue shadow-lg rounded-full absolute ${active ? 'left-60' : 'left-16'} top-12 p-2`} onClick={toggleSideBar}>
+          <div className=' w-full flex justify-center pt-2 pb-2 ' ><img src={icon1}/></div>
+          <div className={`relative ${active ? 'left-32' : 'left-12'} `} onClick={toggleSideBar} style={{top:"-0.5rem",marginTop:"-4px",marginBottom:"-20px", marginLeft:"-10px"}}>
              <img src={active?leftArrow:rightArrow}/>
           </div>
-          <div className=' w-full flex justify-center pt-2 pb-2 ' ><img src={icon1}/></div>
           <NavLink to="/products">{active?<NavbarSideIconOpen src={icon2} tittle="Product"/>:<NavbarSideIcon src={icon2}/>}</NavLink>
           {active?<NavbarSideIconOpen src={icon3} tittle="Inventory"/>:<NavbarSideIcon src={icon3}/>}
           <NavLink to="/materials">{active?<NavbarSideIconOpen src={icon4} tittle="Materials"/>:<NavbarSideIcon src={icon4}/>}</NavLink>

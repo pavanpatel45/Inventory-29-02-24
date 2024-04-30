@@ -8,7 +8,7 @@ import Navbar from "./NavbarForm";
 import Button from "./Button";
 import AddedMaterialsTable from "./AddedMaterialsTable";
 import "../CSS/NavbarMaterials.css"
-import plus from "../Icons/plus.svg"
+import plus from "../Icons/plus-outline.svg"
 
 export default function PurchaseOrder() {
  
