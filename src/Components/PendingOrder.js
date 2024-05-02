@@ -7,7 +7,7 @@ export default function PendingOrder( ) {
     const allOrders = useSelector((state) => state.orders);
   return (
     <div>
-    <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  p-4 gap-2'>
+    <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  p-3 gap-2'>
     { 
      allOrders.map((order) => {
          if(order.status == 2){

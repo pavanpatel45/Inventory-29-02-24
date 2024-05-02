@@ -29,7 +29,7 @@ export default function CreateProduct() {
   };
   return (
     <form >
-      <div className="p-8">
+      <div className="p-8 bg-white">
         <Navbar
           title="Create Product"
           btnTitle="Next"

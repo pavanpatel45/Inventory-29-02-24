@@ -8,7 +8,7 @@ export default function CancelledOrder() {
   return (
     <div>
     {/* <DialogBoxCancelOrder isOpen={isOpen} setIsOpen={setIsOpen} handleReadytoShip={handleReadytoShip} handleCancelOrder={handleCancelOrder}/> */}
-    <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  p-4 gap-2'>
+    <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  p-3 gap-2'>
     { 
      allOrders.map((order) => {
          if(order.status == 6){

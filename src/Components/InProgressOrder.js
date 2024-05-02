@@ -37,7 +37,7 @@ export default function InProgressOrder() {
     <div>
     <DialogBox isOpen={isOpen} setIsOpen={setIsOpen} id={id} handleReadytoShip={handleReadytoShip} handleCancelOrder={handleCancelOrder} content="Ready to Ship"/>
     <DialogBoxCancelOrder isOpen={isOpenCancelOrder} id={id} setIsOpen={setIsOpenCancelOrder} setNote={setNote} Note={Note} handleCancelOrderSubmit={handleCancelOrderSubmit}/>
-    <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  p-4 gap-2'>
+    <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  p-3 gap-2'>
     { 
      allOrders.map((order) => {
          if(order.status == 3){

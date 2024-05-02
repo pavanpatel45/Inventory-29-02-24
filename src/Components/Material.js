@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useTable } from "react-table";
 import dummy from "./dummy.json";
-import "../CSS/OrderDropdown.css";
 import InStock from "./InStock";
 import OutOfStock from "./OutOfStock";
 import FewLeft from "./FewLeft";
@@ -32,7 +31,7 @@ function Material() {
           </div>
         ),
         accessor: "material_name",
-        width: "228px",
+        // width: "228px",
         Cell: ({ cell }) => (
           <div className="flex items-center">
             <input
@@ -68,13 +67,13 @@ function Material() {
       {
         Header: "Code",
         accessor: "code",
-        width: "102px",
+        // width: "102px",
       },
       {
         Header: "Batch ID",
         accessor: "batch_id",
-        width: "122px",
-        height: "40px",
+        // width: "122px",
+        // height: "40px",
       },
       {
         Header: (
@@ -91,8 +90,8 @@ function Material() {
           </>
         ),
         accessor: "category",
-        width: "144px",
-        height: "40px",
+        // width: "144px",
+        // height: "40px",
       },
       {
         Header: (
@@ -108,20 +107,20 @@ function Material() {
           </>
         ),
         accessor: "expiry_date",
-        width: "122px",
-        height: "40px",
+        // width: "122px",
+        // height: "40px",
       },
       {
         Header: "Quantity",
         accessor: "quantity",
-        width: "102px",
-        height: "40px",
+        // width: "102px",
+        // height: "40px",
       },
       {
         Header: "Price($)",
         accessor: "price",
-        width: "102px",
-        height: "40px",
+        // width: "102px",
+        // height: "40px",
       },
       {
         Header: (
@@ -146,14 +145,14 @@ function Material() {
             return <FewLeft />;
           }
         },
-        width: "154px",
-        height: "40px",
+        // width: "154px",
+        // height: "40px",
       },
       {
         Header: "Committed",
         accessor: "committed",
-        width: "102px",
-        height: "40px",
+        // width: "102px",
+        // height: "40px",
       },
       {
         Header: "Action",

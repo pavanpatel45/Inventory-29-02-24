@@ -8,7 +8,7 @@ export default function SalesLayout() {
   return (
     <div className="bg-white flex flex-col justify-start ">
     <div className="scrollbar" style={{height: "80vh" , overflow: 'auto' }}>
-      <div className="pl-3">
+      <div className="">
      <NavbarSales title="Sales Order" />
      </div>
      {/* Navbar for order status Starts here*/}
@@ -16,11 +16,11 @@ export default function SalesLayout() {
      <NavbarSalesInner/>
      </div>
      {/* Navbar for order status Ends here*/}
-     <div className="grid grid-cols-1 p-3">
+     <div className="grid grid-cols-1 ">
         <Outlet/>
      </div>
    </div>
-   <div className="pl-3">
+   <div className="">
      <FooterPagination />
    </div>
  </div>

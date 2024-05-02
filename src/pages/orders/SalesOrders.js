@@ -16,7 +16,7 @@ export default function SalesOrders() {
   return (
     <div className="bg-white flex flex-col justify-between ">
        <div className="scrollbar" style={{height: "80vh" , overflow: 'auto' }}>
-        <NavbarSales title="Sales" />
+        <NavbarSales title="Sales " />
         {/* Navbar for order status Starts here*/}
         
         {/* Navbar for order status Ends here*/}

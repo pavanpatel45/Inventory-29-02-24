@@ -5,7 +5,7 @@ import NavbarMaterials from '../../Components/NavbarMaterials'
 
 export default function MaterialView() {
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col bg-white'>
        <NavbarMaterials/>
        <Material/>
        <FooterPagination/>
