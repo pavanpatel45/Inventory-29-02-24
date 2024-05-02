@@ -18,18 +18,18 @@ export default function NavbarSales({ title, handleCreateOrder }) {
         <div style={{ color: "#2D2D2D", fontSize:"16px", fontWeight:"500" }}>{title}</div>
       </div>
       <div className="flex flex-box gap-3">
-        <div>
-          <img src={search}   />
+        <div className="cursor-pointer">
+          <img src={search}  />
         </div>
-        <div>
+        <div className="cursor-pointer">
           <img src={location}   />
         </div>
-        <div >
+        <div className="cursor-pointer" >
           <img src={data} />
         </div>
 
-        <div>
-          <img src={plus} onClick={handleIconClick}/>
+        <div className="cursor-pointer">
+          <img src={plus} onClick={handleIconClick} />
           <div style={{position:"absolute" ,top:"6.8rem", right:"4rem"}} >
             {showDropdown && <OrderDropdown />}
           </div>
