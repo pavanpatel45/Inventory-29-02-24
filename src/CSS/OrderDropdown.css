@@ -9,7 +9,7 @@
   padding-right: 6px;
   padding-bottom: 8px;
   height: 32px;
-  width: 170px;
+  width: 160px;
   border-radius: 8px;
   }
 
@@ -17,8 +17,8 @@
         border: 1px #B7B7B7;
         margin-top: 25px;
         padding: 5px;
-        width: 180px;
-        height: 106px;
+        width: 170px;
+  z-index: 1000;
         border-radius: 8px;
         box-shadow: 0px 2px 11px 0px rgba(0, 0, 0, 0.45);
       }
@@ -33,5 +33,4 @@
     }
   
 
-      
     

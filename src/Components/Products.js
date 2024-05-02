@@ -52,15 +52,11 @@ function Material() {
                 textDecoration: "underline",
               }}
             >
-              <span
-                style={{
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                }}
+               <p
+                className="truncate max-w-24"
               >
                 {cell.value}{" "}
-              </span>
+              </p>
             </a>
           </div>
         ),
