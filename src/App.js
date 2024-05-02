@@ -30,6 +30,7 @@ import ProductView from "./pages/Product/ProductView";
 import PurchaseOrder from './Components/PurchaseOrder'
 import CreateBatchProduct from "./pages/Product/CreateBatchProduct";
 import CreateProduct from "./pages/Product/CreateProduct";
+import CustomDropdown from "./Components/CustomDropdown";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout/>}>
@@ -65,6 +66,7 @@ function App() {
     <>
       <Provider store={store}>
         <RouterProvider router={router}/>
+        {/* <CustomDropdown/> */}
       </Provider>
     </>
   );
