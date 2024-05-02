@@ -25,7 +25,7 @@ import productIcon from '../../Icons/package.png'
       //  dispatch(changeStatus({id:order.id,status}))
    }
   return (
-    <div className='p-2 grid gap-3 '>
+    <div className='p-2 grid gap-3 bg-white'>
          
         {/*Navbar Starts here */}
            <NavbarView title="View Order" handleConfirmOrder={handleConfirmOrder} handleCancelOrder={handleCancelOrder}/>

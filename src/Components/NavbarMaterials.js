@@ -17,7 +17,7 @@ export default function NavbarMaterials({ className }) {
   };
 
   return (
-    <div className="flex flex-row justify-between items-center py-2 ml-4 mt-3 bg-white">
+    <div className="flex flex-row justify-between items-center  ml-4 mt-3 bg-white">
       <div className="flex flex-row gap-2 ">
         
         <div className="font-medium">Materials View</div>

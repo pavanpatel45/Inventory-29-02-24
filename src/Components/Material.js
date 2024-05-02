@@ -184,7 +184,7 @@ function Material() {
 
   return (
     <div>
-      <div className=" overflow-auto ml-4 pt-3 border-solid border-red-500">
+      <div className=" overflow-auto ml-4 pt-3 border-solid border-red-500 ">
         <table className="table-auto border-collapse ">
           <thead>
             {headerGroups.map((headerGroup) => (
@@ -192,7 +192,7 @@ function Material() {
                 {headerGroup.headers.map((column) => (
                   <th
                     {...column.getHeaderProps()}
-                    className="border border-1 border-dotted px-4 py-2"
+                    className="border border-1  px-4 py-2"
                     style={{
                       backgroundColor: "#E9E9E9",
                       borderColor: "#BDBDBD",

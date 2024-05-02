@@ -2,7 +2,7 @@ import React from "react";
 
 export default function FooterPagination() {
   return (
-    <div className="flex flex-row justify-between text-sm bg-white px-2 pt-2" style={{color:"#343434"}} >
+    <div className="flex flex-row justify-between text-sm bg-white px-2 pt-2 h-8 " style={{color:"#343434" }} >
       <div className="flex flex-row gap-3">
         <div>Entries Per Page</div>
         <div style={{border:"1px solid #A5A5A5"}}>

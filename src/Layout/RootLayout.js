@@ -17,8 +17,8 @@ export default function RootLayout() {
         <NavbarTop />
       </div>
       <div
-        className={` m-2 overflow-auto scrollbar  `}
-        style={{ height: "87vh", width: active ? "80vw" : "92.4vw"}}
+        className={`mt-2 ml-2 overflow-auto scrollbar  `}
+        style={{ height: "calc(100vh - 5rem)", width:  active ? "calc(100vw - 17rem)" : "calc(100vw - 6rem)",}}
       >
            <Outlet/>
       </div>

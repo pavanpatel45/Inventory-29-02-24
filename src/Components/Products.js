@@ -184,19 +184,8 @@ function Material() {
 
   return (
     <>
-     {/* <div className="flex flex-col overflow-hidden">
-    <div>
-    </div>
-    <div>
-       <NavbarMaterials
-        title="Materials View"
-        buttonStyle={buttonStyle}
-        btnTitle="Add +"
-      />
-      </div>
-      </div>   */}
 
-      <div className=" overflow-auto ml-4 pt-3 " style={{ height:"72.7vh"}}>
+      <div className=" overflow-auto ml-4 pt-3 pb-4" >
         <table className="table-auto border-collapse ">
           <thead>
             {headerGroups.map((headerGroup) => (

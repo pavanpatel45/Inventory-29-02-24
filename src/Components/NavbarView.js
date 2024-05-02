@@ -1,11 +1,12 @@
 import React from "react";
 import Button from "./Button";
 import { Link } from "react-router-dom";
+import larr from "../Icons/arrow-left.png"
 export default function NavbarView({ title,handleConfirmOrder,handleCancelOrder }) {
   return (
     <div className="flex flex-row justify-between items-center">
       <div className="flex flex-row gap-2 " style={{ font: "16px" }}>
-      <Link to="/sales/NewOrderRequest"> <div>&larr;</div></Link>
+      <Link to="/sales/NewOrderRequest"> <div><img src={larr}/></div></Link>
         <div style={{ color: "#2D2D2D" }}>{title}</div>
       </div>
       <div className="flex flex-box gap-2 items-center">

@@ -1,12 +1,22 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom';
 import profile from '../Icons/profile.jpg'
 import arrowDown from '../Icons/down-arrow.png'
 import notification from '../Icons/notification.png'
 export default function NavbarTop() {
+  const location = useLocation();
+  const curr = location.pathname.split('/');
+  const final  = curr[1].replace(/./g, (match, index) => {
+    if (index === 0) {
+        return match.toUpperCase();
+    } else {
+        return match.toLowerCase();
+    }
+});
   return (
     <div className=' flex flex-row justify-between h-16 items-center pl-2 pr-2 bg-white'>
         <div >
-            <div className='  text-base-600'>Product</div>
+            <div className='  text-base-600'>{final}</div>
         </div>
         <div className='flex flex-row gap-4'>
             <div className=''><img src={notification}/></div>
