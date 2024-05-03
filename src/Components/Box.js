@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import CustomDropdown from "./CustomDropdown";
+
 import "../CSS/OrderDropdown.css";
 
 function Box({ className, icon1, icon2, title, titleStyle, style, options }) {
@@ -35,11 +35,11 @@ function Box({ className, icon1, icon2, title, titleStyle, style, options }) {
 
       
       {dropdownVisible && (
-        <div className="absolute top-0 right-0 mr-0" style={{marginTop:"25px"}}>
+        <div className="absolute top-0 right-0 mr-0 z-50" style={{marginTop:"25px"}}>
           {/* Adjust margin-top and margin-right as needed */}
           <div className="outer-box">
             <div className="box-text">
-              <CustomDropdown items={options} />
+             
             </div>
           </div>
         </div>
