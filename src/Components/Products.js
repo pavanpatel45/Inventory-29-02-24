@@ -1,4 +1,5 @@
 import * as React from "react";
+// import { useState } from "react";
 import { useTable } from "react-table";
 import dummy from "./dummy.json";
 import InStock from "./InStock";
@@ -9,7 +10,8 @@ import bag from '../Icons/shopping-bag.png'
 import * as Icon from "react-icons/fi";
 import Checkbox from "react-custom-checkbox";
 import { CgOverflow } from "react-icons/cg";
-function Products() {
+import { useState } from "react";
+function Products({selected,setSelected}) {
   const handleImageClick1 = () => {
     console.log("edit icon was clicked");
   };
@@ -17,8 +19,9 @@ function Products() {
     console.log("shopping-bag icon was clicked");
   };
 
-
-
+  React.useEffect(() => {
+    console.log("selected Array", selected);
+  }, [selected])
   const data = React.useMemo(() => dummy, []);
   const columns = React.useMemo(
     () => [
@@ -47,16 +50,14 @@ function Products() {
               //   console.log(event);
               //   return alert(value);
               // }}
-              style={{ cursor: "pointer" ,height:"20px", width:"20px",border:"1px solid #2CAE66",overflow:"hidden"}}
-              // labelStyle={{ marginLeft: 5, userSelect: "none" }}
-              // label="Have you started using it?"
+              style={{ cursor: "pointer", height: "20px", width: "20px", border: "1px solid #2CAE66", overflow: "hidden" }}
             />
             <p>Material Name</p>
           </div>
         ),
         accessor: "material_name",
         width: "228px",
-        Cell: ({ cell }) => (
+        Cell: ({ cell, row }) => (
           <div className="flex items-center gap-2">
             <Checkbox
               icon={
@@ -73,17 +74,28 @@ function Products() {
               }
               name="my-input"
               checked={false}
-              // onChange={(value, event) => {
-              //   let p = {
-              //     isTrue: value,
-              //   };
-              //   console.log(event);
-              //   return alert(value);
-              // }}
-              style={{ cursor: "pointer" ,height:"20px", width:"20px",border:"1px solid #2CAE66",overflow:"hidden"}}
+              onChange={(value, event) => {
+                console.log("Selected checkbox has id :", row.original.id);
+                if (value == true) {
+                  console.log("true");
+                  setSelected((prevSelected) => {
+                    if(!prevSelected.includes(row.original.id)){
+                      return [...prevSelected, row.original.id]
+                    }
+                    else{
 
-              // labelStyle={{ marginLeft: 5, userSelect: "none" }}
-              // label="Have you started using it?"
+                      return prevSelected ;
+                    }
+                  })
+                }
+                else if (value == false) {
+                  return setSelected(prevSelected => prevSelected.filter(item => item !== row.original.id));
+                }
+              }}
+              style={{ cursor: "pointer", height: "20px", width: "20px", border: "1px solid #2CAE66", overflow: "hidden" }}
+
+            // labelStyle={{ marginLeft: 5, userSelect: "none" }}
+            // label="Have you started using it?"
             />
             <a
               href="https://www.google.com" //href={`#/${value}`}
@@ -104,6 +116,7 @@ function Products() {
               </p>
             </a>
           </div>
+
         ),
       },
       {

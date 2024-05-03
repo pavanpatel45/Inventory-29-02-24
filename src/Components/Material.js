@@ -6,9 +6,11 @@ import OutOfStock from "./OutOfStock";
 import FewLeft from "./FewLeft";
 import edit from "../Icons/edit.png";
 import bag from "../Icons/shopping-bag.png";
+import * as Icon from "react-icons/fi";
+import Checkbox from "react-custom-checkbox";
 import "../CSS/OrderDropdown.css";
 
-function Material() {
+function Material({selected,setSelected}) {
   const handleImageClick1 = () => {
     console.log("edit icon was clicked");
   };
@@ -21,23 +23,75 @@ function Material() {
     () => [
       {
         Header: (
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              className="mr-2"
-              style={{ height: "20px", width: "20px" }}
+          <div className="flex items-center gap-2">
+            <Checkbox
+              icon={
+                <div
+                  style={{
+                    display: "flex",
+                    flex: 1,
+                    backgroundColor: "#2CAE66",
+                    alignSelf: "stretch",
+                  }}
+                >
+                  <Icon.FiCheck color="white" size={20} />
+                </div>
+              }
+              name="my-input"
+              checked={false}
+              // onChange={(value, event) => {
+              //   let p = {
+              //     isTrue: value,
+              //   };
+              //   console.log(event);
+              //   return alert(value);
+              // }}
+              style={{ cursor: "pointer", height: "20px", width: "20px", border: "1px solid #2CAE66", overflow: "hidden" }}
             />
             <p>Material Name</p>
           </div>
         ),
         accessor: "material_name",
         // width: "228px",
-        Cell: ({ cell }) => (
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              className="mr-2"
-              style={{ height: "20px", width: "20px" }}
+        Cell: ({ cell,row }) => (
+          <div className="flex items-center gap-2">
+            <Checkbox
+              icon={
+                <div
+                  style={{
+                    display: "flex",
+                    flex: 1,
+                    backgroundColor: "#2CAE66",
+                    alignSelf: "stretch",
+                  }}
+                >
+                  <Icon.FiCheck color="white" size={20} />
+                </div>
+              }
+              name="my-input"
+              checked={false}
+              onChange={(value, event) => {
+                console.log("Selected checkbox has id :", row.original.id);
+                if (value == true) {
+                  console.log("true");
+                  setSelected((prevSelected) => {
+                    if(!prevSelected.includes(row.original.id)){
+                      return [...prevSelected, row.original.id]
+                    }
+                    else{
+
+                      return prevSelected ;
+                    }
+                  })
+                }
+                else if (value == false) {
+                  return setSelected(prevSelected => prevSelected.filter(item => item !== row.original.id));
+                }
+              }}
+              style={{ cursor: "pointer", height: "20px", width: "20px", border: "1px solid #2CAE66", overflow: "hidden" }}
+
+            // labelStyle={{ marginLeft: 5, userSelect: "none" }}
+            // label="Have you started using it?"
             />
             <a
               href="https://www.google.com" //href={`#/${value}`}

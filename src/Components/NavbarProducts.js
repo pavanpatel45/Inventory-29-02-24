@@ -6,10 +6,12 @@ import search from "../Icons/search.png";
 import exprt from "../Icons/export.png";
 import plus from "../Icons/plus-outline.svg";
 import loc from "../Icons/location.png";
+import dlt from "../Icons/Delete.svg";
+import cancel from '../Icons/x.svg'
 import downArrow from "../Icons/down-arrow.png";
 import "../CSS/NavbarMaterials.css";
 
-export default function NavbarMaterials({ className }) {
+export default function NavbarMaterials({ className,select=true,count }) {
   const [exportOption, setExportOption] = useState("");
 
   const handleChange = (e) => {
@@ -19,19 +21,27 @@ export default function NavbarMaterials({ className }) {
   return (
     <div className="flex flex-row justify-between items-center  ml-4 mt-3 bg-white">
       <div className="flex flex-row gap-2 ">
-        
+      {!select &&
         <div className="font-medium">Product View</div>
+        }
+        {select && 
+           <div className="flex flex-row gap-2" >
+              <img src={cancel} />
+              <div style={{color:"#343434",fontWeight:"500"}}>{count} Item(s) Selected</div>
+           </div>
+          } 
       </div>
 
       <div className="flex justify-end">
+      {!select &&
         <div
           className="border border-1 border-r mr-6 flex flex-row items-center relative box-style"
           style={{ borderRadius: "100px" }}
         >
           <img src={search} alt="icon" className="ml-3" />
           <input type="text" className="ml-3 txt-style" placeholder="Search" />
-        </div>
-
+        </div>}
+        {!select &&
         <Box
           className="box-style"
           icon1={loc}
@@ -44,8 +54,8 @@ export default function NavbarMaterials({ className }) {
             lineHeight: "22px",
           }}
           options={["INDIA", "AMERICA"]}
-        />
-
+        />}
+       
         <Box
           className="box-style"
           icon1={exprt}
@@ -59,11 +69,16 @@ export default function NavbarMaterials({ className }) {
           }}
           options={["EXCEL", "CSV", "PDF"]}
         />
-
+       {!select &&
         <Link to="CreateBatchProduct">
           <Button btnTitle={"Add"} className="style" icon={plus}>
             </Button>
-        </Link>
+        </Link>}
+        {/* <Link to="CreateBatchProduct"> */}
+        {select &&
+          <Button btnTitle={"Delete"} className="style1" icon={dlt}>
+            </Button> }
+        {/* </Link> */}
       </div>
     </div>
   );
