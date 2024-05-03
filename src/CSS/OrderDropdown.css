@@ -18,9 +18,9 @@
         margin-top: 25px;
         padding: 5px;
         width: 170px;
-  z-index: 1000;
+ 
         border-radius: 8px;
-        box-shadow: 0px 2px 11px 0px rgba(0, 0, 0, 0.45);
+        box-shadow: 0px 2px 11px 0px rgba(0, 0, 0, 0.75);
       }
       
     .box-text{
