@@ -6,8 +6,10 @@ import OutOfStock from "./OutOfStock";
 import FewLeft from "./FewLeft";
 import edit from '../Icons/edit.png'
 import bag from '../Icons/shopping-bag.png'
-
-function Material() {
+import * as Icon from "react-icons/fi";
+import Checkbox from "react-custom-checkbox";
+import { CgOverflow } from "react-icons/cg";
+function Products() {
   const handleImageClick1 = () => {
     console.log("edit icon was clicked");
   };
@@ -15,18 +17,39 @@ function Material() {
     console.log("shopping-bag icon was clicked");
   };
 
- 
+
 
   const data = React.useMemo(() => dummy, []);
   const columns = React.useMemo(
     () => [
       {
         Header: (
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              className="mr-2"
-              style={{ height: "20px", width: "20px" }}
+          <div className="flex items-center gap-2">
+            <Checkbox
+              icon={
+                <div
+                  style={{
+                    display: "flex",
+                    flex: 1,
+                    backgroundColor: "#2CAE66",
+                    alignSelf: "stretch",
+                  }}
+                >
+                  <Icon.FiCheck color="white" size={20} />
+                </div>
+              }
+              name="my-input"
+              checked={false}
+              // onChange={(value, event) => {
+              //   let p = {
+              //     isTrue: value,
+              //   };
+              //   console.log(event);
+              //   return alert(value);
+              // }}
+              style={{ cursor: "pointer" ,height:"20px", width:"20px",border:"1px solid #2CAE66",overflow:"hidden"}}
+              // labelStyle={{ marginLeft: 5, userSelect: "none" }}
+              // label="Have you started using it?"
             />
             <p>Material Name</p>
           </div>
@@ -34,11 +57,33 @@ function Material() {
         accessor: "material_name",
         width: "228px",
         Cell: ({ cell }) => (
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              className="mr-2"
-              style={{ height: "20px", width: "20px" }}
+          <div className="flex items-center gap-2">
+            <Checkbox
+              icon={
+                <div
+                  style={{
+                    display: "flex",
+                    flex: 1,
+                    backgroundColor: "#2CAE66",
+                    alignSelf: "stretch",
+                  }}
+                >
+                  <Icon.FiCheck color="white" size={20} />
+                </div>
+              }
+              name="my-input"
+              checked={false}
+              // onChange={(value, event) => {
+              //   let p = {
+              //     isTrue: value,
+              //   };
+              //   console.log(event);
+              //   return alert(value);
+              // }}
+              style={{ cursor: "pointer" ,height:"20px", width:"20px",border:"1px solid #2CAE66",overflow:"hidden"}}
+
+              // labelStyle={{ marginLeft: 5, userSelect: "none" }}
+              // label="Have you started using it?"
             />
             <a
               href="https://www.google.com" //href={`#/${value}`}
@@ -52,7 +97,7 @@ function Material() {
                 textDecoration: "underline",
               }}
             >
-               <p
+              <p
                 className="truncate max-w-24"
               >
                 {cell.value}{" "}
@@ -209,11 +254,11 @@ function Material() {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {rows.map((row,index) => {
+            {rows.map((row, index) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()} 
-                className={"even-row"}
+                <tr {...row.getRowProps()}
+                  className={"even-row"}
                 >
                   {row.cells.map((cell) => (
                     <td
@@ -239,4 +284,4 @@ function Material() {
     </>
   );
 }
-export default Material;
+export default Products;
