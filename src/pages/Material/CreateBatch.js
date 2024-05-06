@@ -24,9 +24,13 @@ export default function CreateBatch() {
       [name]: value
     }));
   };
+  const handleSubmit= (e)=>{
+    e.preventDefault();
+    console.log("form Data",formData);
+  }
   return (
     
-    <form  >
+    <form onSubmit={handleSubmit} >
       <div className="p-8 bg-white">
         <Navbar
           title="Create Batch"
@@ -111,6 +115,7 @@ export default function CreateBatch() {
               <Button
                 btnTitle="Save"
                 className=" pt-0 pb-0 text-style"
+                type="submit"
               />
             </div>
         </div>

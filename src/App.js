@@ -30,7 +30,6 @@ import ProductView from "./pages/Product/ProductView";
 import PurchaseOrder from './Components/PurchaseOrder'
 import CreateBatchProduct from "./pages/Product/CreateBatchProduct";
 import CreateProduct from "./pages/Product/CreateProduct";
-
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout/>}>

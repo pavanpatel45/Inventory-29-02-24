@@ -26,9 +26,9 @@ export default function NavbarSide({active,setActive}) {
           <div className={`relative ${active ? 'left-32' : 'left-12'} `} onClick={toggleSideBar} style={{top:"-0.5rem",marginTop:"-4px",marginBottom:"-20px", marginLeft:"-10px"}}>
              <img src={active?leftArrow:rightArrow}/>
           </div>
-          <NavLink to="/products">{active?<NavbarSideIconOpen src={icon2} tittle="Product"/>:<NavbarSideIcon src={icon2}/>}</NavLink>
+          <NavLink to="/products">{active?<NavbarSideIconOpen src={icon2} tittle="Product" isArrowDown={true}/>:<NavbarSideIcon src={icon2}/>}</NavLink>
           {active?<NavbarSideIconOpen src={icon3} tittle="Inventory"/>:<NavbarSideIcon src={icon3}/>}
-          <NavLink to="/materials">{active?<NavbarSideIconOpen src={icon4} tittle="Materials"/>:<NavbarSideIcon src={icon4}/>}</NavLink>
+          <NavLink to="/materials">{active?<NavbarSideIconOpen src={icon4} tittle="Materials" isArrowDown={true}/>:<NavbarSideIcon src={icon4}/>}</NavLink>
           <NavLink to="/sales">{active?<NavbarSideIconOpen src={icon5} tittle="Sales" />:<NavbarSideIcon src={icon5} leftBorder={{borderLeft:`(page==='/sales'`}}/>}</NavLink>
           {active?<NavbarSideIconOpen src={icon6} tittle="Documents"/>:<NavbarSideIcon src={icon6}/>}
           {active?<NavbarSideIconOpen src={icon7} tittle="Analytics"/>:<NavbarSideIcon src={icon7}/>}

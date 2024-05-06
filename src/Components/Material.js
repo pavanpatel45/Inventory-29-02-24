@@ -1,4 +1,5 @@
 import * as React from "react";
+import axios from 'axios';
 import { useTable } from "react-table";
 import dummy from "./dummy.json";
 import InStock from "./InStock";
@@ -9,7 +10,8 @@ import bag from "../Icons/shopping-bag.png";
 import * as Icon from "react-icons/fi";
 import Checkbox from "react-custom-checkbox";
 import "../CSS/OrderDropdown.css";
-
+import materialsTableData from "../Data/api-data"
+import { api_url } from "../Data/Constants";
 function Material({selected,setSelected}) {
   const handleImageClick1 = () => {
     console.log("edit icon was clicked");
@@ -17,8 +19,32 @@ function Material({selected,setSelected}) {
   const handleImageClick2 = () => {
     console.log("shopping-bag icon was clicked");
   };
-
-  const data = React.useMemo(() => dummy, []);
+  const [data,setData] = React.useState([]);
+  const url = `${api_url}/materials`
+  const  materialsTableData = async () => {
+    try {
+        const response = await axios.get(url, {
+          headers:{ 'ngrok-skip-browser-warning': '69420'}
+        });
+        console.log("at api-data : ",response);
+      
+        if (response?.status === 200) {
+          console.log("API Data:", response?.data);
+          setData(response?.data);
+        } else {
+          console.error('Received unexpected response:', response);
+          // Handle other status codes or unexpected responses
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        return null
+      }
+      
+}
+  React.useEffect(()=>{
+    console.log("useEffect : ")
+   materialsTableData();
+  },[])
   const columns = React.useMemo(
     () => [
       {
@@ -51,7 +77,7 @@ function Material({selected,setSelected}) {
             <p>Material Name</p>
           </div>
         ),
-        accessor: "material_name",
+        accessor: "name",
         // width: "228px",
         Cell: ({ cell,row }) => (
           <div className="flex items-center gap-2">
@@ -116,12 +142,12 @@ function Material({selected,setSelected}) {
       },
       {
         Header: "Code",
-        accessor: "code",
+        accessor: "upcCode",
         // width: "102px",
       },
       {
         Header: "Batch ID",
-        accessor: "batch_id",
+        accessor: "batchId",
         // width: "122px",
         // height: "40px",
       },
@@ -143,23 +169,23 @@ function Material({selected,setSelected}) {
         // width: "144px",
         // height: "40px",
       },
-      {
-        Header: (
-          <>
-            <select style={{ backgroundColor: "#E9E9E9" }}>
-              <option default className="hidden">
-                Expiry Date
-              </option>
-              <option value="Option 1">Option 1</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 3">Option 3</option>
-            </select>
-          </>
-        ),
-        accessor: "expiry_date",
-        // width: "122px",
-        // height: "40px",
-      },
+      // {
+      //   Header: (
+      //     <>
+      //       <select style={{ backgroundColor: "#E9E9E9" }}>
+      //         <option default className="hidden">
+      //           Expiry Date
+      //         </option>
+      //         <option value="Option 1">Option 1</option>
+      //         <option value="Option 2">Option 2</option>
+      //         <option value="Option 3">Option 3</option>
+      //       </select>
+      //     </>
+      //   ),
+      //   // accessor: "expiry_date",
+      //   // width: "122px",
+      //   // height: "40px",
+      // },
       {
         Header: "Quantity",
         accessor: "quantity",
@@ -168,36 +194,36 @@ function Material({selected,setSelected}) {
       },
       {
         Header: "Price($)",
-        accessor: "price",
+        accessor: "pricePerUnit",
         // width: "102px",
         // height: "40px",
       },
-      {
-        Header: (
-          <>
-            <select style={{ backgroundColor: "#E9E9E9" }}>
-              <option default className="hidden">
-                Availability
-              </option>
-              <option value="Option 1">In Stock</option>
-              <option value="Option 2">Out of Stock</option>
-              <option value="Option 3">Few Left</option>
-            </select>
-          </>
-        ),
-        accessor: "availability",
-        Cell: ({ row }) => {
-          if (row.original.availability === "In Stock") {
-            return <InStock />;
-          } else if (row.original.availability === "Out of Stock") {
-            return <OutOfStock />;
-          } else if (row.original.availability === "Few Left") {
-            return <FewLeft />;
-          }
-        },
-        // width: "154px",
-        // height: "40px",
-      },
+      // {
+      //   Header: (
+      //     <>
+      //       <select style={{ backgroundColor: "#E9E9E9" }}>
+      //         <option default className="hidden">
+      //           Availability
+      //         </option>
+      //         <option value="Option 1">In Stock</option>
+      //         <option value="Option 2">Out of Stock</option>
+      //         <option value="Option 3">Few Left</option>
+      //       </select>
+      //     </>
+      //   ),
+      //   accessor: "availability",
+      //   Cell: ({ row }) => {
+      //     if (row.original.availability === "In Stock") {
+      //       return <InStock />;
+      //     } else if (row.original.availability === "Out of Stock") {
+      //       return <OutOfStock />;
+      //     } else if (row.original.availability === "Few Left") {
+      //       return <FewLeft />;
+      //     }
+      //   },
+      //   // width: "154px",
+      //   // height: "40px",
+      // },
       {
         Header: "Committed",
         accessor: "committed",
@@ -235,7 +261,7 @@ function Material({selected,setSelected}) {
   return (
     <div>
       <div className=" overflow-auto ml-4 pt-3 border-solid border-red-500 ">
-        <table className="table-auto border-collapse ">
+        <table {...getTableProps()} className="table-auto border-collapse ">
           <thead>
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
@@ -263,6 +289,7 @@ function Material({selected,setSelected}) {
           </thead>
           <tbody {...getTableBodyProps()}>
             {rows.map((row, index) => {
+              console.log("row===>>sdgd", row);
               prepareRow(row);
               return (
                 <tr {...row.getRowProps()} className={"even-row"}>

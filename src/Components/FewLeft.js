@@ -4,7 +4,7 @@ function FewLeft() {
   return (
     <div className='flex flex-row'>
     <div
-      className="border border-solid flex justify-center items-center"
+      className="flex justify-center items-center"
       style={{
         backgroundColor: "#FFF3ED",
         borderRadius: "100px",
