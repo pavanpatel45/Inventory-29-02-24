@@ -20,7 +20,7 @@ function Material({selected,setSelected}) {
     console.log("shopping-bag icon was clicked");
   };
   const [data,setData] = React.useState([]);
-  const url = `${api_url}/materials`
+  const url = `${api_url}/material`
   const  materialsTableData = async () => {
     try {
         const response = await axios.get(url, {

@@ -4,6 +4,8 @@ import DropDown from "../../Components/Dropdown";
 import Navbar from "../../Components/NavbarCreateBatch";
 import Button from "../../Components/Button";
 import "../../CSS/CreateBatch.css"
+import { api_url } from "../../Data/Constants";
+import axios from "axios";
 
 export default function CreateBatch() {
   const [formData,setFormData]= useState({
@@ -24,9 +26,27 @@ export default function CreateBatch() {
       [name]: value
     }));
   };
+  const postData = async() =>{
+    try{
+       const url = `${api_url}/batch/`;
+       const Data = {
+        productName : formData.productName,
+        storageLocation:formData.storageLocation,
+        expiryDate:formData.expiryDate,
+        quantity:formData.quantity,
+        price:formData.price
+       }
+       const resp = await axios.post(url,Data);
+       console.log('Response',resp);
+    }
+    catch(error){
+      console.log("Error :",error);
+    }
+  }
   const handleSubmit= (e)=>{
     e.preventDefault();
     console.log("form Data",formData);
+    // postData();
   }
   return (
     
