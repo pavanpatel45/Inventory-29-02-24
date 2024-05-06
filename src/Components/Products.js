@@ -11,6 +11,9 @@ import * as Icon from "react-icons/fi";
 import Checkbox from "react-custom-checkbox";
 import { CgOverflow } from "react-icons/cg";
 import { useState } from "react";
+
+import "../CSS/OrderDropdown.css";
+import TableDropdown from "./TableDropdown";
 function Products({selected,setSelected}) {
   const handleImageClick1 = () => {
     console.log("edit icon was clicked");
@@ -23,6 +26,52 @@ function Products({selected,setSelected}) {
     console.log("selected Array", selected);
   }, [selected])
   const data = React.useMemo(() => dummy, []);
+  const options = [
+    {
+      value: "inStock",
+      label: "In Stock",
+     
+    },
+    {
+      value: "fewLeft",
+      label: "Few Left",
+     
+    },
+    {
+      value: "outOfStock",
+      label: "Out of Stock",
+     
+    },
+  ];
+
+  const options1 = [
+    {
+      value: "fillersBinders",
+      label: "Fillers and Binders",
+     
+    },
+    {
+      value: "solvents",
+      label: "Solvents",
+     
+    },
+    {
+      value: "stabilizersLubricants",
+      label: "Stabilizers and Lubricants",
+     
+    },
+    {
+      value: "preservatives",
+      label: "Preservatives",
+     
+    },
+    {
+      value: "modifiersAdditives",
+      label: "Modifiers and Additives",
+     
+    },
+  ];
+
   const columns = React.useMemo(
     () => [
       {
@@ -122,30 +171,24 @@ function Products({selected,setSelected}) {
       {
         Header: "Code",
         accessor: "code",
-        width: "102px",
+        // width: "102px",
       },
       {
         Header: "Batch ID",
         accessor: "batch_id",
-        width: "122px",
-        height: "40px",
+        // width: "122px",
+        // height: "40px",
       },
       {
         Header: (
           <>
-            <select style={{ backgroundColor: "#E9E9E9" }}>
-              <option default className="hidden">
-                Category
-              </option>
-              <option value="Option 1">Option 1</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 3">Option 3</option>
-            </select>
+            <TableDropdown title="Category" options={options1}/>
           </>
         ),
         accessor: "category",
-        width: "144px",
-        height: "40px",
+        className: "truncate max-w-24"
+        // width: "144px",
+        // height: "40px",
       },
       {
         Header: (
@@ -161,32 +204,25 @@ function Products({selected,setSelected}) {
           </>
         ),
         accessor: "expiry_date",
-        width: "122px",
-        height: "40px",
+        // width: "122px",
+        // height: "40px",
       },
       {
         Header: "Quantity",
         accessor: "quantity",
-        width: "102px",
-        height: "40px",
+        // width: "102px",
+        // height: "40px",
       },
       {
         Header: "Price($)",
         accessor: "price",
-        width: "102px",
-        height: "40px",
+        // width: "102px",
+        // height: "40px",
       },
       {
         Header: (
           <>
-            <select style={{ backgroundColor: "#E9E9E9" }}>
-              <option default className="hidden">
-                Availability
-              </option>
-              <option value="Option 1">In Stock</option>
-              <option value="Option 2">Out of Stock</option>
-              <option value="Option 3">Few Left</option>
-            </select>
+            <TableDropdown title="Availability" options={options}/>
           </>
         ),
         accessor: "availability",
@@ -199,14 +235,14 @@ function Products({selected,setSelected}) {
             return <FewLeft />;
           }
         },
-        width: "154px",
-        height: "40px",
+        // width: "154px",
+        // height: "40px",
       },
       {
         Header: "Committed",
         accessor: "committed",
-        width: "102px",
-        height: "40px",
+        // width: "102px",
+        // height: "40px",
       },
       {
         Header: "Action",
@@ -237,9 +273,8 @@ function Products({selected,setSelected}) {
     useTable({ columns, data });
 
   return (
-    <>
-
-      <div className=" overflow-auto ml-4 pt-3 pb-4" >
+    <div>
+      <div className=" overflow-auto ml-4 pt-3 border-solid border-red-500 ">
         <table className="table-auto border-collapse ">
           <thead>
             {headerGroups.map((headerGroup) => (
@@ -247,7 +282,7 @@ function Products({selected,setSelected}) {
                 {headerGroup.headers.map((column) => (
                   <th
                     {...column.getHeaderProps()}
-                    className="border border-1 border-dotted px-4 py-2"
+                    className="border border-1  px-4 py-2"
                     style={{
                       backgroundColor: "#E9E9E9",
                       borderColor: "#BDBDBD",
@@ -270,9 +305,7 @@ function Products({selected,setSelected}) {
             {rows.map((row, index) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()}
-                  className={"even-row"}
-                >
+                <tr {...row.getRowProps()} className={"even-row"}>
                   {row.cells.map((cell) => (
                     <td
                       {...cell.getCellProps()}
@@ -294,7 +327,7 @@ function Products({selected,setSelected}) {
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 }
 export default Products;

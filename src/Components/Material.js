@@ -12,39 +12,90 @@ import Checkbox from "react-custom-checkbox";
 import "../CSS/OrderDropdown.css";
 import materialsTableData from "../Data/api-data"
 import { api_url } from "../Data/Constants";
-function Material({selected,setSelected}) {
+import "../CSS/OrderDropdown.css";
+import TableDropdown from "./TableDropdown";
+
+function Material({setSelected,selected}) {
   const handleImageClick1 = () => {
     console.log("edit icon was clicked");
   };
   const handleImageClick2 = () => {
     console.log("shopping-bag icon was clicked");
   };
-  const [data,setData] = React.useState([]);
+  const [data, setData] = React.useState([]);
   const url = `${api_url}/material`
-  const  materialsTableData = async () => {
+  const materialsTableData = async () => {
     try {
-        const response = await axios.get(url, {
-          headers:{ 'ngrok-skip-browser-warning': '69420'}
-        });
-        console.log("at api-data : ",response);
-      
-        if (response?.status === 200) {
-          console.log("API Data:", response?.data);
-          setData(response?.data);
-        } else {
-          console.error('Received unexpected response:', response);
-          // Handle other status codes or unexpected responses
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        return null
+      const response = await axios.get(url, {
+        headers: { 'ngrok-skip-browser-warning': '69420' }
+      });
+      console.log("at api-data : ", response);
+
+      if (response?.status === 200) {
+        console.log("API Data:", response?.data);
+        setData(response?.data);
+      } else {
+        console.error('Received unexpected response:', response);
+        // Handle other status codes or unexpected responses
       }
-      
-}
-  React.useEffect(()=>{
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      return null
+    }
+
+  }
+  React.useEffect(() => {
     console.log("useEffect : ")
-   materialsTableData();
-  },[])
+    materialsTableData();
+  }, [])
+
+  // const data = React.useMemo(() => dummy, []);
+  const options = [
+    {
+      value: "inStock",
+      label: "In Stock",
+
+    },
+    {
+      value: "fewLeft",
+      label: "Few Left",
+
+    },
+    {
+      value: "outOfStock",
+      label: "Out of Stock",
+
+    },
+  ];
+
+  const options1 = [
+    {
+      value: "fillersBinders",
+      label: "Fillers and Binders",
+
+    },
+    {
+      value: "solvents",
+      label: "Solvents",
+
+    },
+    {
+      value: "stabilizersLubricants",
+      label: "Stabilizers and Lubricants",
+
+    },
+    {
+      value: "preservatives",
+      label: "Preservatives",
+
+    },
+    {
+      value: "modifiersAdditives",
+      label: "Modifiers and Additives",
+
+    },
+  ];
+
   const columns = React.useMemo(
     () => [
       {
@@ -79,7 +130,7 @@ function Material({selected,setSelected}) {
         ),
         accessor: "name",
         // width: "228px",
-        Cell: ({ cell,row }) => (
+        Cell: ({ cell, row }) => (
           <div className="flex items-center gap-2">
             <Checkbox
               icon={
@@ -101,12 +152,12 @@ function Material({selected,setSelected}) {
                 if (value == true) {
                   console.log("true");
                   setSelected((prevSelected) => {
-                    if(!prevSelected.includes(row.original.id)){
+                    if (!prevSelected.includes(row.original.id)) {
                       return [...prevSelected, row.original.id]
                     }
-                    else{
+                    else {
 
-                      return prevSelected ;
+                      return prevSelected;
                     }
                   })
                 }
@@ -154,18 +205,11 @@ function Material({selected,setSelected}) {
       {
         Header: (
           <>
-            <select style={{ backgroundColor: "#E9E9E9" }}>
-              <option default className="hidden">
-                Category
-              </option>
-
-              <option value="Option 1">Option 1</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 3">Option 3</option>
-            </select>
+            <TableDropdown title="Category" options={options1} />
           </>
         ),
         accessor: "category",
+        className: "truncate max-w-24"
         // width: "144px",
         // height: "40px",
       },
@@ -201,14 +245,7 @@ function Material({selected,setSelected}) {
       // {
       //   Header: (
       //     <>
-      //       <select style={{ backgroundColor: "#E9E9E9" }}>
-      //         <option default className="hidden">
-      //           Availability
-      //         </option>
-      //         <option value="Option 1">In Stock</option>
-      //         <option value="Option 2">Out of Stock</option>
-      //         <option value="Option 3">Few Left</option>
-      //       </select>
+      //       <TableDropdown title="Availability" options={options}/>
       //     </>
       //   ),
       //   accessor: "availability",
@@ -221,8 +258,8 @@ function Material({selected,setSelected}) {
       //       return <FewLeft />;
       //     }
       //   },
-      //   // width: "154px",
-      //   // height: "40px",
+      // width: "154px",
+      // height: "40px",
       // },
       {
         Header: "Committed",

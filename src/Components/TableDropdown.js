@@ -1,24 +1,24 @@
 import React, { useState } from "react";
 import Select from "react-select";
-import exportIcon from "../Icons/export.png";
+import down from "../Icons/arrow-down.svg";
 
-const options = [
-  {
-    value: "chocolate",
-    label: "Chocolate",
+// const options = [
+//   {
+//     value: "chocolate",
+//     label: "Chocolate",
    
-  },
-  {
-    value: "strawberry",
-    label: "Strawberry",
+//   },
+//   {
+//     value: "strawberry",
+//     label: "Strawberry",
    
-  },
-  {
-    value: "vanilla",
-    label: "Vanilla",
+//   },
+//   {
+//     value: "vanilla",
+//     label: "Vanilla",
    
-  },
-];
+//   },
+// ];
 
 const colorStyles = {
   control: (base, state) => ({
@@ -27,16 +27,16 @@ const colorStyles = {
     borderRadius: "8px",
     boxShadow: "none", // This line disable the blue border
     padding: "4px 0px",
-    width: "129px",
-    height: "42px",
+    width: "145px",
+    height: "40px",
     display:"flex",
     justifyContent:"center",
     fontSize: "14px",
-    fontWeight: "500",
+    fontWeight: "900",
     color: "black",
     borderRadius: "8px",
-    backgroundColor: "#EFEFEF",
-    "&:hover": { backgroundColor: "#EFEFEF" },
+    backgroundColor: "#E9E9E9",
+    "&:hover": { backgroundColor: "#E9E9E9" },
   }),
 
  
@@ -51,15 +51,21 @@ const colorStyles = {
   menu: (provided, state) => ({
     ...provided,
     boxShadow: '0px 2px 11px 0px rgba(0, 0, 0, 0.75)',
-    borderRadius:"8px" 
+    borderRadius:"8px" ,
+  //  width:"210px", 
+//      overflow: "hidden",
+//   whiteSpace: "nowrap",
+//   textOverflow: "ellipsis",
+
   }),
 
   dropdownIndicator: (base, state) => ({
     ...base,
     padding: "8px",
-    color: "black", // Customize the color of the icon
+    display:"none",
+    color: "#E9E9E9", // Customize the color of the icon
     "&:hover": {
-      color: "black", // Customize the hover color of the icon
+      color: "#E9E9E9", // Customize the hover color of the icon
     },
   }),
 
@@ -72,7 +78,7 @@ const colorStyles = {
 
   menuList: (base) => ({
     ...base,
-    
+ 
     paddingLeft:"6px",
     paddingRight:"6px",
     "::-webkit-scrollbar": {
@@ -93,11 +99,11 @@ const colorStyles = {
   option: (provided, state) => ({
     ...provided,
     color: "#696969",
-    overflow: "hidden",
-    whiteSpace: "nowrap",
-    textOverflow: "ellipsis",
     fontSize: "14px",
     padding: "6px 12px 6px 12px",
+    overflow: "hidden",
+  whiteSpace: "nowrap",
+  textOverflow: "ellipsis",
    //backgroundColor: state.isSelected ? "#F7F7F7" : "inherit",
     "&:hover": {   backgroundColor: "#DDF8E9",
     color: "black",
@@ -115,7 +121,7 @@ borderRadius:"8px"
     ...base,
     color: "black", 
     fontSize: "14px", 
-    fontWeight:"500px",
+    fontWeight:"900px",
     display: "flex",
     alignItems: "center"
   }),
@@ -124,7 +130,7 @@ borderRadius:"8px"
 
 };
 
-function Export() {
+function TableDropdown({title,options}) {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const handleChange = (selectedOption) => {
@@ -150,8 +156,8 @@ function Export() {
   };
   const CustomPlaceholder = () => (
     <div style={{ display: "flex", alignItems: "center" }}>
-      <img src={exportIcon} alt="Export Icon" style={{ marginRight: "8px" }} />
-      <span>Export</span>
+      <span>{title}</span>
+      <img src={down} alt="Location Icon" style={{ marginLeft: "8px" }} className="z-0" />
     </div>
 );
 
@@ -163,7 +169,7 @@ function Export() {
         value={selectedOption}
         onChange={handleChange}
         options={options}
-        isSearchable={false}
+        isSearchable={true}
         placeholder={<CustomPlaceholder />}
         onFocus={handleFocus}
         onBlur={handleBlur}
@@ -173,4 +179,4 @@ function Export() {
   );
 }
 
-export default Export;
+export default TableDropdown;
