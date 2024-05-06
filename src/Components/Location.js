@@ -41,6 +41,9 @@ const colorStyles = {
     
     color:"#696969",
     backgroundColor:"white",
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis",
     "&:hover": {
       backgroundColor: "#DDF8E9",
       color: "black",
@@ -49,11 +52,14 @@ const colorStyles = {
     },
     fontSize: "14px",
     fontWeight: "400",
+    zIndex:"100",
+    position:"relative"
   }),
 
   dropdownIndicator: (base, state) => ({
     ...base,
     padding: "8px",
+  
     color: "black", // Customize the color of the icon
     "&:hover": {
       color: "black", // Customize the hover color of the icon
@@ -98,7 +104,8 @@ const colorStyles = {
   menu: (provided, state) => ({
     ...provided,
     boxShadow: '0px 2px 11px 0px rgba(0, 0, 0, 0.75)',
-    borderRadius:"8px" 
+    borderRadius:"8px" ,
+    
   }),
 
   indicatorSeparator: () => null,
@@ -136,7 +143,7 @@ function Location() {
   );
 
   return (
-    <div className="App">
+    <div className="bg-white  ">
       <Select
         styles={colorStyles}
         className="custom-select"
@@ -147,6 +154,7 @@ function Location() {
         placeholder={<CustomPlaceholder />}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        
       />
     </div>
   );

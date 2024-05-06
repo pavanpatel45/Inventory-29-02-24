@@ -6,7 +6,9 @@ import OutOfStock from "./OutOfStock";
 import FewLeft from "./FewLeft";
 import edit from "../Icons/edit.png";
 import bag from "../Icons/shopping-bag.png";
+
 import "../CSS/OrderDropdown.css";
+import TableDropdown from "./TableDropdown";
 
 function Material() {
   const handleImageClick1 = () => {
@@ -17,6 +19,52 @@ function Material() {
   };
 
   const data = React.useMemo(() => dummy, []);
+  const options = [
+    {
+      value: "inStock",
+      label: "In Stock",
+     
+    },
+    {
+      value: "fewLeft",
+      label: "Few Left",
+     
+    },
+    {
+      value: "outOfStock",
+      label: "Out of Stock",
+     
+    },
+  ];
+
+  const options1 = [
+    {
+      value: "fillersBinders",
+      label: "Fillers and Binders",
+     
+    },
+    {
+      value: "solvents",
+      label: "Solvents",
+     
+    },
+    {
+      value: "stabilizersLubricants",
+      label: "Stabilizers and Lubricants",
+     
+    },
+    {
+      value: "preservatives",
+      label: "Preservatives",
+     
+    },
+    {
+      value: "modifiersAdditives",
+      label: "Modifiers and Additives",
+     
+    },
+  ];
+
   const columns = React.useMemo(
     () => [
       {
@@ -74,18 +122,11 @@ function Material() {
       {
         Header: (
           <>
-            <select style={{ backgroundColor: "#E9E9E9" }}>
-              <option default className="hidden">
-                Category
-              </option>
-
-              <option value="Option 1">Option 1</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 3">Option 3</option>
-            </select>
+            <TableDropdown title="Category" options={options1}/>
           </>
         ),
         accessor: "category",
+        className: "truncate max-w-24"
         // width: "144px",
         // height: "40px",
       },
@@ -121,14 +162,7 @@ function Material() {
       {
         Header: (
           <>
-            <select style={{ backgroundColor: "#E9E9E9" }}>
-              <option default className="hidden">
-                Availability
-              </option>
-              <option value="Option 1">In Stock</option>
-              <option value="Option 2">Out of Stock</option>
-              <option value="Option 3">Few Left</option>
-            </select>
+            <TableDropdown title="Availability" options={options}/>
           </>
         ),
         accessor: "availability",

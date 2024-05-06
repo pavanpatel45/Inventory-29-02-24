@@ -4,8 +4,11 @@ import dummy from "./dummy.json";
 import InStock from "./InStock";
 import OutOfStock from "./OutOfStock";
 import FewLeft from "./FewLeft";
-import edit from '../Icons/edit.png'
-import bag from '../Icons/shopping-bag.png'
+import edit from "../Icons/edit.png";
+import bag from "../Icons/shopping-bag.png";
+
+import "../CSS/OrderDropdown.css";
+import TableDropdown from "./TableDropdown";
 
 function Material() {
   const handleImageClick1 = () => {
@@ -15,9 +18,53 @@ function Material() {
     console.log("shopping-bag icon was clicked");
   };
 
- 
-
   const data = React.useMemo(() => dummy, []);
+  const options = [
+    {
+      value: "inStock",
+      label: "In Stock",
+     
+    },
+    {
+      value: "fewLeft",
+      label: "Few Left",
+     
+    },
+    {
+      value: "outOfStock",
+      label: "Out of Stock",
+     
+    },
+  ];
+
+  const options1 = [
+    {
+      value: "fillersBinders",
+      label: "Fillers and Binders",
+     
+    },
+    {
+      value: "solvents",
+      label: "Solvents",
+     
+    },
+    {
+      value: "stabilizersLubricants",
+      label: "Stabilizers and Lubricants",
+     
+    },
+    {
+      value: "preservatives",
+      label: "Preservatives",
+     
+    },
+    {
+      value: "modifiersAdditives",
+      label: "Modifiers and Additives",
+     
+    },
+  ];
+
   const columns = React.useMemo(
     () => [
       {
@@ -32,7 +79,7 @@ function Material() {
           </div>
         ),
         accessor: "material_name",
-        width: "228px",
+        // width: "228px",
         Cell: ({ cell }) => (
           <div className="flex items-center">
             <input
@@ -52,7 +99,7 @@ function Material() {
                 textDecoration: "underline",
               }}
             >
-               <p
+              <p
                 className="truncate max-w-24"
               >
                 {cell.value}{" "}
@@ -64,30 +111,24 @@ function Material() {
       {
         Header: "Code",
         accessor: "code",
-        width: "102px",
+        // width: "102px",
       },
       {
         Header: "Batch ID",
         accessor: "batch_id",
-        width: "122px",
-        height: "40px",
+        // width: "122px",
+        // height: "40px",
       },
       {
         Header: (
           <>
-            <select style={{ backgroundColor: "#E9E9E9" }}>
-              <option default className="hidden">
-                Category
-              </option>
-              <option value="Option 1">Option 1</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 3">Option 3</option>
-            </select>
+            <TableDropdown title="Category" options={options1}/>
           </>
         ),
         accessor: "category",
-        width: "144px",
-        height: "40px",
+        className: "truncate max-w-24"
+        // width: "144px",
+        // height: "40px",
       },
       {
         Header: (
@@ -103,32 +144,25 @@ function Material() {
           </>
         ),
         accessor: "expiry_date",
-        width: "122px",
-        height: "40px",
+        // width: "122px",
+        // height: "40px",
       },
       {
         Header: "Quantity",
         accessor: "quantity",
-        width: "102px",
-        height: "40px",
+        // width: "102px",
+        // height: "40px",
       },
       {
         Header: "Price($)",
         accessor: "price",
-        width: "102px",
-        height: "40px",
+        // width: "102px",
+        // height: "40px",
       },
       {
         Header: (
           <>
-            <select style={{ backgroundColor: "#E9E9E9" }}>
-              <option default className="hidden">
-                Availability
-              </option>
-              <option value="Option 1">In Stock</option>
-              <option value="Option 2">Out of Stock</option>
-              <option value="Option 3">Few Left</option>
-            </select>
+            <TableDropdown title="Availability" options={options}/>
           </>
         ),
         accessor: "availability",
@@ -141,14 +175,14 @@ function Material() {
             return <FewLeft />;
           }
         },
-        width: "154px",
-        height: "40px",
+        // width: "154px",
+        // height: "40px",
       },
       {
         Header: "Committed",
         accessor: "committed",
-        width: "102px",
-        height: "40px",
+        // width: "102px",
+        // height: "40px",
       },
       {
         Header: "Action",
@@ -179,9 +213,8 @@ function Material() {
     useTable({ columns, data });
 
   return (
-    <>
-
-      <div className=" overflow-auto ml-4 pt-3 pb-4" >
+    <div>
+      <div className=" overflow-auto ml-4 pt-3 border-solid border-red-500 ">
         <table className="table-auto border-collapse ">
           <thead>
             {headerGroups.map((headerGroup) => (
@@ -189,7 +222,7 @@ function Material() {
                 {headerGroup.headers.map((column) => (
                   <th
                     {...column.getHeaderProps()}
-                    className="border border-1 border-dotted px-4 py-2"
+                    className="border border-1  px-4 py-2"
                     style={{
                       backgroundColor: "#E9E9E9",
                       borderColor: "#BDBDBD",
@@ -209,12 +242,10 @@ function Material() {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {rows.map((row,index) => {
+            {rows.map((row, index) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()} 
-                className={"even-row"}
-                >
+                <tr {...row.getRowProps()} className={"even-row"}>
                   {row.cells.map((cell) => (
                     <td
                       {...cell.getCellProps()}
@@ -236,7 +267,7 @@ function Material() {
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 }
 export default Material;
