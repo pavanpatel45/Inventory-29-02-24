@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import search from "../Icons/search.svg";
-import location from "../Icons/location.svg";
+import location from "../Icons/filter icon.svg";
 import data from "../Icons/data.svg";
 import plus from "../Icons/plus.svg"
 import OrderDropdown from "./OrderDropdown";
@@ -21,8 +21,8 @@ export default function NavbarSales({ title, handleCreateOrder }) {
         <div className="cursor-pointer">
           <img src={search}  />
         </div>
-        <div className="cursor-pointer">
-          <img src={location}   />
+        <div className="cursor-pointer ">
+          <img src={location}  alt="location" className=" "/>  
         </div>
         <div className="cursor-pointer" >
           <img src={data} />
