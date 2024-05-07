@@ -11,7 +11,7 @@ function OrderDropdown() {
   return (
     <div>
       {isOpen && (
-        <div className="outer-box">
+        <div className="outer-box bg-white">
           <div className="box-text">
             <ul>
               <Link to="createOrder">
