@@ -1,163 +1,171 @@
-import React, { useState } from "react";
-import Select from "react-select";
-import locationIcon from "../Icons/location.png";
-
-const options = [
-  {
-    value: "chocolate",
-    label: "Chocolate",
-    
-  },
-  {
-    value: "strawberry",
-    label: "Strawberry",
-    
-  },
-  {
-    value: "vanilla",
-    label: "Vanilla",
-  
-  },
-];
-
-const colorStyles = {
-  control: (base, state) => ({
-    ...base,
-    border: state.isFocused ? "1px #EDEEF0" : "0",
-    borderRadius: "8px",
-    boxShadow: "none", // This line disable the blue border
-    padding: "4px 0px",
-    width: "170px",
-    height: "42px",
-    fontSize: "14px",
-    fontWeight: "500",
-    color: "black",
-    borderRadius: "8px",
-    backgroundColor: "#EFEFEF",
-    "&:hover": { backgroundColor: "#EFEFEF" },
-  }),
-  option: (provided, state) => ({
-    ...provided,
-    
-    color:"#696969",
-    backgroundColor:"white",
-    overflow: "hidden",
-    whiteSpace: "nowrap",
-    textOverflow: "ellipsis",
-    "&:hover": {
-      backgroundColor: "#DDF8E9",
-      color: "black",
-      fontWeight:"500" ,
-      borderRadius:"8px"
-    },
-    fontSize: "14px",
-    fontWeight: "400",
-    zIndex:"100",
-    position:"relative"
-  }),
-
-  dropdownIndicator: (base, state) => ({
-    ...base,
-    padding: "8px",
-  
-    color: "black", // Customize the color of the icon
-    "&:hover": {
-      color: "black", // Customize the hover color of the icon
-    },
-  }),
-
-  valueContainer: (base) => ({
-    ...base,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center", // Center the content horizontally
-  }),
-  menuList: (base) => ({
-    ...base,
-    
-    paddingLeft:"6px",
-    paddingRight:"6px",
-    "::-webkit-scrollbar": {
-      width: "8px",
-      height: "0px",
-    },
-    "::-webkit-scrollbar-track": {
-      background: "#f1f1f1",
-    },
-    "::-webkit-scrollbar-thumb": {
-      background: "#888",
-    },
-    "::-webkit-scrollbar-thumb:hover": {
-      background: "#555",
-    },
-  }),
-
-  placeholder: (base) => ({
-    ...base,
-    color: "black", 
-    fontSize: "14px", 
-    fontWeight:"500px",
-    display: "flex",
-    alignItems: "center"
-  }),
-
-  menu: (provided, state) => ({
-    ...provided,
-    boxShadow: '0px 2px 11px 0px rgba(0, 0, 0, 0.75)',
-    borderRadius:"8px" ,
-    
-  }),
-
-  indicatorSeparator: () => null,
-
-};
+import React, { useState, useEffect } from "react";
+import down from "../Icons/arrow-down.svg";
+import locationIcon from "../Icons/location.svg";
+import search from "../Icons/search-navbar.svg";
+import { Popover } from "react-tiny-popover";
+import "../CSS/OrderDropdown.css";
+import cross from "../Icons/cross.svg";
 
 function Location() {
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
-  const handleChange = (selectedOption) => {
-    setSelectedOption(selectedOption);
+  const togglePopoverOpen = () => {
+    setIsPopoverOpen(!isPopoverOpen);
   };
 
-  const handleFocus = () => {
-    console.log("Select component focused");
+  const [isAnyCheckboxSelected, setIsAnyCheckboxSelected] = useState(false);
+
+  const handleSave = () => {
+    setIsPopoverOpen(false);
+    
   };
 
-  const handleBlur = () => {
-    console.log("Select component blurred");
+  const handleClear = () => {
+    // Uncheck all checkboxes
+    document.querySelectorAll("input[type='checkbox']").forEach((checkbox) => {
+      checkbox.checked = false;
+    });
+    setIsAnyCheckboxSelected(false); 
   };
 
-  const handleButtonClick = () => {
-    if (selectedOption) {
-      console.log("Selected option:", selectedOption);
+  const handleCheckboxChange = (event) => {
+    const isChecked = event.target.checked;
+    if (isChecked) {
+      setIsAnyCheckboxSelected(true); // At least one checkbox is checked
     } else {
-      console.log("No option selected");
+      // Check if any checkbox is still checked
+      const anyCheckboxSelected =
+        document.querySelectorAll("input[type='checkbox']:checked").length > 0;
+      setIsAnyCheckboxSelected(anyCheckboxSelected); // Update state based on whether any checkbox is still checked
     }
   };
 
-  const CustomPlaceholder = () => (
-    <div style={{ display: "flex", alignItems: "center" }}>
-      <img src={locationIcon} alt="Location Icon" style={{ marginRight: "8px" }} />
-      <span>All Locations</span>
-    </div>
-  );
+  useEffect(() => {
+    // Reset isAnyCheckboxSelected when the dropdown is closed
+    if (!isOpen) {
+      setIsAnyCheckboxSelected(false);
+    }
+  }, [isOpen]);
 
   return (
-    <div className="bg-white  ">
-      <Select
-        styles={colorStyles}
-        className="custom-select"
-        value={selectedOption}
-        onChange={handleChange}
-        options={options}
-        isSearchable={false}
-        placeholder={<CustomPlaceholder />}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        
-      />
+    <div>
+      <Popover
+       isOpen={isPopoverOpen}
+        positions={["up", "left", "bottom", "right"]}
+        padding={80}
+        reposition={true}
+        onClickOutside={() => setIsPopoverOpen(false)}
+        containerStyle={{
+          position: "absolute",
+          top: "112px",
+          left: 0,
+          width: "170px",
+        }}
+        content={() => (
+          <div className="outer-box bg-white">
+            <div className="flex flex-row ">
+              <img src={search} alt="icon" />
+
+              <div>
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  className="w-24 pl-2"
+                  style={{ fontSize: "12px" }}
+                />
+              </div>
+
+              <img
+                src={cross}
+                alt="icon"
+                className="pl-6 cursor-pointer"
+                onClick={handleSave}
+              />
+            </div>
+
+            <ul className="bg-white box-text text-black">
+              <div className="flex flex-row items-center dropHover">
+                <input
+                  type="checkbox"
+                  className=" pl-1"
+                  onChange={handleCheckboxChange}
+                />
+                <li className=" pl-2 mb-0.5">Item1</li>
+              </div>
+              <div className="flex flex-row items-center dropHover">
+                <input type="checkbox" onChange={handleCheckboxChange} />
+                <li className=" pl-2 mb-0.5">Item1</li>
+              </div>{" "}
+              <div className="flex flex-row items-center dropHover">
+                <input type="checkbox" onChange={handleCheckboxChange} />
+                <li className=" pl-2 mb-0.5">Item1</li>
+              </div>
+            </ul>
+            <div className="flex justify-end pt-1">
+            <button
+               
+                style={{
+                  width: "46px",
+                  height: "24px",
+                  backgroundColor:"#",
+                  borderRadius: "4px",
+                  color: "#9A9898",
+                  fontSize: "12px",
+                  fontWeight: "500",
+                  borderColor:"#D1D0D0"
+                }}
+                className="mr-2 border border-1 "
+                onClick={handleClear}
+              >
+                Clear
+              </button>
+              <button
+                onClick={handleSave}
+                style={{
+                  width: "48px",
+                  height: "24px",
+                  backgroundColor: isAnyCheckboxSelected
+                    ? "#2CAE66"
+                    : "#EBEBEB",
+                  borderRadius: "4px",
+                  color: isAnyCheckboxSelected ? "white" : "#9A9898",
+                  fontSize: "12px",
+                  fontWeight: "500",
+                }}
+                disabled={!isAnyCheckboxSelected}
+                className={isAnyCheckboxSelected ? "" : "cursor-not-allowed"}
+              >
+                Save
+              </button>
+             
+            </div>
+          </div>
+        )}
+      >
+        <div
+          className="border flex flex-row items-center justify-between cursor-pointer"
+          style={{
+            width: "170px",
+            height: "42px",
+            borderRadius: "8px",
+            backgroundColor: "#EFEFEF",
+            position: "relative",
+          }}
+          onClick={togglePopoverOpen}
+        >
+          <div className="pl-2">
+            <img src={locationIcon} alt="icon" style={{ color: "black" }} />
+          </div>
+          <div className="pr-2" style={{ fontSize: "16px", fontWeight: "500" }}>
+            All Locations
+          </div>
+          <div className="pr-5">
+            <img src={down} alt="icon" />
+          </div>
+        </div>
+      </Popover>
     </div>
   );
 }
-
 export default Location;

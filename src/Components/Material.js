@@ -198,7 +198,7 @@ function Material({setSelected,selected,materialsTableData,data}) {
       {
         Header: (
           <>
-            <TableDropdown title="Category" options={options1} />
+            <TableDropdown title="Category" options={options1}  />
           </>
         ),
         accessor: "category",
@@ -237,9 +237,9 @@ function Material({setSelected,selected,materialsTableData,data}) {
       },
       {
         Header: (
-          <>
+          <div className="z-50">
             <TableDropdown title="Availability" options={options}/>
-          </>
+          </div>
         ),
         accessor: "availability",
         Cell: ({ row }) => {
@@ -251,8 +251,8 @@ function Material({setSelected,selected,materialsTableData,data}) {
             return <FewLeft />;
           }
         },
-      width: "154px",
-      height: "40px",
+      // width: "154px",
+      // height: "40px",
       },
       {
         Header: "Committed",
