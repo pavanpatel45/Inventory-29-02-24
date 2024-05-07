@@ -22,17 +22,20 @@ function Material({setSelected,selected,materialsTableData,data}) {
     console.log("shopping-bag icon was clicked");
   };
   const handleCheck = (id) =>{
-    console.log("at handleCheck :",id);
+    // console.log("at handleCheck :",id);
+    // console.log("selected at handlecheck:",selected);
     if(selected.includes(id)){
-      console.log("return true");
+      // console.log("return true");
       return true;
     }
     else{
-      console.log("return false");
+      // console.log("return false");
       return false;
     }
   }
-  
+  React.useEffect(()=>{
+     console.log("selected array:",selected);
+  },[selected])
  
 
   // const data = React.useMemo(() => dummy, []);
@@ -132,11 +135,13 @@ function Material({setSelected,selected,materialsTableData,data}) {
                 </div>
               }
               name="my-input"
-              checked={handleCheck(row.original.id)}
+              
               onChange={(value, event) => {
                 console.log("Selected checkbox has id :", row.original);
+
                 if (value == true) {
                   // console.log("true");
+                  console.log("selected Array true:",selected);
                   setSelected((prevSelected) => {
                     if (!prevSelected.includes(row.original.id)) {
                       return [...prevSelected, row.original.id]
@@ -146,13 +151,15 @@ function Material({setSelected,selected,materialsTableData,data}) {
                       return prevSelected;
                     }
                   })
+                 
                 }
                 else if (value == false) {
+                  console.log("selected Array false:",selected);
                   return setSelected(prevSelected => prevSelected.filter(item => item !== row.original.id));
                 }
               }}
               style={{ cursor: "pointer", height: "20px", width: "20px", border: "1px solid #2CAE66", overflow: "hidden" }}
-
+              checked={handleCheck(row.original.id)}
             // labelStyle={{ marginLeft: 5, userSelect: "none" }}
             // label="Have you started using it?"
             />
