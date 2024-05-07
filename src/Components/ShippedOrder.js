@@ -6,7 +6,7 @@ import DialogBox from './DialogBox'
 import DialogBoxCancelOrder from './DialogBoxCancelOrder'
 export default function ShippedOrder () {
     const dispactch = useDispatch();
-    const allOrders = useSelector((state) => state.orders);
+    const allOrders = useSelector((state) => state.orders.orders);
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenCancelOrder, setIsOpenCancelOrder] = useState(false);
     const [Note,setNote] = useState('');

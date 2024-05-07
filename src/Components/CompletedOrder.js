@@ -6,7 +6,7 @@ import DialogBox from './DialogBox'
 import DialogBoxCancelOrder from './DialogBoxCancelOrder'
 export default function CompletedOrder( ) {
     const dispactch = useDispatch();
-    const allOrders = useSelector((state) => state.orders);
+    const allOrders = useSelector((state) => state.orders.orders);
     const [isOpen, setIsOpen] = useState(false);
     const [id,setId] = useState('');
   return (

@@ -4,7 +4,7 @@ import OrderBoxMedium from './OrderBoxMedium'
 import DialogBox from './DialogBox'
 import DialogBoxCancelOrder from './DialogBoxCancelOrder'
 export default function PendingOrder( ) {
-    const allOrders = useSelector((state) => state.orders);
+    const allOrders = useSelector((state) => state.orders.orders);
   return (
     <div>
     <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  p-3 gap-2'>

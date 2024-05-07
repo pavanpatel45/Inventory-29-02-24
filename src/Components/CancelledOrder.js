@@ -4,7 +4,7 @@ import OrderBoxMedium from './OrderBoxMedium'
 import DialogBox from './DialogBox'
 import DialogBoxCancelOrder from './DialogBoxCancelOrder'
 export default function CancelledOrder() {
-    const allOrders = useSelector((state) => state.orders);
+    const allOrders = useSelector((state) => state.orders.orders);
   return (
     <div>
     {/* <DialogBoxCancelOrder isOpen={isOpen} setIsOpen={setIsOpen} handleReadytoShip={handleReadytoShip} handleCancelOrder={handleCancelOrder}/> */}
