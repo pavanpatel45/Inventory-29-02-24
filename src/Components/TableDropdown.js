@@ -169,7 +169,7 @@ function TableDropdown({title,options}) {
         value={selectedOption}
         onChange={handleChange}
         options={options}
-        isSearchable={true}
+        isSearchable={false}
         placeholder={<CustomPlaceholder />}
         onFocus={handleFocus}
         onBlur={handleBlur}

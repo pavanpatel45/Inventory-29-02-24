@@ -5,7 +5,6 @@ import Button from "./Button";
 import search from "../Icons/search.png";
 
 import plus from "../Icons/plus-outline.svg";
-import loc from "../Icons/location.png";
 import dlt from "../Icons/Delete.svg";
 import cancel from '../Icons/x.svg'
 import downArrow from "../Icons/down-arrow.png";
@@ -16,10 +15,14 @@ import Export from "./Export";
 
 export default function NavbarMaterials({ className,select=true,count }) {
   const [exportOption, setExportOption] = useState("");
-
+  const [isSearchClicked, setIsSearchClicked] = useState(false);
   const handleChange = (e) => {
     setExportOption(e.target.value);
   };
+  const handleSearch = () => {
+    setIsSearchClicked(true);
+  };
+ 
 
   return (
     <div className="flex flex-row justify-between items-center  ml-4 mt-3 bg-white">
@@ -38,12 +41,18 @@ export default function NavbarMaterials({ className,select=true,count }) {
       <div className="flex justify-end">
       {!select &&
         <div
-          className="border border-1 border-r mr-4 flex flex-row items-center relative box-style"
-          style={{ borderRadius: "100px" }}
-        >
-          <img src={search} alt="icon" className="ml-3" />
-          <input type="text" className="ml-3 txt-style" placeholder="Search" />
-        </div>}
+        className="border border-1 border-r mr-4 flex flex-row items-center relative box-style"
+        style={{ borderRadius: "100px" }}
+        onClick={handleSearch}
+      >
+        <img src={search} alt="icon" className="ml-3" />
+        <input
+          type="text"
+          className="pl-2 txt-style"
+          style={{ width: isSearchClicked ? "330px" : "190px" , fontSize:"14px", color:"#A2A1A1"}}
+          placeholder={isSearchClicked ? "Type here to search" : "Search"}
+        />
+      </div>}
         {!select &&
     
 

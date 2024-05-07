@@ -1,174 +1,161 @@
-import React, { useState } from "react";
-import Select from "react-select";
+// import React, { useState } from "react";
+// import Select, { components } from "react-select";
 import exportIcon from "../Icons/export.png";
-
-const options = [
-  {
-    value: "chocolate",
-    label: "Chocolate",
-   
-  },
-  {
-    value: "strawberry",
-    label: "Strawberry",
-   
-  },
-  {
-    value: "vanilla",
-    label: "Vanilla",
-   
-  },
-];
-
-const colorStyles = {
-  control: (base, state) => ({
-    ...base,
-    border: state.isFocused ? "1px #EDEEF0" : "0",
-    borderRadius: "8px",
-    boxShadow: "none", // This line disable the blue border
-    padding: "4px 0px",
-    width: "129px",
-    height: "42px",
-    display:"flex",
-    justifyContent:"center",
-    fontSize: "14px",
-    fontWeight: "500",
-    color: "black",
-    borderRadius: "8px",
-    backgroundColor: "#EFEFEF",
-    "&:hover": { backgroundColor: "#EFEFEF" },
-  }),
-
- 
-
-//   input: (base) => ({       //we need this when we require searching in the dropdown
-//     ...base,
-//     margin: 0,
-//     padding: 0,
-   
-//   }),
-
-  menu: (provided, state) => ({
-    ...provided,
-    boxShadow: '0px 2px 11px 0px rgba(0, 0, 0, 0.75)',
-    borderRadius:"8px" 
-  }),
-
-  dropdownIndicator: (base, state) => ({
-    ...base,
-    padding: "8px",
-    color: "black", // Customize the color of the icon
-    "&:hover": {
-      color: "black", // Customize the hover color of the icon
-    },
-  }),
-
-  valueContainer: (base) => ({
-    ...base,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center", // Center the content horizontally
-  }),
-
-  menuList: (base) => ({
-    ...base,
-    
-    paddingLeft:"6px",
-    paddingRight:"6px",
-    "::-webkit-scrollbar": {
-      width: "8px",
-      height: "0px",
-    },
-    "::-webkit-scrollbar-track": {
-      background: "#f1f1f1",
-    },
-    "::-webkit-scrollbar-thumb": {
-      background: "#888",
-    },
-    "::-webkit-scrollbar-thumb:hover": {
-      background: "#555",
-    },
-  }),
-
-  option: (provided, state) => ({
-    ...provided,
-    color: "#696969",
-    overflow: "hidden",
-    whiteSpace: "nowrap",
-    textOverflow: "ellipsis",
-    fontSize: "14px",
-    padding: "6px 12px 6px 12px",
-   //backgroundColor: state.isSelected ? "#F7F7F7" : "inherit",
-    "&:hover": {   backgroundColor: "#DDF8E9",
-    color: "black",
-    fontSize: "14px",
-fontWeight:"500",
-borderRadius:"8px"    
-},
-   // color: state.data.color,
-    backgroundColor: "white",
-  
-    fontWeight: "400",
-  }),
-
-  placeholder: (base) => ({
-    ...base,
-    color: "black", 
-    fontSize: "14px", 
-    fontWeight:"500px",
-    display: "flex",
-    alignItems: "center"
-  }),
-
-  indicatorSeparator: () => null,
-
-};
+import down from "../Icons/arrow-down.svg";
+import "../CSS/OrderDropdown.css";
+import React, { useState, useEffect, useRef } from "react";
+import cross from "../Icons/cross.svg";
 
 function Export() {
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isAnyCheckboxSelected, setIsAnyCheckboxSelected] = useState(false);
 
-  const handleChange = (selectedOption) => {
-    setSelectedOption(selectedOption);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
   };
 
-  const handleFocus = () => {
-    console.log("Select component focused");
+  const handleSave = () => {
+    setIsOpen(false);
   };
 
-  const handleBlur = () => {
-    console.log("Select component blurred");
-  };
-
-  const handleButtonClick = () => {
-    if (selectedOption) {
-      console.log("Selected option:", selectedOption);
+  const handleCheckboxChange = (event) => {
+    const isChecked = event.target.checked;
+    if (isChecked) {
+      setIsAnyCheckboxSelected(true); // At least one checkbox is checked
     } else {
-      console.log("No option selected");
+      // Check if any checkbox is still checked
+      const anyCheckboxSelected =
+        document.querySelectorAll("input[type='checkbox']:checked").length > 0;
+      setIsAnyCheckboxSelected(anyCheckboxSelected); // Update state based on whether any checkbox is still checked
     }
-    
-
   };
-  const CustomPlaceholder = () => (
-    <div style={{ display: "flex", alignItems: "center" }}>
-      <img src={exportIcon} alt="Export Icon" style={{ marginRight: "8px" }} />
-      <span>Export</span>
-    </div>
-);
+
+  useEffect(() => {
+    // Reset isAnyCheckboxSelected when the dropdown is closed
+    if (!isOpen) {
+      setIsAnyCheckboxSelected(false);
+    }
+  }, [isOpen]);
 
   return (
-    <div className="App">
-      <Select
-        styles={colorStyles}
-        className="custom-select"
-        value={selectedOption}
-        onChange={handleChange}
-        options={options}
-        isSearchable={false}
-        placeholder={<CustomPlaceholder />}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-      />
-      {/* <button onClick={handleButtonClick}>Submit</button> */}
+    <div style={{ position: "relative" }}>
+      <div
+        className="border flex flex-row items-center"
+        style={{
+          width: "129px",
+          height: "42px",
+          borderRadius: "8px",
+          backgroundColor: "#EFEFEF",
+          cursor: "pointer",
+        }}
+        onClick={toggleDropdown}
+      >
+        <div className="pl-3">
+          <img src={exportIcon} alt="icon" />
+        </div>
+        <div
+          className="pl-2"
+          style={{
+            fontWeight: "500",
+            fontize: "14px",
+            fontFamily: "roboto",
+            lineHeight: "22px",
+          }}
+        >
+          Export
+        </div>
+        <div className="pl-3">
+          <img src={down} alt="icon" />
+        </div>
+      </div>
+      {isOpen && (
+        <div
+          ref={dropdownRef}
+          className="outer-box dropdown bg-white"
+          style={{
+            position: "absolute",
+            top: "60%",
+            left: "-30%",
+
+            width: "170px",
+            height: "134px",
+          }}
+        >
+          <div className="flex flex-row justify-between">
+            <p
+              className="pb-1 pl-1"
+              style={{
+                backgroundColor: "white",
+                color: "#737373",
+                fontSize: "12px",
+                letterSpacing: "1%",
+              }}
+            >
+              Export as
+            </p>
+            <img
+              src={cross}
+              alt="icon"
+              className="pr-2 cursor-pointer"
+              onClick={handleSave}
+            />
+          </div>
+          <div className="box-text">
+            <ul>
+              <li
+                className="dropHover flex justify-start items-center"
+                style={{ width: "160px" }}
+              >
+                <input type="checkbox" onChange={handleCheckboxChange} />{" "}
+                <p className="pl-2">.CSV</p>
+              </li>
+              <li
+                className="dropHover flex justify-start items-center "
+                style={{ width: "160px" }}
+              >
+                <input type="checkbox" onChange={handleCheckboxChange} />{" "}
+                <p className="pl-2">.PDF</p>
+              </li>
+            </ul>
+            <div className="flex justify-end pt-1">
+              <button
+                onClick={handleSave}
+                style={{
+                  width: "48px",
+                  height: "24px",
+                  backgroundColor: isAnyCheckboxSelected
+                    ? "#2CAE66"
+                    : "#EBEBEB",
+                  borderRadius: "4px",
+                  color: isAnyCheckboxSelected ? "white" : "#9A9898",
+                  fontSize: "12px",
+                  fontWeight: "500",
+                }}
+                disabled={!isAnyCheckboxSelected}
+                className={!isAnyCheckboxSelected ? "cursor-not-allowed" : ""}
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

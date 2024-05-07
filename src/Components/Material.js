@@ -205,7 +205,7 @@ function Material({setSelected,selected}) {
       {
         Header: (
           <>
-            <TableDropdown title="Category" options={options1} />
+            <TableDropdown title="Category" options={options1}  />
           </>
         ),
         accessor: "category",
@@ -213,23 +213,23 @@ function Material({setSelected,selected}) {
         // width: "144px",
         // height: "40px",
       },
-      // {
-      //   Header: (
-      //     <>
-      //       <select style={{ backgroundColor: "#E9E9E9" }}>
-      //         <option default className="hidden">
-      //           Expiry Date
-      //         </option>
-      //         <option value="Option 1">Option 1</option>
-      //         <option value="Option 2">Option 2</option>
-      //         <option value="Option 3">Option 3</option>
-      //       </select>
-      //     </>
-      //   ),
-      //   // accessor: "expiry_date",
-      //   // width: "122px",
-      //   // height: "40px",
-      // },
+      {
+        Header: (
+          <>
+            <select style={{ backgroundColor: "#E9E9E9" }}>
+              <option default className="hidden">
+                Expiry Date
+              </option>
+              <option value="Option 1">Option 1</option>
+              <option value="Option 2">Option 2</option>
+              <option value="Option 3">Option 3</option>
+            </select>
+          </>
+        ),
+        accessor: "date",
+        // width: "122px",
+        // height: "40px",
+      },
       {
         Header: "Quantity",
         accessor: "quantity",
@@ -242,25 +242,25 @@ function Material({setSelected,selected}) {
         // width: "102px",
         // height: "40px",
       },
-      // {
-      //   Header: (
-      //     <>
-      //       <TableDropdown title="Availability" options={options}/>
-      //     </>
-      //   ),
-      //   accessor: "availability",
-      //   Cell: ({ row }) => {
-      //     if (row.original.availability === "In Stock") {
-      //       return <InStock />;
-      //     } else if (row.original.availability === "Out of Stock") {
-      //       return <OutOfStock />;
-      //     } else if (row.original.availability === "Few Left") {
-      //       return <FewLeft />;
-      //     }
-      //   },
+      {
+        Header: (
+          <div className="z-50">
+            <TableDropdown title="Availability" options={options}/>
+          </div>
+        ),
+        accessor: "availability",
+        Cell: ({ row }) => {
+          if (row.original.availability === "In Stock") {
+            return <InStock />;
+          } else if (row.original.availability === "Out of Stock") {
+            return <OutOfStock />;
+          } else if (row.original.availability === "Few Left") {
+            return <FewLeft />;
+          }
+        },
       // width: "154px",
       // height: "40px",
-      // },
+      },
       {
         Header: "Committed",
         accessor: "committed",
