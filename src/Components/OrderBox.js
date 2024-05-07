@@ -6,6 +6,7 @@ import downarrow from "../Icons/ArrowLineclose.svg";
 import productImg from "../Icons/product.png";
 import { Link } from "react-router-dom";
 export default function OrderBox({ order, key }) {
+  console.log("order at OrderBox : ",order);
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   function handleOpenBox() {
@@ -73,7 +74,7 @@ export default function OrderBox({ order, key }) {
         <div className="grid gap-2">
           <div className="flex flex-row">
             <div className="text-xs font-medium" style={{ color: "#2D2D2D" }}>
-              Order by :
+              Order by : 
             </div>
             <div className="text-xs font-normal" style={{ color: "#2D2D2D" }}>
               {order.customerDetails.customerName}

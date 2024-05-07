@@ -1,63 +1,39 @@
 import React, { useState } from "react";
 import InputBox from "../../Components/InputBox";
 import DropDown from "../../Components/Dropdown";
-import Navbar from "../../Components/NavbarCreateBatch";
+import Navbar from "../../Components/NavbarCreateBatchProduct";
 import Button from "../../Components/Button";
 import "../../CSS/CreateBatch.css"
-import { api_url } from "../../Data/Constants";
-import axios from "axios";
+import { Link,useLocation} from "react-router-dom";
 
-export default function CreateBatch() {
-  const [formData,setFormData]= useState({
-    productName :'',
-    storageLocation:'',
-    batchId:'',
-    makeOrder:'',
-    expiryDate:'',
-    quantity:'',
-    price:'',
-  });
+export default function UpdateProduct() {
+  const location = useLocation();
+  const data = location?.state;
+  console.log("data at update product",data);
+  const [formData, setFormData] = useState({
+    productName: '',
+    storageLocation: '',
+    batchId: '',
+    makeOrder: '',
+    expiryDate: '',
+    quantity: '',
+    price: '',
+  })
   const handleInputChange = (e) => {
     console.log(e);
     const { name, value } = e.target;
-    console.log("Input value changed:", name,":",value);
+    console.log("Input value changed:", name, ":", value);
     setFormData(prevData => ({
       ...prevData,
       [name]: value
     }));
   };
-  const postData = async() =>{
-    try{
-       const url = `${api_url}/batch/`;
-       const Data = {
-        batchId: formData.batchId,
-        materialName: formData.productName,
-        storageLocation: formData.storageLocation,
-        // purchaseOrder: formData.makeOrder,
-        expiryDate: formData.expiryDate,
-        quantity: parseInt(formData.quantity),
-        price: parseFloat(formData.price)
-      };
-       console.log("data : ",Data);
-       const resp = await axios.post(url,Data);
-       console.log('Response',resp);
-    }
-    catch(error){
-      console.log("Error :",error);
-    }
-  }
-  const handleSubmit= (e)=>{
-    e.preventDefault();
-    console.log("form Data",formData);
-    postData();
-  }
   return (
-    
-    <form onSubmit={handleSubmit} >
+
+    <form >
       <div className="p-8 bg-white">
         <Navbar
-          title="Create Batch"
-          btnTitle="Add Material"
+          title="Edit Batch"
         />
         <div className="grid gap-y-4 pt-8">
           <div className="grid gap-2">
@@ -92,7 +68,7 @@ export default function CreateBatch() {
 
           <div className="grid gap-2">
             <div className="grid grid-cols-1 md:grid-cols-3 grid-flow-row gap-x-8 gap-y-8">
-             
+
               <InputBox
                 type="text"
                 title="Make Order#*"
@@ -124,7 +100,7 @@ export default function CreateBatch() {
 
           <div className="grid gap-2">
             <div className="grid grid-cols-1 md:grid-cols-3 grid-flow-row gap-x-8 gap-y-8">
-          <InputBox
+              <InputBox
                 type="number"
                 title="Price($)*"
                 name="price"
@@ -132,15 +108,16 @@ export default function CreateBatch() {
                 labelCss={
                   formData.price  ? 'label-up' : 'label-down'}
               />
-</div>
-</div>
-<div className="flex flex-row justify-end">
-              <Button
-                btnTitle="Save"
-                className=" pt-0 pb-0 text-style"
-                type="submit"
-              />
             </div>
+          </div>
+          <div className="flex flex-row justify-end">
+
+            <Button
+              btnTitle="Save"
+              className=" pt-0 pb-0 text-style"
+            />
+
+          </div>
         </div>
       </div>
     </form>

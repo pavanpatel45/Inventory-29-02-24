@@ -12,7 +12,7 @@ export default function NavbarSalesInner() {
       </NavLink>
       <NavLink to="/sales/Pending">
         <div className={`flex flex-row items-center gap-1 navbar-border-bottom `} >
-          <div className="h-2 w-2  rounded-full navbar-circle" ></div>
+          <div className="h-2 w-2  rounded-full navbar-circle navbar-circle-pending" ></div>
           <div  >Pending</div>
         </div>
       </NavLink>
@@ -24,7 +24,7 @@ export default function NavbarSalesInner() {
       </NavLink>
       <NavLink to="/sales/Shipped">
         <div className={`flex flex-row items-center gap-1 navbar-border-bottom`} >
-          <div className="h-2 w-2  rounded-full navbar-circle" ></div>
+          <div className="h-2 w-2  rounded-full navbar-circle navbar-circle-shipped" ></div>
           <div >Shipped</div>
         </div>
       </NavLink>

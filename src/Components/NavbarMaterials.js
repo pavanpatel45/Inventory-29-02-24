@@ -14,7 +14,7 @@ import cancel from '../Icons/x.svg'
 
 import "../CSS/NavbarMaterials.css";
 
-export default function NavbarMaterials({ className,select=true,count }) {
+export default function NavbarMaterials({ className,select=true,count ,handleDelete}) {
   const [exportOption, setExportOption] = useState("");
 
   const handleChange = (e) => {
@@ -58,7 +58,7 @@ export default function NavbarMaterials({ className,select=true,count }) {
             </Button>
         </Link>}
         {select &&
-          <Button btnTitle={"Delete"} className="style1" icon={dlt}>
+          <Button btnTitle={"Delete"} className="style1" icon={dlt} onClickfunction={handleDelete}>
             </Button> }
       </div>
     </div>

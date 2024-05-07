@@ -14,7 +14,7 @@ import "../CSS/NavbarMaterials.css";
 import Location from "./Location";
 import Export from "./Export";
 
-export default function NavbarMaterials({ className,select=true,count }) {
+export default function NavbarMaterials({ className,select=true,count,handleDelete }) {
   const [exportOption, setExportOption] = useState("");
 
   const handleChange = (e) => {
@@ -61,7 +61,7 @@ export default function NavbarMaterials({ className,select=true,count }) {
         </Link>}
         {/* <Link to="CreateBatchProduct"> */}
         {select &&
-          <Button btnTitle={"Delete"} className="style1" icon={dlt}>
+          <Button btnTitle={"Delete"} className="style1" icon={dlt} onClickfunction={handleDelete}>
             </Button> }
       </div>
     </div>

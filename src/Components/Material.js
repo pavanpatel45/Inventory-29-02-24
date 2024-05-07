@@ -10,44 +10,30 @@ import bag from "../Icons/shopping-bag.png";
 import * as Icon from "react-icons/fi";
 import Checkbox from "react-custom-checkbox";
 import "../CSS/OrderDropdown.css";
-import materialsTableData from "../Data/api-data"
 import { api_url } from "../Data/Constants";
 import "../CSS/OrderDropdown.css";
 import TableDropdown from "./TableDropdown";
 
-function Material({setSelected,selected}) {
+function Material({setSelected,selected,materialsTableData,data}) {
   const handleImageClick1 = () => {
     console.log("edit icon was clicked");
   };
   const handleImageClick2 = () => {
     console.log("shopping-bag icon was clicked");
   };
-  const [data, setData] = React.useState([]);
-  const url = `${api_url}/material`
-  const materialsTableData = async () => {
-    try {
-      const response = await axios.get(url, {
-        headers: { 'ngrok-skip-browser-warning': '69420' }
-      });
-      console.log("at api-data : ", response);
-
-      if (response?.status === 200) {
-        console.log("API Data:", response?.data);
-        setData(response?.data);
-      } else {
-        console.error('Received unexpected response:', response);
-        // Handle other status codes or unexpected responses
-      }
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      return null
+  const handleCheck = (id) =>{
+    console.log("at handleCheck :",id);
+    if(selected.includes(id)){
+      console.log("return true");
+      return true;
     }
-
+    else{
+      console.log("return false");
+      return false;
+    }
   }
-  React.useEffect(() => {
-    console.log("useEffect : ")
-    materialsTableData();
-  }, [])
+  
+ 
 
   // const data = React.useMemo(() => dummy, []);
   const options = [
@@ -146,11 +132,11 @@ function Material({setSelected,selected}) {
                 </div>
               }
               name="my-input"
-              checked={false}
+              checked={handleCheck(row.original.id)}
               onChange={(value, event) => {
-                console.log("Selected checkbox has id :", row.original.id);
+                console.log("Selected checkbox has id :", row.original);
                 if (value == true) {
-                  console.log("true");
+                  // console.log("true");
                   setSelected((prevSelected) => {
                     if (!prevSelected.includes(row.original.id)) {
                       return [...prevSelected, row.original.id]
@@ -213,23 +199,23 @@ function Material({setSelected,selected}) {
         // width: "144px",
         // height: "40px",
       },
-      // {
-      //   Header: (
-      //     <>
-      //       <select style={{ backgroundColor: "#E9E9E9" }}>
-      //         <option default className="hidden">
-      //           Expiry Date
-      //         </option>
-      //         <option value="Option 1">Option 1</option>
-      //         <option value="Option 2">Option 2</option>
-      //         <option value="Option 3">Option 3</option>
-      //       </select>
-      //     </>
-      //   ),
-      //   // accessor: "expiry_date",
-      //   // width: "122px",
-      //   // height: "40px",
-      // },
+      {
+        Header: (
+          <>
+            <select style={{ backgroundColor: "#E9E9E9" }}>
+              <option default className="hidden">
+                Expiry Date
+              </option>
+              <option value="Option 1">Option 1</option>
+              <option value="Option 2">Option 2</option>
+              <option value="Option 3">Option 3</option>
+            </select>
+          </>
+        ),
+        accessor: "date",
+        // width: "122px",
+        // height: "40px",
+      },
       {
         Header: "Quantity",
         accessor: "quantity",
@@ -242,25 +228,25 @@ function Material({setSelected,selected}) {
         // width: "102px",
         // height: "40px",
       },
-      // {
-      //   Header: (
-      //     <>
-      //       <TableDropdown title="Availability" options={options}/>
-      //     </>
-      //   ),
-      //   accessor: "availability",
-      //   Cell: ({ row }) => {
-      //     if (row.original.availability === "In Stock") {
-      //       return <InStock />;
-      //     } else if (row.original.availability === "Out of Stock") {
-      //       return <OutOfStock />;
-      //     } else if (row.original.availability === "Few Left") {
-      //       return <FewLeft />;
-      //     }
-      //   },
-      // width: "154px",
-      // height: "40px",
-      // },
+      {
+        Header: (
+          <>
+            <TableDropdown title="Availability" options={options}/>
+          </>
+        ),
+        accessor: "availability",
+        Cell: ({ row }) => {
+          if (row.original.availability === "In Stock") {
+            return <InStock />;
+          } else if (row.original.availability === "Out of Stock") {
+            return <OutOfStock />;
+          } else if (row.original.availability === "Few Left") {
+            return <FewLeft />;
+          }
+        },
+      width: "154px",
+      height: "40px",
+      },
       {
         Header: "Committed",
         accessor: "committed",
@@ -326,7 +312,7 @@ function Material({setSelected,selected}) {
           </thead>
           <tbody {...getTableBodyProps()}>
             {rows.map((row, index) => {
-              console.log("row===>>sdgd", row);
+              // console.log("row===>>sdgd", row);
               prepareRow(row);
               return (
                 <tr {...row.getRowProps()} className={"even-row"}>

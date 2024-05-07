@@ -1,7 +1,8 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 // import { useState } from "react";
 import { useTable } from "react-table";
-import dummy from "./dummy.json";
+import axios from "axios";
 import InStock from "./InStock";
 import OutOfStock from "./OutOfStock";
 import FewLeft from "./FewLeft";
@@ -10,22 +11,29 @@ import bag from '../Icons/shopping-bag.png'
 import * as Icon from "react-icons/fi";
 import Checkbox from "react-custom-checkbox";
 import { CgOverflow } from "react-icons/cg";
+import { api_url } from "../Data/Constants";
 import { useState } from "react";
 
 import "../CSS/OrderDropdown.css";
 import TableDropdown from "./TableDropdown";
-function Products({selected,setSelected}) {
+function Products({selected,setSelected,productsTableData,data}) {
   const handleImageClick1 = () => {
     console.log("edit icon was clicked");
   };
-  const handleImageClick2 = () => {
-    console.log("shopping-bag icon was clicked");
+  const handleImageClick2 = (row) => {
+    console.log("shopping-bag icon was clicked",row);
   };
-
-  React.useEffect(() => {
-    console.log("selected Array", selected);
-  }, [selected])
-  const data = React.useMemo(() => dummy, []);
+  const handleCheck = (id) =>{
+    console.log("at handleCheck :",id);
+    if(selected.includes(id)){
+      console.log("return true");
+      return true;
+    }
+    else{
+      console.log("return false");
+      return false;
+    }
+  }
   const options = [
     {
       value: "inStock",
@@ -101,10 +109,10 @@ function Products({selected,setSelected}) {
               // }}
               style={{ cursor: "pointer", height: "20px", width: "20px", border: "1px solid #2CAE66", overflow: "hidden" }}
             />
-            <p>Material Name</p>
+            <p>Product</p>
           </div>
         ),
-        accessor: "material_name",
+        accessor: "name",
         width: "228px",
         Cell: ({ cell, row }) => (
           <div className="flex items-center gap-2">
@@ -122,7 +130,7 @@ function Products({selected,setSelected}) {
                 </div>
               }
               name="my-input"
-              checked={false}
+              checked={handleCheck(row.original.id)}
               onChange={(value, event) => {
                 console.log("Selected checkbox has id :", row.original.id);
                 if (value == true) {
@@ -175,7 +183,7 @@ function Products({selected,setSelected}) {
       },
       {
         Header: "Batch ID",
-        accessor: "batch_id",
+        accessor: "batchPId",
         // width: "122px",
         // height: "40px",
       },
@@ -203,7 +211,7 @@ function Products({selected,setSelected}) {
             </select>
           </>
         ),
-        accessor: "expiry_date",
+        accessor: "expiryDate",
         // width: "122px",
         // height: "40px",
       },
@@ -247,7 +255,7 @@ function Products({selected,setSelected}) {
       {
         Header: "Action",
         accessor: "action",
-        Cell: ({ cell }) => (
+        Cell: ({ cell,row }) => (
           <div className="flex flex-row justify-center">
             <img
               src={bag}
@@ -256,12 +264,15 @@ function Products({selected,setSelected}) {
               onClick={handleImageClick1}
               style={{ cursor: "pointer" }}
             />
+           {/* <Link to="/products/UpdateProduct" state={row}> */}
             <img
               src={edit}
               alt="icon"
-              onClick={handleImageClick2}
+              onClick={() => handleImageClick2(row)}
               style={{ cursor: "pointer" }}
+              
             />
+            {/* </Link> */}
           </div>
         ),
       },

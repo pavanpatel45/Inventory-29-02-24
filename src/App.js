@@ -30,6 +30,7 @@ import ProductView from "./pages/Product/ProductView";
 import PurchaseOrder from './Components/PurchaseOrder'
 import CreateBatchProduct from "./pages/Product/CreateBatchProduct";
 import CreateProduct from "./pages/Product/CreateProduct";
+import UpdateProduct from "./pages/Product/UpdateProduct";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout/>}>
@@ -55,6 +56,7 @@ const router = createBrowserRouter(
            <Route index element={<ProductView/>}/>
            <Route path="CreateBatchProduct" element={<CreateBatchProduct/>}/>
            <Route path="CreateProduct" element={<CreateProduct/>}/>
+           <Route path="UpdateProduct" element={<UpdateProduct/>}/>
         </Route>
     </Route>
 

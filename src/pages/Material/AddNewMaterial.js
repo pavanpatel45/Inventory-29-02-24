@@ -15,6 +15,7 @@ export default function AddNewMaterial() {
     minimumQuantity:'',
     measurementType:'',
     Description:'',
+    refrigeration:''
   })
   const handleInputChange = (e) => {
     console.log(e);
@@ -25,13 +26,18 @@ export default function AddNewMaterial() {
       [name]: value
     }));
   };
+  const handleSubmit = (e)=>{
+     e.preventDefault();
+     console.log("at handle Submit",formData);
+  }
   return (
-    <form >
+    <form onSubmit={handleSubmit}>
       <div className="p-3 bg-white">
         <Navbar
           title="Create Product"
           btnTitle="Next"
           className="NavbarForm"
+          btnType="submit"
         />
 
         {/* <div className="flex flex-row mt-7 ">
@@ -158,7 +164,7 @@ export default function AddNewMaterial() {
             />
 
             <div className="row-span-2 flex items-center">
-              <CheckBox />
+              <CheckBox formData={formData} setFormData={setFormData}/>
             </div>
 
             <InputBox

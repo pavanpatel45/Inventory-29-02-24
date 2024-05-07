@@ -34,6 +34,7 @@ export default function CreateProduct() {
           title="Create Product"
           btnTitle="Next"
           className="NavbarForm"
+          backLink=""
         />
 
         <div className="flex flex-row mt-7 ">

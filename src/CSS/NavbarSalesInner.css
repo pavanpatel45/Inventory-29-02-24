@@ -1,8 +1,14 @@
 a.active div .navbar-circle-blue{
     background-color: #3968F9;
 }
+a.active div .navbar-circle-pending{
+    background-color: #F96536;
+}
 a.active div .navbar-circle-yellow{
     background-color:#FCE51B;
+}
+a.active div .navbar-circle-shipped{
+    background-color:#904CE5;
 }
 a.active div .navbar-circle-red{
     background-color:#E72626;

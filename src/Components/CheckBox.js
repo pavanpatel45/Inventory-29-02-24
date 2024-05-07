@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import checkbox from "../Icons/checkbox.svg";
 import "../CSS/CheckBox.css";
 
-function CheckBox() {
+function CheckBox({formData,setFormData}) {
   const [yesChecked, setYesChecked] = useState(false);
   const [noChecked, setNoChecked] = useState(false);
 
@@ -11,6 +11,10 @@ function CheckBox() {
     if (noChecked) {
       setNoChecked(false);
     }
+    setFormData(prevData => ({
+      ...prevData,
+      refrigeration: "Yes"
+    }));
   };
 
   const handleNoChange = () => {
@@ -18,6 +22,10 @@ function CheckBox() {
     if (yesChecked) {
       setYesChecked(false);
     }
+    setFormData(prevData => ({
+      ...prevData,
+      refrigeration: "No"
+    }));
   };
 
   return (
