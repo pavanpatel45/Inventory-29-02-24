@@ -86,8 +86,9 @@ function Export() {
       </div>
       {isOpen && (
         <div
+
           ref={dropdownRef}
-          className="outer-box dropdown bg-white"
+          className="outer-box dropdown bg-white z-50"
           style={{
             position: "absolute",
             top: "60%",
