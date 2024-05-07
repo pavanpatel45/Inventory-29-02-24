@@ -1,10 +1,15 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addMaterial } from "../../features/Materials/materialSlice";
 import InputBox from "../../Components/InputBox";
 import DropDown from "../../Components/Dropdown";
 import Navbar from "../../Components/NavbarForm";
 import CheckBox from "../../Components/CheckBox";
 import "../../CSS/NavbarMaterials.css"
 export default function AddNewMaterial() {
+  const materials = useSelector((state) => state.materials);
+  console.log("materials ",materials)
+  const dispatch = useDispatch();
   const [formData,setFormData] = useState({
     materialName:'',
     shortName:'',
@@ -29,6 +34,7 @@ export default function AddNewMaterial() {
   const handleSubmit = (e)=>{
      e.preventDefault();
      console.log("at handle Submit",formData);
+     dispatch(addMaterial(formData));
   }
   return (
     <form onSubmit={handleSubmit}>

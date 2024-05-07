@@ -112,7 +112,7 @@ function Products({selected,setSelected,productsTableData,data}) {
             <p>Product</p>
           </div>
         ),
-        accessor: "name",
+        accessor: "productName",
         width: "228px",
         Cell: ({ cell, row }) => (
           <div className="flex items-center gap-2">
@@ -178,12 +178,12 @@ function Products({selected,setSelected,productsTableData,data}) {
       },
       {
         Header: "Code",
-        accessor: "code",
+        accessor: "upc",
         // width: "102px",
       },
       {
         Header: "Batch ID",
-        accessor: "batchPId",
+        accessor: "batchId",
         // width: "122px",
         // height: "40px",
       },

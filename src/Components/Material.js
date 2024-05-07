@@ -114,7 +114,7 @@ function Material({setSelected,selected,materialsTableData,data}) {
             <p>Material Name</p>
           </div>
         ),
-        accessor: "name",
+        accessor: "materialName",
         // width: "228px",
         Cell: ({ cell, row }) => (
           <div className="flex items-center gap-2">
@@ -179,7 +179,7 @@ function Material({setSelected,selected,materialsTableData,data}) {
       },
       {
         Header: "Code",
-        accessor: "upcCode",
+        accessor: "upc",
         // width: "102px",
       },
       {
@@ -212,7 +212,7 @@ function Material({setSelected,selected,materialsTableData,data}) {
             </select>
           </>
         ),
-        accessor: "date",
+        accessor: "expiryDate",
         // width: "122px",
         // height: "40px",
       },
@@ -224,7 +224,7 @@ function Material({setSelected,selected,materialsTableData,data}) {
       },
       {
         Header: "Price($)",
-        accessor: "pricePerUnit",
+        accessor: "price",
         // width: "102px",
         // height: "40px",
       },

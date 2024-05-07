@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addBatch } from "../../features/Materials/materialSlice";
 import InputBox from "../../Components/InputBox";
 import DropDown from "../../Components/Dropdown";
 import Navbar from "../../Components/NavbarCreateBatch";
@@ -8,8 +10,9 @@ import { api_url } from "../../Data/Constants";
 import axios from "axios";
 
 export default function CreateBatch() {
+  const dispatch = useDispatch();
   const [formData,setFormData]= useState({
-    productName :'',
+    materialName :'',
     storageLocation:'',
     batchId:'',
     makeOrder:'',
@@ -26,30 +29,12 @@ export default function CreateBatch() {
       [name]: value
     }));
   };
-  const postData = async() =>{
-    try{
-       const url = `${api_url}/batch/`;
-       const Data = {
-        batchId: formData.batchId,
-        materialName: formData.productName,
-        storageLocation: formData.storageLocation,
-        // purchaseOrder: formData.makeOrder,
-        expiryDate: formData.expiryDate,
-        quantity: parseInt(formData.quantity),
-        price: parseFloat(formData.price)
-      };
-       console.log("data : ",Data);
-       const resp = await axios.post(url,Data);
-       console.log('Response',resp);
-    }
-    catch(error){
-      console.log("Error :",error);
-    }
-  }
+  
   const handleSubmit= (e)=>{
     e.preventDefault();
     console.log("form Data",formData);
-    postData();
+    // postData();
+    dispatch(addBatch(formData));
   }
   return (
     
@@ -64,11 +49,11 @@ export default function CreateBatch() {
             <div className="grid  grid-cols-1 md:grid-cols-3 grid-flow-row gap-x-8 gap-y-8">
               <InputBox
                 type="text"
-                title="Product Name/Code*"
-                name="productName"
+                title="Material Name/Code*"
+                name="materialName"
                 onChange={handleInputChange}
                 labelCss={
-                  formData.productName.length > 0 ? 'label-up' : 'label-down'}
+                  formData.materialName.length > 0 ? 'label-up' : 'label-down'}
               />
 
               <DropDown
@@ -95,7 +80,7 @@ export default function CreateBatch() {
              
               <InputBox
                 type="text"
-                title="Make Order#*"
+                title="Purchase Order#*"
                 name="makeOrder"
                 onChange={handleInputChange}
                 labelCss={

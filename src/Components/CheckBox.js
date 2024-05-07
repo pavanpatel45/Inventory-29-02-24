@@ -13,7 +13,7 @@ function CheckBox({formData,setFormData}) {
     }
     setFormData(prevData => ({
       ...prevData,
-      refrigeration: "Yes"
+      refrigeration: true
     }));
   };
 
@@ -24,7 +24,7 @@ function CheckBox({formData,setFormData}) {
     }
     setFormData(prevData => ({
       ...prevData,
-      refrigeration: "No"
+      refrigeration: false
     }));
   };
 
