@@ -54,6 +54,8 @@ export default function MaterialView() {
        deleteMaterials(id={id});
     })
 
+    
+
    
   }
   React.useEffect(() => {

@@ -6,8 +6,11 @@ import DropDown from "../../Components/Dropdown";
 import Navbar from "../../Components/NavbarCreateBatch";
 import Button from "../../Components/Button";
 import "../../CSS/CreateBatch.css"
+import { Link } from "react-router-dom";
 import { api_url } from "../../Data/Constants";
 import axios from "axios";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function CreateBatch() {
   const dispatch = useDispatch();
@@ -121,11 +124,14 @@ export default function CreateBatch() {
 </div>
 </div>
 <div className="flex flex-row justify-end">
+  <Link to="/materials">
               <Button
                 btnTitle="Save"
                 className=" pt-0 pb-0 text-style"
                 type="submit"
+                onClickfunction={()=>{toast.success("Batch Successfully Added")}}
               />
+              </Link>
             </div>
         </div>
       </div>

@@ -5,36 +5,38 @@ import InputBox from "../../Components/InputBox";
 import DropDown from "../../Components/Dropdown";
 import Navbar from "../../Components/NavbarCreateBatchProduct";
 import Button from "../../Components/Button";
-import "../../CSS/CreateBatch.css"
+import "../../CSS/CreateBatch.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { Link } from "react-router-dom";
 
 export default function CreateBatch() {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
-    productName: '',
-    storageLocation: '',
-    batchId: '',
-    makeOrder: '',
-    expiryDate: '',
-    quantity: '',
-    price: '',
-  })
+    productName: "",
+    storageLocation: "",
+    batchId: "",
+    makeOrder: "",
+    expiryDate: "",
+    quantity: "",
+    price: "",
+  });
   const handleInputChange = (e) => {
     console.log(e);
     const { name, value } = e.target;
     console.log("Input value changed:", name, ":", value);
-    setFormData(prevData => ({
+    setFormData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
   };
-  const handleSubmit = (e)=>{
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("form data at createbatchproduct :",formData);
+    console.log("form data at createbatchproduct :", formData);
     dispatch(addProductBatch(formData));
-  }
+  };
   return (
-
     <form onSubmit={handleSubmit}>
       <div className="p-8 bg-white">
         <Navbar
@@ -51,7 +53,8 @@ export default function CreateBatch() {
                 name="productName"
                 onChange={handleInputChange}
                 labelCss={
-                  formData.productName.length > 0 ? 'label-up' : 'label-down'}
+                  formData.productName.length > 0 ? "label-up" : "label-down"
+                }
               />
 
               <DropDown
@@ -59,7 +62,10 @@ export default function CreateBatch() {
                 name="storageLocation"
                 onChange={handleInputChange}
                 labelCss={
-                  formData.storageLocation.length > 0 ? 'label-up' : 'label-down'}
+                  formData.storageLocation.length > 0
+                    ? "label-up"
+                    : "label-down"
+                }
               />
 
               <InputBox
@@ -68,21 +74,22 @@ export default function CreateBatch() {
                 name="batchId"
                 onChange={handleInputChange}
                 labelCss={
-                  formData.batchId.length > 0 ? 'label-up' : 'label-down'}
+                  formData.batchId.length > 0 ? "label-up" : "label-down"
+                }
               />
             </div>
           </div>
 
           <div className="grid gap-2">
             <div className="grid grid-cols-1 md:grid-cols-3 grid-flow-row gap-x-8 gap-y-8">
-
               <InputBox
                 type="text"
                 title="Make Order#*"
                 name="makeOrder"
                 onChange={handleInputChange}
                 labelCss={
-                  formData.makeOrder.length > 0 ? 'label-up' : 'label-down'}
+                  formData.makeOrder.length > 0 ? "label-up" : "label-down"
+                }
               />
 
               <InputBox
@@ -91,19 +98,18 @@ export default function CreateBatch() {
                 name="expiryDate"
                 onChange={handleInputChange}
                 labelCss={
-                  formData.expiryDate.length > 0 ? 'label-up' : 'label-down'}
+                  formData.expiryDate.length > 0 ? "label-up" : "label-down"
+                }
               />
               <InputBox
                 type="number"
                 title="Quantity(Units)*"
                 name="quantity"
                 onChange={handleInputChange}
-                labelCss={
-                  formData.quantity  ? 'label-up' : 'label-down'}
+                labelCss={formData.quantity ? "label-up" : "label-down"}
               />
             </div>
           </div>
-
 
           <div className="grid gap-2">
             <div className="grid grid-cols-1 md:grid-cols-3 grid-flow-row gap-x-8 gap-y-8">
@@ -112,19 +118,21 @@ export default function CreateBatch() {
                 title="Price($)*"
                 name="price"
                 onChange={handleInputChange}
-                labelCss={
-                  formData.price  ? 'label-up' : 'label-down'}
+                labelCss={formData.price ? "label-up" : "label-down"}
               />
             </div>
           </div>
           <div className="flex flex-row justify-end">
-
-            <Button
-              btnTitle="Save"
-              className=" pt-0 pb-0 text-style"
-              type="submit"
-            />
-
+            <Link to="/products">
+              <Button
+                btnTitle="Save"
+                className=" pt-0 pb-0 text-style"
+                type="submit"
+                onClickfunction={() => {
+                  toast.success("Batch Successfully Added");
+                }}
+              />
+            </Link>
           </div>
         </div>
       </div>

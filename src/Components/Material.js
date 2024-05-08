@@ -119,7 +119,8 @@ function Material({setSelected,selected,materialsTableData,data}) {
           </div>
         ),
         accessor: "materialName",
-        // width: "228px",
+         width: "228px",
+       
         Cell: ({ cell, row }) => (
           <div className="flex items-center gap-2">
             <Checkbox
@@ -188,12 +189,12 @@ function Material({setSelected,selected,materialsTableData,data}) {
       {
         Header: "Code",
         accessor: "upc",
-        // width: "102px",
+        width: "102px",
       },
       {
         Header: "Batch ID",
         accessor: "batchId",
-        // width: "122px",
+        width: "122px",
         // height: "40px",
       },
       {
@@ -203,8 +204,8 @@ function Material({setSelected,selected,materialsTableData,data}) {
           </>
         ),
         accessor: "category",
-        className: "truncate max-w-24"
-        // width: "144px",
+        className: "truncate max-w-24",
+        width: "144px",
         // height: "40px",
       },
       {
@@ -221,19 +222,19 @@ function Material({setSelected,selected,materialsTableData,data}) {
           </>
         ),
         accessor: "expiryDate",
-        // width: "122px",
+        width: "122px",
         // height: "40px",
       },
       {
         Header: "Quantity",
         accessor: "quantity",
-        // width: "102px",
+        width: "102px",
         // height: "40px",
       },
       {
         Header: "Price($)",
         accessor: "price",
-        // width: "102px",
+        width: "102px",
         // height: "40px",
       },
       {
@@ -243,27 +244,32 @@ function Material({setSelected,selected,materialsTableData,data}) {
           </div>
         ),
         accessor: "availability",
-        Cell: ({ row }) => {
-          if (row.original.availability === "In Stock") {
+        Cell: ({ value }) => {
+          if (value === "In Stock") {
             return <InStock />;
-          } else if (row.original.availability === "Out of Stock") {
+          } else if (value === "Out of Stock") {
             return <OutOfStock />;
-          } else if (row.original.availability === "Few Left") {
+          } else if (value === "Few Left") {
             return <FewLeft />;
+          } else {
+            return value; // Render the actual data value if it doesn't match any of the conditions
           }
         },
-      // width: "154px",
-      // height: "40px",
+        width: "154px",
+        justifyContent: "center",
+        alignItems: "center"
       },
+      
       {
         Header: "Committed",
         accessor: "committed",
-        // width: "102px",
+        width: "102px",
         // height: "40px",
       },
       {
         Header: "Action",
         accessor: "action",
+        width:"102px",
         Cell: ({ cell }) => (
           <div className="flex flex-row justify-center">
             <img
@@ -283,7 +289,7 @@ function Material({setSelected,selected,materialsTableData,data}) {
         ),
       },
     ],
-    []
+    [selected]
   );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
@@ -335,6 +341,7 @@ function Material({setSelected,selected,materialsTableData,data}) {
                         fontWeight: "400",
                         lineHeight: "22px",
                         fontFamily: "Roboto",
+                        width: cell.column.width,
                       }}
                     >
                       {cell.render("Cell")}

@@ -167,7 +167,7 @@ function Products({selected,setSelected,productsTableData,data}) {
               }}
             >
               <p
-                className="truncate max-w-24"
+                className="truncate max-w-36"
               >
                 {cell.value}{" "}
               </p>
@@ -179,12 +179,12 @@ function Products({selected,setSelected,productsTableData,data}) {
       {
         Header: "Code",
         accessor: "upc",
-        // width: "102px",
+        width: "102px",
       },
       {
         Header: "Batch ID",
         accessor: "batchId",
-        // width: "122px",
+        width: "122px",
         // height: "40px",
       },
       {
@@ -194,8 +194,8 @@ function Products({selected,setSelected,productsTableData,data}) {
           </>
         ),
         accessor: "category",
-        className: "truncate max-w-24"
-        // width: "144px",
+        className: "truncate max-w-24",
+        width: "144px",
         // height: "40px",
       },
       {
@@ -212,19 +212,19 @@ function Products({selected,setSelected,productsTableData,data}) {
           </>
         ),
         accessor: "expiryDate",
-        // width: "122px",
+        width: "122px",
         // height: "40px",
       },
       {
         Header: "Quantity",
         accessor: "quantity",
-        // width: "102px",
+        width: "102px",
         // height: "40px",
       },
       {
         Header: "Price($)",
         accessor: "price",
-        // width: "102px",
+        width: "102px",
         // height: "40px",
       },
       {
@@ -243,18 +243,19 @@ function Products({selected,setSelected,productsTableData,data}) {
             return <FewLeft />;
           }
         },
-        // width: "154px",
+        width: "154px",
         // height: "40px",
       },
       {
         Header: "Committed",
         accessor: "committed",
-        // width: "102px",
+        width: "102px",
         // height: "40px",
       },
       {
         Header: "Action",
         accessor: "action",
+        width:"102px",
         Cell: ({ cell,row }) => (
           <div className="flex flex-row justify-center">
             <img
@@ -327,6 +328,7 @@ function Products({selected,setSelected,productsTableData,data}) {
                         fontWeight: "400",
                         lineHeight: "22px",
                         fontFamily: "Roboto",
+                        width: cell.column.width,
                       }}
                     >
                       {cell.render("Cell")}

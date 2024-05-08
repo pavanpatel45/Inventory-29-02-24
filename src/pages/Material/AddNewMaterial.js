@@ -5,6 +5,8 @@ import InputBox from "../../Components/InputBox";
 import DropDown from "../../Components/Dropdown";
 import Navbar from "../../Components/NavbarForm";
 import CheckBox from "../../Components/CheckBox";
+
+import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "../../CSS/NavbarMaterials.css"
@@ -12,7 +14,7 @@ export default function AddNewMaterial() {
   const materials = useSelector((state) => state.materials);
   console.log("materials ",materials)
   const dispatch = useDispatch();
-
+const navigate= useNavigate();
   const [formData,setFormData] = useState({
     materialName:'',
     shortName:'',
@@ -34,13 +36,14 @@ export default function AddNewMaterial() {
       [name]: value
     }));
   };
-  const notify = () => console.log(1);;
+ 
 
   const handleSubmit = (e)=>{
      e.preventDefault();
      console.log("at handle Submit",formData);
      dispatch(addMaterial(formData));
-    
+     toast.success("New Material Successfully Added");
+    navigate("/materials/CreateBatch");  
   }
   return (
     <form >
