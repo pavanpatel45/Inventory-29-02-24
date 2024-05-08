@@ -14,6 +14,7 @@ import { api_url } from "../Data/Constants";
 import "../CSS/OrderDropdown.css";
 import TableDropdown from "./TableDropdown";
 
+
 function Material({setSelected,selected,materialsTableData,data}) {
   const handleImageClick1 = () => {
     console.log("edit icon was clicked");
@@ -290,6 +291,7 @@ function Material({setSelected,selected,materialsTableData,data}) {
 
   return (
     <div>
+    
       <div className=" overflow-auto ml-4 pt-3 border-solid border-red-500 ">
         <table {...getTableProps()} className="table-auto border-collapse ">
           <thead>

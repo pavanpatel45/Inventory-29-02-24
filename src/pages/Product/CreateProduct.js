@@ -45,9 +45,10 @@ export default function CreateProduct() {
           title="Create Product"
           btnTitle="Next"
           className="NavbarForm"
-          backLink=""
           btnType="submit"
           handleClick={handleSubmit}
+          backLink="/products/CreateBatchProduct"
+          // nextLink="createProductMaterials"
         />
 
         <div className="flex flex-row mt-7 ">

@@ -43,6 +43,7 @@ export default function CreateBatch() {
         <Navbar
           title="Create Batch"
           btnTitle="Add Material"
+          backLink="/materials"
         />
         <div className="grid gap-y-4 pt-8">
           <div className="grid gap-2">
