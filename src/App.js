@@ -79,6 +79,11 @@ function App() {
   return (
     <>
       <Provider store={store}>
+        <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        />
+
         <RouterProvider router={router} />
       </Provider>
     </>

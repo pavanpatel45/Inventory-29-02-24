@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { addProductMaterial } from "../features/Product/productSlice";
 import InputBox from "./InputBox";
 import Navbar from "./NavbarForm";
@@ -8,10 +9,13 @@ import AddedMaterialsTable from "./AddedMaterialsTable";
 import "../CSS/NavbarMaterials.css"
 import plus from "../Icons/plus-outline.svg"
 import smallPlus from "../Icons/small-plus.svg"
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export default function CreateProductMaterials() {
   const dispatch = useDispatch();
-
+const navigate= useNavigate();
   const [formData, setFormData] = useState({
     materialNameCode: "",
     requiredQuantity: "",
@@ -21,6 +25,8 @@ export default function CreateProductMaterials() {
     e.preventDefault();
     console.log("form Data at createProductMaterials :",formData);
     dispatch(addProductMaterial(formData));
+    toast.success("New Product Successfully Added");
+    navigate('/products/CreateBatchProduct')
   }
   return (
     <div className="bg-white">
@@ -32,6 +38,7 @@ export default function CreateProductMaterials() {
             btnTitle="Save"
             handleClick={handleSubmit}
             backLink="/products/createProduct/"
+           // nextLink="/products/CreateBatchProduct"
           />
             <div className="flex flex-row mt-7 ">
           <div className="flex flex-col items-center">
