@@ -13,7 +13,7 @@ import cancel from "../Icons/x.svg";
 
 import "../CSS/NavbarMaterials.css";
 
-export default function NavbarMaterials({ className,select=true,count ,handleDelete}) {
+export default function NavbarMaterials({ className,select=true,count ,handleDelete,selected,setSelected, materialsTableData}) {
   const [exportOption, setExportOption] = useState("");
   const [isSearchClicked, setIsSearchClicked] = useState(false);
   const handleChange = (e) => {
@@ -30,7 +30,10 @@ export default function NavbarMaterials({ className,select=true,count ,handleDel
         {!select && <div className="font-medium">Materials View</div>}
         {select && (
           <div className="flex flex-row gap-2">
-            <img src={cancel} />
+            <img src={cancel} onClick={()=>{
+               setSelected([]);
+               materialsTableData();
+            }}/>
             <div style={{ color: "#343434", fontWeight: "500" }}>
               {count} Item(s) Selected
             </div>

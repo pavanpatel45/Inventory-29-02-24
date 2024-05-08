@@ -277,7 +277,7 @@ function Products({selected,setSelected,productsTableData,data}) {
         ),
       },
     ],
-    []
+    [selected]
   );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =

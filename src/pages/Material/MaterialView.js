@@ -9,9 +9,9 @@ export default function MaterialView() {
   const [selected, setSelected] = useState([])
   const [data, setData] = React.useState([]);
   const url = `${api_url}/material`
-  useEffect(()=>{
-      console.log("selected Data : ",selected);
-  },[selected])
+  // useEffect(()=>{
+  //     console.log("selected Data : ",selected);
+  // },[selected])
   const materialsTableData = async () => {
     try {
       const response = await axios.get(url, {
@@ -42,6 +42,7 @@ export default function MaterialView() {
       console.log('Delete response:', response);
       if(1){//response is ok
          setSelected([])
+         materialsTableData();
       }
     } catch (error) {
       console.error('Delete error:', error);
@@ -60,13 +61,10 @@ export default function MaterialView() {
     // console.log("useEffect : ")
     materialsTableData();
   }, [])
-  useEffect(()=>{
-    materialsTableData();
-  },[selected])
   return (
     <div className='flex flex-col bg-white'>
        <div style={{height: "calc(100vh - 8rem)"}}  className={`overflow-auto scrollbar  `}> 
-       <NavbarMaterials select={Boolean(selected.length)} count={selected.length} handleDelete={handleDelete}/>
+       <NavbarMaterials select={Boolean(selected.length)} count={selected.length} handleDelete={handleDelete} selected={selected} setSelected={setSelected} materialsTableData={materialsTableData}/>
        <Material selected={selected} setSelected={setSelected} materialsTableData={materialsTableData} data={data}/>
        </div>
        <div>

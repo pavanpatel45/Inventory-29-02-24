@@ -1,7 +1,6 @@
 import * as React from "react";
 import axios from 'axios';
 import { useTable } from "react-table";
-import dummy from "./dummy.json";
 import InStock from "./InStock";
 import OutOfStock from "./OutOfStock";
 import FewLeft from "./FewLeft";
@@ -13,9 +12,11 @@ import "../CSS/OrderDropdown.css";
 import { api_url } from "../Data/Constants";
 import "../CSS/OrderDropdown.css";
 import TableDropdown from "./TableDropdown";
+import { set } from "react-hook-form";
 
 
 function Material({setSelected,selected,materialsTableData,data}) {
+  const [option1,setOption1] = React.useState([]);
   const handleImageClick1 = () => {
     console.log("edit icon was clicked");
   };
@@ -37,9 +38,39 @@ function Material({setSelected,selected,materialsTableData,data}) {
   React.useEffect(()=>{
      console.log("selected array:",selected);
   },[selected])
- 
+  const getCategory = async () =>{
+    const url = `${api_url}/getAllMaterialCategory`
+    try {
+      const response = await axios.get(url, {
+        headers: { 'ngrok-skip-browser-warning': '69420' }
+      });
+      // console.log("at api-data Category DAta: ", response);
 
-  // const data = React.useMemo(() => dummy, []);
+      if (response?.status === 200) {
+        console.log("API Data: Category DAta", response?.data);
+        const option = response?.data;
+        setOption1([]);
+        option.map((ele)=>{
+            setOption1((prev)=>{
+              return [...prev,{
+                value:ele.value,
+                label:ele.value
+              }]
+            })
+        })
+      } else {
+        console.error('Received unexpected response:', response);
+  
+      }
+    } catch (error) {
+      return null
+    }
+  }
+  React.useEffect(()=>{
+     getCategory();
+  },[])
+
+  // const data1 = React.useMemo(() => data, [selected]);
   const options = [
     {
       value: "inStock",
@@ -58,33 +89,33 @@ function Material({setSelected,selected,materialsTableData,data}) {
     },
   ];
 
-  const options1 = [
-    {
-      value: "fillersBinders",
-      label: "Fillers and Binders",
+  // const options1 = [
+  //   {
+  //     value: "fillersBinders",
+  //     label: "Fillers and Binders",
 
-    },
-    {
-      value: "solvents",
-      label: "Solvents",
+  //   },
+  //   {
+  //     value: "solvents",
+  //     label: "Solvents",
 
-    },
-    {
-      value: "stabilizersLubricants",
-      label: "Stabilizers and Lubricants",
+  //   },
+  //   {
+  //     value: "stabilizersLubricants",
+  //     label: "Stabilizers and Lubricants",
 
-    },
-    {
-      value: "preservatives",
-      label: "Preservatives",
+  //   },
+  //   {
+  //     value: "preservatives",
+  //     label: "Preservatives",
 
-    },
-    {
-      value: "modifiersAdditives",
-      label: "Modifiers and Additives",
+  //   },
+  //   {
+  //     value: "modifiersAdditives",
+  //     label: "Modifiers and Additives",
 
-    },
-  ];
+  //   },
+  // ];
 
   const columns = React.useMemo(
     () => [
@@ -199,7 +230,7 @@ function Material({setSelected,selected,materialsTableData,data}) {
       {
         Header: (
           <>
-            <TableDropdown title="Category" options={options1}  />
+            <TableDropdown title="Category" options={option1}  />
           </>
         ),
         accessor: "category",
@@ -283,7 +314,7 @@ function Material({setSelected,selected,materialsTableData,data}) {
         ),
       },
     ],
-    []
+    [option1,selected]
   );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =

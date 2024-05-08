@@ -40,14 +40,8 @@ const deleteProducts = async (id)=>{
    
     console.log('Delete response:', response);
     if(1){//response is ok
-       setSelected((prevData) => {
-        console.log("id :",id);
-        const updatedData = prevData.filter(item => {
-          console.log("item :",item,"id",id['id']);
-          return item != id['id'];
-        });
-        return updatedData;
-       })
+       setSelected([]);
+       productsTableData();
     }
   } catch (error) {
     console.error('Delete error:', error);
@@ -66,9 +60,6 @@ React.useEffect(() => {
   // console.log("useEffect : ")
    productsTableData();
 }, [])
-useEffect(()=>{
-  productsTableData();
-},[selected])
   return (
     <div className='flex flex-col bg-white'>
       <div style={{height: "calc(100vh - 8rem)"}}  className={`overflow-auto scrollbar  `}>
