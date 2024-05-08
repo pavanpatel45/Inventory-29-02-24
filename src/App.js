@@ -81,7 +81,8 @@ function App() {
       <Provider store={store}>
         <ToastContainer
         position="top-center"
-        autoClose={1000}
+        autoClose={1500}
+        hideProgressBar
         />
 
         <RouterProvider router={router} />
