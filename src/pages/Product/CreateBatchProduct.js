@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addProductBatch } from "../../features/Product/productSlice";
 import InputBox from "../../Components/InputBox";
 import DropDown from "../../Components/Dropdown";
 import Navbar from "../../Components/NavbarCreateBatchProduct";
@@ -7,6 +9,7 @@ import "../../CSS/CreateBatch.css"
 import { Link } from "react-router-dom";
 
 export default function CreateBatch() {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     productName: '',
     storageLocation: '',
@@ -25,9 +28,14 @@ export default function CreateBatch() {
       [name]: value
     }));
   };
+  const handleSubmit = (e)=>{
+    e.preventDefault();
+    console.log("form data at createbatchproduct :",formData);
+    dispatch(addProductBatch(formData));
+  }
   return (
 
-    <form >
+    <form onSubmit={handleSubmit}>
       <div className="p-8 bg-white">
         <Navbar
           title="Create Batch"
@@ -113,6 +121,7 @@ export default function CreateBatch() {
             <Button
               btnTitle="Save"
               className=" pt-0 pb-0 text-style"
+              type="submit"
             />
 
           </div>

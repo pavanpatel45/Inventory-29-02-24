@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 import "../CSS/NavbarMaterials.css";
 import arrow from "../Icons/arrow-left.png"
 
-export default function NavbarForm({title,btnTitle,className,btnType,backLink, nextLink}) {
+export default function NavbarForm({title,btnTitle,className,btnType,backLink, nextLink,handleClick}) {
   return (
     <div className='flex flex-row justify-between items-center'>
        <div className=' gap-2 flex flex-row items-center' style={{font:"16px"}}>
@@ -13,7 +13,7 @@ export default function NavbarForm({title,btnTitle,className,btnType,backLink, n
        </div>
        <div className='flex flex-row'>
         <Link to={nextLink}>
-           <Button btnTitle={btnTitle} className={className} type={btnType}/>
+           <Button btnTitle={btnTitle} className={className} btnType={btnType} onClickfunction={handleClick} />
            </Link>
        </div>
     </div>

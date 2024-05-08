@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addProductMaterial } from "../features/Product/productSlice";
 import InputBox from "./InputBox";
 import Navbar from "./NavbarForm";
 import Button from "./Button";
@@ -8,22 +10,27 @@ import plus from "../Icons/plus-outline.svg"
 import smallPlus from "../Icons/small-plus.svg"
 
 export default function CreateProductMaterials() {
- 
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     materialNameCode: "",
     requiredQuantity: "",
     unit: "",
   });
-
+  const handleSubmit = (e)=>{
+    e.preventDefault();
+    console.log("form Data at createProductMaterials :",formData);
+    dispatch(addProductMaterial(formData));
+  }
   return (
     <div className="bg-white">
       <form>
         <div className="p-8">
           <Navbar
             title="Create Product"
-          className="NavbarForm"
+            className="NavbarForm"
             btnTitle="Save"
+            handleClick={handleSubmit}
           />
             <div className="flex flex-row mt-7 ">
           <div className="flex flex-col items-center">

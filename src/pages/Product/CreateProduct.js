@@ -1,12 +1,17 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addProduct } from "../../features/Product/productSlice";
 import InputBox from "../../Components/InputBox";
 import DropDown from "../../Components/Dropdown";
 import Navbar from "../../Components/NavbarForm";
 import ImageUpload from "../../Components/ImageUpload";
 import CheckBox from "../../Components/CheckBox";
+import { useNavigate } from 'react-router-dom';
 
 
 export default function CreateProduct() {
+  const navigate = useNavigate()
+  const dispatch = useDispatch();
   const [formData,setFormData] = useState({
     productName:'',
     productNameCode:'',
@@ -27,15 +32,22 @@ export default function CreateProduct() {
       [name]: value
     }));
   };
+  const handleSubmit = (e)=>{
+     e.preventDefault();
+     console.log("form Data at createProduct :",formData);
+     dispatch(addProduct(formData));
+     navigate('/products/CreateProduct/CreateProductMaterials')
+  }
   return (
-    <form >
+    <form onSubmit={handleSubmit}>
       <div className="p-8 bg-white">
         <Navbar
           title="Create Product"
           btnTitle="Next"
           className="NavbarForm"
           backLink=""
-          nextLink="createProductMaterials"
+          btnType="submit"
+          handleClick={handleSubmit}
         />
 
         <div className="flex flex-row mt-7 ">

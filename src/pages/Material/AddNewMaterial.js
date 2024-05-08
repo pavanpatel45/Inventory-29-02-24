@@ -37,13 +37,14 @@ export default function AddNewMaterial() {
      dispatch(addMaterial(formData));
   }
   return (
-    <form onSubmit={handleSubmit}>
+    <form >
       <div className="p-3 bg-white">
         <Navbar
           title="Create Product"
           btnTitle="Next"
           className="NavbarForm"
           btnType="submit"
+          handleClick={handleSubmit}
         />
 
         {/* <div className="flex flex-row mt-7 ">
