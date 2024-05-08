@@ -18,7 +18,7 @@ export default function InputBox({
         name={name}
         style={{color:"#2D2D2D",borderColor:"#A1A1A1", font:"14px"}}
       />
-      <label for={name} className={`relative  bg-white max-w-max ${labelCss} `} style={{color:"#808080",display:"inline",font:"12px" ,top:"-8px" ,left:"22px"}}>
+      <label htmlFor={name} className={`relative  bg-white max-w-max ${labelCss} `} style={{color:"#808080",display:"inline",font:"12px" ,top:"-8px" ,left:"22px"}}>
         {title}
       </label>
     </div>

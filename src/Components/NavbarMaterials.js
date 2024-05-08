@@ -51,6 +51,7 @@ export default function NavbarMaterials({ className,select=true,count ,handleDel
               className="pl-2 txt-style"
               style={{ width: isSearchClicked ? "330px" : "190px" , fontSize:"14px", color:"#A2A1A1"}}
               placeholder={isSearchClicked ? "Type here to search" : "Search"}
+              
             />
           </div>
         )}

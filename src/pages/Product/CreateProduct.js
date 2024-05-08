@@ -4,7 +4,7 @@ import DropDown from "../../Components/Dropdown";
 import Navbar from "../../Components/NavbarForm";
 import ImageUpload from "../../Components/ImageUpload";
 import CheckBox from "../../Components/CheckBox";
-import { useSearchParams } from "react-router-dom";
+
 
 export default function CreateProduct() {
   const [formData,setFormData] = useState({
@@ -35,6 +35,7 @@ export default function CreateProduct() {
           btnTitle="Next"
           className="NavbarForm"
           backLink=""
+          nextLink="createProductMaterials"
         />
 
         <div className="flex flex-row mt-7 ">
@@ -167,7 +168,7 @@ export default function CreateProduct() {
             />
 
             <div className="row-span-2 flex items-center">
-              <CheckBox />
+              <CheckBox formData={formData} setFormData={setFormData} />
             </div>
 
             <InputBox
