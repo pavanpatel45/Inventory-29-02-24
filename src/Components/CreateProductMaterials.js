@@ -24,18 +24,19 @@ export default function CreateProductMaterials() {
             title="Create Product"
           className="NavbarForm"
             btnTitle="Save"
+            backLink="/products/createProduct/"
           />
             <div className="flex flex-row mt-7 ">
           <div className="flex flex-col items-center">
             <div
-              className="h-5 w-5 rounded-full flex items-center justify-center text-xs text-white"
-              style={{ border: "1px", backgroundColor: "#2CAE66" }}
+              className="h-5 w-5 rounded-full flex items-center justify-center  text-green-500"
+              style={{ border: "1px solid", borderColor: "#2CAE66" }}
             >
               1
             </div>
             <div
               style={{
-                color: "#2CAE66",
+                color: "black",
                 fontSize: "12px",
                 fontWeight: "500",
                 lineHeight: "14.06px",
@@ -53,8 +54,8 @@ export default function CreateProductMaterials() {
             style={{ position: "relative", left: "-36px" }}
           >
             <div
-              className="h-5 w-5 rounded-full flex items-center justify-center text-green-500"
-              style={{ border: "1px solid", borderColor: "#2CAE66" }}
+              className="h-5 w-5 rounded-full flex items-center justify-center text-xs text-white"
+              style={{ border: "1px",backgroundColor: "#2CAE66"  }}
             >
               2
             </div>
@@ -63,6 +64,7 @@ export default function CreateProductMaterials() {
                 fontSize: "12px",
                 fontWeight: "500",
                 lineHeight: "14.06px",
+                color:"#2CAE66"
               }}
             >
               Materials

@@ -34,7 +34,7 @@ export default function CreateProduct() {
           title="Create Product"
           btnTitle="Next"
           className="NavbarForm"
-          backLink=""
+          backLink="/products/CreateBatchProduct"
           nextLink="createProductMaterials"
         />
 

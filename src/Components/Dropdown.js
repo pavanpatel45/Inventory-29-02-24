@@ -36,7 +36,7 @@ export default function Dropdown({
           </>
         )}
       </select>
-      <label for="title" className={`relative top-3 left-3 bg-white max-w-max ${labelCss}`} style={{color:"#808080" ,top:"-8px" ,left:"22px"}}>
+      <label htmlFor="title" className={`relative top-3 left-3 bg-white max-w-max ${labelCss}`} style={{color:"#808080" ,top:"-8px" ,left:"22px"}}>
         {title}
       </label>
     </div>

@@ -5,11 +5,14 @@ import InputBox from "../../Components/InputBox";
 import DropDown from "../../Components/Dropdown";
 import Navbar from "../../Components/NavbarForm";
 import CheckBox from "../../Components/CheckBox";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "../../CSS/NavbarMaterials.css"
 export default function AddNewMaterial() {
   const materials = useSelector((state) => state.materials);
   console.log("materials ",materials)
   const dispatch = useDispatch();
+
   const [formData,setFormData] = useState({
     materialName:'',
     shortName:'',
@@ -31,66 +34,28 @@ export default function AddNewMaterial() {
       [name]: value
     }));
   };
+  const notify = () => console.log(1);;
+
   const handleSubmit = (e)=>{
      e.preventDefault();
      console.log("at handle Submit",formData);
      dispatch(addMaterial(formData));
+    
   }
   return (
     <form onSubmit={handleSubmit}>
       <div className="p-3 bg-white">
         <Navbar
-          title="Create Product"
+          title="Add Material"
           btnTitle="Next"
           className="NavbarForm"
           btnType="submit"
+          nextLink="/materials/CreateBatch"
+          backLink="/materials/CreateBatch"
+         
         />
 
-        {/* <div className="flex flex-row mt-7 ">
-          <div className="flex flex-col items-center">
-            <div
-              className="h-5 w-5 rounded-full flex items-center justify-center text-xs text-white"
-              style={{ border: "1px", backgroundColor: "#2CAE66" }}
-            >
-              1
-            </div>
-            <div
-              style={{
-                color: "#2CAE66",
-                fontSize: "12px",
-                fontWeight: "500",
-                lineHeight: "14.06px",
-              }}
-            >
-              Add Product
-            </div>
-          </div>
-          <div
-            className="border border-1 border-black border-dashed h-0 w-64"
-            style={{ position: "relative", left: "-23px", top: "8px" }}
-          ></div>
-          <div
-            className="flex flex-col items-center "
-            style={{ position: "relative", left: "-36px" }}
-          >
-            <div
-              className="h-5 w-5 rounded-full flex items-center justify-center text-green-500"
-              style={{ border: "1px solid", borderColor: "#2CAE66" }}
-            >
-              2
-            </div>
-            <div
-              style={{
-                fontSize: "12px",
-                fontWeight: "500",
-                lineHeight: "14.06px",
-              }}
-            >
-              Materials
-            </div>
-          </div>
-        </div> */}
-
+       
         <div className="grid gap-y-4 pt-8 ">
           <div
             style={{

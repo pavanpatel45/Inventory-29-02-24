@@ -31,7 +31,8 @@ export default function CreateBatch() {
       <div className="p-8 bg-white">
         <Navbar
           title="Create Batch"
-          btnTitle="Add Material"
+          btnTitle="Add Product"
+          backLink="/products"
         />
         <div className="grid gap-y-4 pt-8">
           <div className="grid gap-2">

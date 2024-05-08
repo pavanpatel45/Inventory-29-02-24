@@ -13,7 +13,7 @@ export default function NavbarForm({title,btnTitle,className,btnType,backLink, n
        </div>
        <div className='flex flex-row'>
         <Link to={nextLink}>
-           <Button btnTitle={btnTitle} className={className} type={btnType}/>
+           <Button btnTitle={btnTitle} className={className} type={btnType} />
            </Link>
        </div>
     </div>

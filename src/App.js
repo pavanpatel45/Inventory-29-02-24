@@ -26,7 +26,7 @@ import MakeOrder from "./Components/MakeOrder";
 import ShippedOrder from "./Components/ShippedOrder";
 import CompletedOrder from "./Components/CompletedOrder";
 import CancelledOrder from "./Components/CancelledOrder";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MaterialView from "./pages/Material/MaterialView";
 import RootLayout from "./Layout/RootLayout";
