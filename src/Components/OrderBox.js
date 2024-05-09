@@ -6,8 +6,8 @@ import downarrow from "../Icons/ArrowLineclose.svg";
 import productImg from "../Icons/product.png";
 import { Link } from "react-router-dom";
 export default function OrderBox({ order, key }) {
-  console.log("order at OrderBox : ",order);
   const dispatch = useDispatch();
+  console.log("order at OrderBox : ",order);
   const [isOpen, setIsOpen] = useState(false);
   function handleOpenBox() {
     if (isOpen) {
@@ -18,7 +18,7 @@ export default function OrderBox({ order, key }) {
   }
   const handleCancelledOrder = () =>{
     const status = 6;
-    dispatch(changeStatus({id:order.id,status}))
+    dispatch(changeStatus({id:order.orderId,status}))
   }
   return (
     <div
@@ -41,10 +41,10 @@ export default function OrderBox({ order, key }) {
           </div>
           <div>
             <div className="text-sm font-medium" style={{ color: "#4A4A4A" }}>
-              Order Quantity: {order.productDetails.quantity}
+              Order Quantity: {order.quantity}
             </div>
             <div className="text-xs font-normal" style={{ color: "#2D2D2D" }}>
-              {order.productDetails.Name}
+              {order.productName}
             </div>
           </div>
         </div>
@@ -58,7 +58,7 @@ export default function OrderBox({ order, key }) {
       </div>
       <div className=" flex justify-between items-center">
         <div className="text-xs font-normal" style={{ color: "#666666" }}>
-          Received On {order.orderDetails.receivedDate}
+          Received On {order.receivedDate}
         </div>
         <div className="flex flex-row items-center gap-2">
           <div
@@ -77,7 +77,7 @@ export default function OrderBox({ order, key }) {
               Order by : 
             </div>
             <div className="text-xs font-normal" style={{ color: "#2D2D2D" }}>
-              {order.customerDetails.customerName}
+              {order.customerName}
             </div>
           </div>
           <div className="flex flex-row">
@@ -85,7 +85,7 @@ export default function OrderBox({ order, key }) {
               Location :
             </div>
             <div className="text-xs font-normal" style={{ color: "#2D2D2D" }}>
-              {order.orderDetails.Location}
+              {order.orderLocation}
             </div>
           </div>
           <div className="flex justify-between">
@@ -126,7 +126,7 @@ export default function OrderBox({ order, key }) {
               className="text-xs font-normal inline"
               style={{ color: "#2D2D2D" }}
             >
-              {order.orderDetails.Note}
+              {order.orderNote}
             </div>
           </div>
           <div className="grid grid-cols-2 text-center">

@@ -67,15 +67,14 @@ export default function CreateOrder() {
   const handleDeliveryCheckChange = (e) => { };
   const handleSubmit = (e) => {
     e.preventDefault();
-    formData.id = generateUniqueId();
-    console.log("data at submit", formData);
+    console.log("data at submit create Order", formData);
     dispatch(addOrder(formData));
   };
   return (
-    <form onSubmit={handleSubmit}>
+    <form >
       <div className="p-3 bg-white pb-4">
          
-        <NavbarForm title="Create Order" btnTitle="Save" className="NavbarCreateOrder" />
+        <NavbarForm title="Create Order" btnTitle="Save" className="NavbarCreateOrder" handleClick={handleSubmit}/>
         
        
         <div className="grid gap-y-4">

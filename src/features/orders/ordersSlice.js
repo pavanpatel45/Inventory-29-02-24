@@ -1,699 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { api_url } from "../../Data/Constants";
+import axios from "axios";
 const initialState = {
   orders: [
-    {
-      status:1,
-      id:1,
-      customerDetails: {
-        Address: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        customerName: "Azura Pharmaceuticals",
-        email: "azurapharmaceuticals@gmail.com",
-        mobileNumber: "+1 (954) 633-1314",
-      },
-      orderDetails: {
-        Location: "Mumbai",
-        Note: "Kindly fulfill an order for 500 Paracetamol strips, each containing 10 tablets, ensuring standard packaging and a minimum 24-month expiry.",
-        receivedDate: "03-05-2024",
-      },
-      paymentDetails: {
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        amount: "$15000.00",
-        cardHolderName: "Maria Aniston",
-        cardNo: "**** **** 8752",
-        paymentAddress: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        paymentDate: "2024-03-19",
-        paymentMethod: "Credit Card",
-        paymentStatus: "Paid",
-      },
-      productDetails: {
-        Name: "Paracetamol 500mg Capsules",
-        code: "PAR001",
-        price: "$30.00 Per Strip",
-        quantity: "500 Strips",
-      },
-      shipmentDetails: {
-        Address: "Azura Pharma Pvt Ltd Warehouse 3423 White Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        deliveryDate: "2024-03-21",
-      },
-    },
-    {
-      status:1,
-      id:2,
-      customerDetails: {
-        Address: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        customerName: "Azura Pharmaceuticals",
-        email: "azurapharmaceuticals@gmail.com",
-        mobileNumber: "+1 (954) 633-1314",
-      },
-      orderDetails: {
-        Location: "Mumbai",
-        Note: "Kindly fulfill an order for 500 Paracetamol strips, each containing 10 tablets, ensuring standard packaging and a minimum 24-month expiry.",
-        receivedDate: "03-05-2024",
-      },
-      paymentDetails: {
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        amount: "$15000.00",
-        cardHolderName: "Maria Aniston",
-        cardNo: "**** **** 8752",
-        paymentAddress: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        paymentDate: "2024-03-19",
-        paymentMethod: "Credit Card",
-        paymentStatus: "Paid",
-      },
-      productDetails: {
-        Name: "Paracetamol 500mg Capsules",
-        code: "PAR001",
-        price: "$30.00 Per Strip",
-        quantity: "500 Strips",
-      },
-      shipmentDetails: {
-        Address: "Azura Pharma Pvt Ltd Warehouse 3423 White Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        deliveryDate: "2024-03-21",
-      },
-    },
-    {
-      status:1,
-      id:3,
-      customerDetails: {
-        Address: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        customerName: "Azura Pharmaceuticals",
-        email: "azurapharmaceuticals@gmail.com",
-        mobileNumber: "+1 (954) 633-1314",
-      },
-      orderDetails: {
-        Location: "Mumbai",
-        Note: "Kindly fulfill an order for 500 Paracetamol strips, each containing 10 tablets, ensuring standard packaging and a minimum 24-month expiry.",
-        receivedDate: "03-05-2024",
-      },
-      paymentDetails: {
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        amount: "$15000.00",
-        cardHolderName: "Maria Aniston",
-        cardNo: "**** **** 8752",
-        paymentAddress: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        paymentDate: "2024-03-19",
-        paymentMethod: "Credit Card",
-        paymentStatus: "Paid",
-      },
-      productDetails: {
-        Name: "Paracetamol 500mg Capsules",
-        code: "PAR001",
-        price: "$30.00 Per Strip",
-        quantity: "500 Strips",
-      },
-      shipmentDetails: {
-        Address: "Azura Pharma Pvt Ltd Warehouse 3423 White Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        deliveryDate: "2024-03-21",
-      },
-    },
-    {
-      status:1,
-      id:4,
-      customerDetails: {
-        Address: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        customerName: "Azura Pharmaceuticals",
-        email: "azurapharmaceuticals@gmail.com",
-        mobileNumber: "+1 (954) 633-1314",
-      },
-      orderDetails: {
-        Location: "Mumbai",
-        Note: "Kindly fulfill an order for 500 Paracetamol strips, each containing 10 tablets, ensuring standard packaging and a minimum 24-month expiry.",
-        receivedDate: "03-05-2024",
-      },
-      paymentDetails: {
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        amount: "$15000.00",
-        cardHolderName: "Maria Aniston",
-        cardNo: "**** **** 8752",
-        paymentAddress: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        paymentDate: "2024-03-19",
-        paymentMethod: "Credit Card",
-        paymentStatus: "Paid",
-      },
-      productDetails: {
-        Name: "Paracetamol 500mg Capsules",
-        code: "PAR001",
-        price: "$30.00 Per Strip",
-        quantity: "500 Strips",
-      },
-      shipmentDetails: {
-        Address: "Azura Pharma Pvt Ltd Warehouse 3423 White Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        deliveryDate: "2024-03-21",
-      },
-    },
-    {
-      status:1,
-      id:5,
-      customerDetails: {
-        Address: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        customerName: "Azura Pharmaceuticals",
-        email: "azurapharmaceuticals@gmail.com",
-        mobileNumber: "+1 (954) 633-1314",
-      },
-      orderDetails: {
-        Location: "Mumbai",
-        Note: "Kindly fulfill an order for 500 Paracetamol strips, each containing 10 tablets, ensuring standard packaging and a minimum 24-month expiry.",
-        receivedDate: "03-05-2024",
-      },
-      paymentDetails: {
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        amount: "$15000.00",
-        cardHolderName: "Maria Aniston",
-        cardNo: "**** **** 8752",
-        paymentAddress: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        paymentDate: "2024-03-19",
-        paymentMethod: "Credit Card",
-        paymentStatus: "Paid",
-      },
-      productDetails: {
-        Name: "Paracetamol 500mg Capsules",
-        code: "PAR001",
-        price: "$30.00 Per Strip",
-        quantity: "500 Strips",
-      },
-      shipmentDetails: {
-        Address: "Azura Pharma Pvt Ltd Warehouse 3423 White Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        deliveryDate: "2024-03-21",
-      },
-    },
-    {
-      status:1,
-      id:6,
-      customerDetails: {
-        Address: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        customerName: "Azura Pharmaceuticals",
-        email: "azurapharmaceuticals@gmail.com",
-        mobileNumber: "+1 (954) 633-1314",
-      },
-      orderDetails: {
-        Location: "Mumbai",
-        Note: "Kindly fulfill an order for 500 Paracetamol strips, each containing 10 tablets, ensuring standard packaging and a minimum 24-month expiry.",
-        receivedDate: "03-05-2024",
-      },
-      paymentDetails: {
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        amount: "$15000.00",
-        cardHolderName: "Maria Aniston",
-        cardNo: "**** **** 8752",
-        paymentAddress: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        paymentDate: "2024-03-19",
-        paymentMethod: "Credit Card",
-        paymentStatus: "Paid",
-      },
-      productDetails: {
-        Name: "Paracetamol 500mg Capsules",
-        code: "PAR001",
-        price: "$30.00 Per Strip",
-        quantity: "500 Strips",
-      },
-      shipmentDetails: {
-        Address: "Azura Pharma Pvt Ltd Warehouse 3423 White Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        deliveryDate: "2024-03-21",
-      },
-    },
-    {
-      status:1,
-      id:7,
-      customerDetails: {
-        Address: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        customerName: "Azura Pharmaceuticals",
-        email: "azurapharmaceuticals@gmail.com",
-        mobileNumber: "+1 (954) 633-1314",
-      },
-      orderDetails: {
-        Location: "Mumbai",
-        Note: "Kindly fulfill an order for 500 Paracetamol strips, each containing 10 tablets, ensuring standard packaging and a minimum 24-month expiry.",
-        receivedDate: "03-05-2024",
-      },
-      paymentDetails: {
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        amount: "$15000.00",
-        cardHolderName: "Maria Aniston",
-        cardNo: "**** **** 8752",
-        paymentAddress: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        paymentDate: "2024-03-19",
-        paymentMethod: "Credit Card",
-        paymentStatus: "Paid",
-      },
-      productDetails: {
-        Name: "Paracetamol 500mg Capsules",
-        code: "PAR001",
-        price: "$30.00 Per Strip",
-        quantity: "500 Strips",
-      },
-      shipmentDetails: {
-        Address: "Azura Pharma Pvt Ltd Warehouse 3423 White Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        deliveryDate: "2024-03-21",
-      },
-    },
-    {
-      status:1,
-      id:8,
-      customerDetails: {
-        Address: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        customerName: "Azura Pharmaceuticals",
-        email: "azurapharmaceuticals@gmail.com",
-        mobileNumber: "+1 (954) 633-1314",
-      },
-      orderDetails: {
-        Location: "Mumbai",
-        Note: "Kindly fulfill an order for 500 Paracetamol strips, each containing 10 tablets, ensuring standard packaging and a minimum 24-month expiry.",
-        receivedDate: "03-05-2024",
-      },
-      paymentDetails: {
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        amount: "$15000.00",
-        cardHolderName: "Maria Aniston",
-        cardNo: "**** **** 8752",
-        paymentAddress: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        paymentDate: "2024-03-19",
-        paymentMethod: "Credit Card",
-        paymentStatus: "Paid",
-      },
-      productDetails: {
-        Name: "Paracetamol 500mg Capsules",
-        code: "PAR001",
-        price: "$30.00 Per Strip",
-        quantity: "500 Strips",
-      },
-      shipmentDetails: {
-        Address: "Azura Pharma Pvt Ltd Warehouse 3423 White Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        deliveryDate: "2024-03-21",
-      },
-    },
-    {
-      status:1,
-      id:9,
-      customerDetails: {
-        Address: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        customerName: "Azura Pharmaceuticals",
-        email: "azurapharmaceuticals@gmail.com",
-        mobileNumber: "+1 (954) 633-1314",
-      },
-      orderDetails: {
-        Location: "Mumbai",
-        Note: "Kindly fulfill an order for 500 Paracetamol strips, each containing 10 tablets, ensuring standard packaging and a minimum 24-month expiry.",
-        receivedDate: "03-05-2024",
-      },
-      paymentDetails: {
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        amount: "$15000.00",
-        cardHolderName: "Maria Aniston",
-        cardNo: "**** **** 8752",
-        paymentAddress: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        paymentDate: "2024-03-19",
-        paymentMethod: "Credit Card",
-        paymentStatus: "Paid",
-      },
-      productDetails: {
-        Name: "Paracetamol 500mg Capsules",
-        code: "PAR001",
-        price: "$30.00 Per Strip",
-        quantity: "500 Strips",
-      },
-      shipmentDetails: {
-        Address: "Azura Pharma Pvt Ltd Warehouse 3423 White Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        deliveryDate: "2024-03-21",
-      },
-    },
-    {
-      status:1,
-      id:10,
-      customerDetails: {
-        Address: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        customerName: "Azura Pharmaceuticals",
-        email: "azurapharmaceuticals@gmail.com",
-        mobileNumber: "+1 (954) 633-1314",
-      },
-      orderDetails: {
-        Location: "Mumbai",
-        Note: "Kindly fulfill an order for 500 Paracetamol strips, each containing 10 tablets, ensuring standard packaging and a minimum 24-month expiry.",
-        receivedDate: "03-05-2024",
-      },
-      paymentDetails: {
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        amount: "$15000.00",
-        cardHolderName: "Maria Aniston",
-        cardNo: "**** **** 8752",
-        paymentAddress: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        paymentDate: "2024-03-19",
-        paymentMethod: "Credit Card",
-        paymentStatus: "Paid",
-      },
-      productDetails: {
-        Name: "Paracetamol 500mg Capsules",
-        code: "PAR001",
-        price: "$30.00 Per Strip",
-        quantity: "500 Strips",
-      },
-      shipmentDetails: {
-        Address: "Azura Pharma Pvt Ltd Warehouse 3423 White Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        deliveryDate: "2024-03-21",
-      },
-    },
-    {
-      status:1,
-      id:11,
-      customerDetails: {
-        Address: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        customerName: "Azura Pharmaceuticals",
-        email: "azurapharmaceuticals@gmail.com",
-        mobileNumber: "+1 (954) 633-1314",
-      },
-      orderDetails: {
-        Location: "Mumbai",
-        Note: "Kindly fulfill an order for 500 Paracetamol strips, each containing 10 tablets, ensuring standard packaging and a minimum 24-month expiry.",
-        receivedDate: "03-05-2024",
-      },
-      paymentDetails: {
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        amount: "$15000.00",
-        cardHolderName: "Maria Aniston",
-        cardNo: "**** **** 8752",
-        paymentAddress: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        paymentDate: "2024-03-19",
-        paymentMethod: "Credit Card",
-        paymentStatus: "Paid",
-      },
-      productDetails: {
-        Name: "Paracetamol 500mg Capsules",
-        code: "PAR001",
-        price: "$30.00 Per Strip",
-        quantity: "500 Strips",
-      },
-      shipmentDetails: {
-        Address: "Azura Pharma Pvt Ltd Warehouse 3423 White Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        deliveryDate: "2024-03-21",
-      },
-    },
-    {
-      status:1,
-      id:12,
-      customerDetails: {
-        Address: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        customerName: "Azura Pharmaceuticals",
-        email: "azurapharmaceuticals@gmail.com",
-        mobileNumber: "+1 (954) 633-1314",
-      },
-      orderDetails: {
-        Location: "Mumbai",
-        Note: "Kindly fulfill an order for 500 Paracetamol strips, each containing 10 tablets, ensuring standard packaging and a minimum 24-month expiry.",
-        receivedDate: "03-05-2024",
-      },
-      paymentDetails: {
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        amount: "$15000.00",
-        cardHolderName: "Maria Aniston",
-        cardNo: "**** **** 8752",
-        paymentAddress: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        paymentDate: "2024-03-19",
-        paymentMethod: "Credit Card",
-        paymentStatus: "Paid",
-      },
-      productDetails: {
-        Name: "Paracetamol 500mg Capsules",
-        code: "PAR001",
-        price: "$30.00 Per Strip",
-        quantity: "500 Strips",
-      },
-      shipmentDetails: {
-        Address: "Azura Pharma Pvt Ltd Warehouse 3423 White Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        deliveryDate: "2024-03-21",
-      },
-    },
-    {
-      status:1,
-      id:13,
-      customerDetails: {
-        Address: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        customerName: "Azura Pharmaceuticals",
-        email: "azurapharmaceuticals@gmail.com",
-        mobileNumber: "+1 (954) 633-1314",
-      },
-      orderDetails: {
-        Location: "Mumbai",
-        Note: "Kindly fulfill an order for 500 Paracetamol strips, each containing 10 tablets, ensuring standard packaging and a minimum 24-month expiry.",
-        receivedDate: "03-05-2024",
-      },
-      paymentDetails: {
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        amount: "$15000.00",
-        cardHolderName: "Maria Aniston",
-        cardNo: "**** **** 8752",
-        paymentAddress: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        paymentDate: "2024-03-19",
-        paymentMethod: "Credit Card",
-        paymentStatus: "Paid",
-      },
-      productDetails: {
-        Name: "Paracetamol 500mg Capsules",
-        code: "PAR001",
-        price: "$30.00 Per Strip",
-        quantity: "500 Strips",
-      },
-      shipmentDetails: {
-        Address: "Azura Pharma Pvt Ltd Warehouse 3423 White Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        deliveryDate: "2024-03-21",
-      },
-    },
-    {
-      status:1,
-      id:14,
-      customerDetails: {
-        Address: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        customerName: "Azura Pharmaceuticals",
-        email: "azurapharmaceuticals@gmail.com",
-        mobileNumber: "+1 (954) 633-1314",
-      },
-      orderDetails: {
-        Location: "Mumbai",
-        Note: "Kindly fulfill an order for 500 Paracetamol strips, each containing 10 tablets, ensuring standard packaging and a minimum 24-month expiry.",
-        receivedDate: "03-05-2024",
-      },
-      paymentDetails: {
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        amount: "$15000.00",
-        cardHolderName: "Maria Aniston",
-        cardNo: "**** **** 8752",
-        paymentAddress: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        paymentDate: "2024-03-19",
-        paymentMethod: "Credit Card",
-        paymentStatus: "Paid",
-      },
-      productDetails: {
-        Name: "Paracetamol 500mg Capsules",
-        code: "PAR001",
-        price: "$30.00 Per Strip",
-        quantity: "500 Strips",
-      },
-      shipmentDetails: {
-        Address: "Azura Pharma Pvt Ltd Warehouse 3423 White Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        deliveryDate: "2024-03-21",
-      },
-    },
-    {
-      status:1,
-      id:15,
-      customerDetails: {
-        Address: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        customerName: "Azura Pharmaceuticals",
-        email: "azurapharmaceuticals@gmail.com",
-        mobileNumber: "+1 (954) 633-1314",
-      },
-      orderDetails: {
-        Location: "Mumbai",
-        Note: "Kindly fulfill an order for 500 Paracetamol strips, each containing 10 tablets, ensuring standard packaging and a minimum 24-month expiry.",
-        receivedDate: "03-05-2024",
-      },
-      paymentDetails: {
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        amount: "$15000.00",
-        cardHolderName: "Maria Aniston",
-        cardNo: "**** **** 8752",
-        paymentAddress: "Azura Pharma Pvt Ltd 1234 Elm Street  Anytown",
-        paymentDate: "2024-03-19",
-        paymentMethod: "Credit Card",
-        paymentStatus: "Paid",
-      },
-      productDetails: {
-        Name: "Paracetamol 500mg Capsules",
-        code: "PAR001",
-        price: "$30.00 Per Strip",
-        quantity: "500 Strips",
-      },
-      shipmentDetails: {
-        Address: "Azura Pharma Pvt Ltd Warehouse 3423 White Street  Anytown",
-        City: "Springfield",
-        Country: "USA",
-        PostalCode: "62701",
-        State: "Illinois",
-        deliveryDate: "2024-03-21",
-      },
-    },
-    
   ],
 };
+const postData = async (Data) => {
+  try {
+    const url = `${api_url}/api/createOrder/`;
+    console.log("data : ", Data);
+    const resp = await axios.post(url, Data);
+    console.log('Response at createOrder', resp);
+  }
+  catch (error) {
+    console.log("Error :", error);
+  }
+}
 
 export const ordersSlice = createSlice({
   name: "Orders",
@@ -701,37 +23,75 @@ export const ordersSlice = createSlice({
   reducers: {
     addOrder: (state, action) => {
       if (action.payload) {
-        state.orders.push(action.payload);
+        // state.orders.push(action.payload);
+        console.log("action.payload at orderSlice:", action.payload);
+        const data = {
+          "receivedDate": String(action.payload.orderDetails.receivedDate),
+          "orderStatus": parseInt(1),
+          "orderLocation": String(action.payload.orderDetails.Location),
+          "orderNote": String(action.payload.orderDetails.Note),
+          "productName": String(action.payload.productDetails.Name),
+          "code": String(action.payload.productDetails.code),
+          "quantity": parseInt(action.payload.productDetails.quantity),
+          "price": parseFloat(action.payload.productDetails.price),
+          "customerName": String(action.payload.customerDetails.customerName),
+          "email": String(action.payload.customerDetails.email),
+          "mobileNumber": String(action.payload.customerDetails.mobileNumber),
+          "addressLine": String(action.payload.customerDetails.Address),
+          "postalCode": String(action.payload.customerDetails.PostalCode),
+          "city": String(action.payload.customerDetails.City),
+          "state": String(action.payload.customerDetails.State),
+          "country": String(action.payload.customerDetails.Country),
+          "paymentMethod": String(action.payload.paymentDetails.paymentMethod),
+          "cardNumber": String(action.payload.paymentDetails.cardNo),
+          "cardHolderName": String(action.payload.paymentDetails.cardHolderName),
+          "paymentStatus": String(action.payload.paymentDetails.paymentStatus),
+          "paymentDate": String(action.payload.paymentDetails.paymentDate),
+          "amount": parseFloat(action.payload.paymentDetails.amount),
+          "paymentAddressLine": String(action.payload.paymentDetails.paymentAddress),
+          "paymentPostalCode": String(action.payload.paymentDetails.PostalCode),
+          "paymentCity": String(action.payload.paymentDetails.City),
+          "paymentState": String(action.payload.paymentDetails.State),
+          "paymentCountry": String(action.payload.paymentDetails.Country),
+          "deliveryDate": String(action.payload.shipmentDetails.deliveryDate),
+          "shipmentAddressLine": String(action.payload.shipmentDetails.Address),
+          "shipmentPostalCode": String(action.payload.shipmentDetails.PostalCode),
+          "shipmentCity": String(action.payload.shipmentDetails.City),
+          "shipmentState": String(action.payload.shipmentDetails.State),
+          "shipmentCountry": String(action.payload.shipmentDetails.Country)
+        }
+        console.log("Data at addOrder :", data);
+        postData(data)
         // console.log("all orders", state.orders);
       } else {
         console.log("data not received at reducer");
       }
     },
-    changeStatus:(state,action) =>{
-      console.log("at reducer :",action.payload.id," ",action.payload.status);
-      if(action.payload){
+    changeStatus: (state, action) => {
+      console.log("at reducer :", action.payload.id, " ", action.payload.status);
+      if (action.payload) {
         // console.log("all orders", [...state.orders]);
-          state.orders = state.orders.map((order) => {
-              if(order.id == action.payload.id){
-                // console.log("order at changeStatus reducer",order.id,action.payload.id,order.status);
-                return {
-                  ...order,
-                  status: action.payload.status
-                };
-              }
-              return order;
-          })
-          // state.orders.map((order) =>{
-          //   console.log("all Orders at reducer: ",order.id, " ",order.status);
-          // })
+        state.orders = state.orders.map((order) => {
+          if (order.id == action.payload.id) {
+            // console.log("order at changeStatus reducer",order.id,action.payload.id,order.status);
+            return {
+              ...order,
+              status: action.payload.status
+            };
+          }
+          return order;
+        })
+        // state.orders.map((order) =>{
+        //   console.log("all Orders at reducer: ",order.id, " ",order.status);
+        // })
       }
-      else{
+      else {
         console.log("data not received at reducer ");
       }
     },
   },
 });
 
-export const { addOrder,changeStatus } = ordersSlice.actions;
+export const { addOrder, changeStatus } = ordersSlice.actions;
 
 export default ordersSlice.reducer;
