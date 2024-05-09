@@ -34,6 +34,7 @@ export default function PurchaseOrder() {
             title="Purchase Order"
           className="NavbarForm"
             btnTitle="Next"
+            backLink="/sales"
           />
           <div className="grid gap-y-4 pt-8">
             <div className="grid gap-2">

@@ -30,7 +30,7 @@ export default function CreateOrder() {
   return (
     <form >
       <div className="p-8 bg-white">
-        <Navbar title="Make Order" className="NavbarForm" btnTitle="Next" />
+        <Navbar title="Make Order" className="NavbarForm" btnTitle="Next" backLink="/sales" />
         <div className="grid gap-y-4 pt-8" >
           <div className="grid gap-2">
             <div className="grid  grid-cols-1 md:grid-cols-3 grid-flow-row gap-x-8 gap-y-8">

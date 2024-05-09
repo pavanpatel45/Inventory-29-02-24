@@ -1,5 +1,5 @@
 import * as React from "react";
-import axios from 'axios';
+import axios from "axios";
 import { useTable } from "react-table";
 import InStock from "./InStock";
 import OutOfStock from "./OutOfStock";
@@ -15,35 +15,33 @@ import "../CSS/OrderDropdown.css";
 import TableDropdown from "./TableDropdown";
 import { set } from "react-hook-form";
 
-
-function Material({setSelected,selected,materialsTableData,data}) {
-  const [option1,setOption1] = React.useState([]);
+function Material({ setSelected, selected, materialsTableData, data }) {
+  const [option1, setOption1] = React.useState([]);
   const handleImageClick1 = () => {
     console.log("edit icon was clicked");
   };
   const handleImageClick2 = () => {
     console.log("shopping-bag icon was clicked");
   };
-  const handleCheck = (id) =>{
+  const handleCheck = (id) => {
     // console.log("at handleCheck :",id);
     // console.log("selected at handlecheck:",selected);
-    if(selected.includes(id)){
+    if (selected.includes(id)) {
       // console.log("return true");
       return true;
-    }
-    else{
+    } else {
       // console.log("return false");
       return false;
     }
-  }
-  React.useEffect(()=>{
-     console.log("selected array:",selected);
-  },[selected])
-  const getCategory = async () =>{
-    const url = `${api_url}/getAllMaterialCategory`
+  };
+  React.useEffect(() => {
+    console.log("selected array:", selected);
+  }, [selected]);
+  const getCategory = async () => {
+    const url = `${api_url}/getAllMaterialCategory`;
     try {
       const response = await axios.get(url, {
-        headers: { 'ngrok-skip-browser-warning': '69420' }
+        headers: { "ngrok-skip-browser-warning": "69420" },
       });
       // console.log("at api-data Category DAta: ", response);
 
@@ -51,42 +49,41 @@ function Material({setSelected,selected,materialsTableData,data}) {
         console.log("API Data: Category DAta", response?.data);
         const option = response?.data;
         setOption1([]);
-        option.map((ele)=>{
-            setOption1((prev)=>{
-              return [...prev,{
-                value:ele.value,
-                label:ele.value
-              }]
-            })
-        })
+        option.map((ele) => {
+          setOption1((prev) => {
+            return [
+              ...prev,
+              {
+                value: ele.value,
+                label: ele.value,
+              },
+            ];
+          });
+        });
       } else {
-        console.error('Received unexpected response:', response);
-  
+        console.error("Received unexpected response:", response);
       }
     } catch (error) {
-      return null
+      return null;
     }
-  }
-  React.useEffect(()=>{
-     getCategory();
-  },[])
+  };
+  React.useEffect(() => {
+    getCategory();
+  }, []);
 
   // const data1 = React.useMemo(() => data, [selected]);
   const options = [
     {
       value: "inStock",
       label: "In Stock",
-
     },
     {
       value: "fewLeft",
       label: "Few Left",
-
     },
     {
       value: "outOfStock",
       label: "Out of Stock",
-
     },
   ];
 
@@ -138,29 +135,56 @@ function Material({setSelected,selected,materialsTableData,data}) {
               }
               name="my-input"
               checked={false}
-             
-              style={{ cursor: "pointer", height: "20px", width: "20px", border: "1px solid #2CAE66", overflow: "hidden" }}
+              style={{
+                cursor: "pointer",
+                height: "20px",
+                width: "20px",
+                border: "1px solid #2CAE66",
+                overflow: "hidden",
+              }}
             />
             <p>Material Name</p>
           </div>
         ),
         accessor: "materialName",
-         width: "228px",
-       
+        //width: "200px",
+
         Cell: ({ cell, row }) => (
-          <div className="flex items-center gap-2"
-          onMouseEnter={() => {
-            const img = document.getElementById(`image-${row.original.id}`);
-            if (img) {
-              img.style.display = "block";
-            }
-          }}
-          onMouseLeave={() => {
-            const img = document.getElementById(`image-${row.original.id}`);
-            if (img) {
-              img.style.display = "none";
-            }
-          }}>
+          <div
+            className="relative flex items-center gap-2"
+            onMouseEnter={() => {
+              const img = document.getElementById(`image-${row.original.id}`);
+              if (img) {
+                img.style.display = "block";
+              }
+            }}
+            onMouseLeave={() => {
+              const img = document.getElementById(`image-${row.original.id}`);
+              if (img) {
+                img.style.display = "none";
+              }
+            }}
+          >
+             <div
+      id={`image-${row.original.id}`}
+      className="hover-image"
+      style={{
+        display: "none", // Initially hidden
+        position: "absolute",
+        marginLeft:"20px",
+        top: "50%", // Center vertically
+        //transform: "translateY(-50%)", // Center vertically
+      }}
+    >
+            <img
+              src={hover}
+              alt="Hover Image"
+              style={{
+                width: "148px", // Adjust size as needed
+                height: "44px",
+              }}
+            />
+            </div>
             <Checkbox
               icon={
                 <div
@@ -175,67 +199,48 @@ function Material({setSelected,selected,materialsTableData,data}) {
                 </div>
               }
               name="my-input"
-              
               onChange={(value, event) => {
                 console.log("Selected checkbox has id :", row.original);
 
                 if (value == true) {
-                  // console.log("true");
-                  console.log("selected Array true:",selected);
+                  console.log("selected Array true:", selected);
                   setSelected((prevSelected) => {
                     if (!prevSelected.includes(row.original.id)) {
-                      return [...prevSelected, row.original.id]
-                    }
-                    else {
-
+                      return [...prevSelected, row.original.id];
+                    } else {
                       return prevSelected;
                     }
-                  })
-                 
-                }
-                else if (value == false) {
-                  console.log("selected Array false:",selected);
-                  return setSelected(prevSelected => prevSelected.filter(item => item !== row.original.id));
+                  });
+                } else if (value == false) {
+                  console.log("selected Array false:", selected);
+                  return setSelected((prevSelected) =>
+                    prevSelected.filter((item) => item !== row.original.id)
+                  );
                 }
               }}
-              style={{ cursor: "pointer", height: "20px", width: "20px", border: "1px solid #2CAE66", overflow: "hidden" }}
+              style={{
+                cursor: "pointer",
+                height: "20px",
+                width: "20px",
+                border: "1px solid #2CAE66",
+                overflow: "hidden",
+              }}
               checked={handleCheck(row.original.id)}
-            // labelStyle={{ marginLeft: 5, userSelect: "none" }}
-            // label="Have you started using it?"
             />
             <a
-              href="https://www.google.com" //href={`#/${value}`}
+              href="https://www.google.com"
               className="hover:underline"
               style={{
                 color: "#103BD5",
                 fontFamily: "Roboto",
                 fontWeight: "400",
-                fontSize: "14px",
+                fontSize: "16px",
                 lineHeight: "22px",
                 textDecoration: "underline",
               }}
             >
-              <p
-                className="truncate max-w-24"
-              >
-                {cell.value}{" "}
-              </p>
+              <p className="truncate max-w-24">{cell.value} </p>
             </a>
-            <img
-        id={`image-${row.original.id}`}
-        src={hover}
-        alt="Hover Image"
-        className="hover-image"
-        style={{
-          display: "none", // Initially hidden
-          width: "50px", // Adjust size as needed
-          height: "50px",
-          position: "absolute",
-          top: "50%", // Position in the middle of the row item
-          left: "100%", // Position to the right of the row item
-          transform: "translate(-50%, -50%)", // Center the image
-        }}
-      />
           </div>
         ),
       },
@@ -253,7 +258,7 @@ function Material({setSelected,selected,materialsTableData,data}) {
       {
         Header: (
           <>
-            <TableDropdown title="Category" options={option1}  />
+            <TableDropdown title="Category" options={option1} />
           </>
         ),
         accessor: "category",
@@ -293,7 +298,7 @@ function Material({setSelected,selected,materialsTableData,data}) {
       {
         Header: (
           <div className="z-50">
-            <TableDropdown title="Availability" options={options}/>
+            <TableDropdown title="Availability" options={options} />
           </div>
         ),
         accessor: "availability",
@@ -310,9 +315,9 @@ function Material({setSelected,selected,materialsTableData,data}) {
         },
         width: "154px",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
       },
-      
+
       {
         Header: "Committed",
         accessor: "committed",
@@ -322,7 +327,7 @@ function Material({setSelected,selected,materialsTableData,data}) {
       {
         Header: "Action",
         accessor: "action",
-        width:"102px",
+        width: "102px",
         Cell: ({ cell }) => (
           <div className="flex flex-row justify-center">
             <img
@@ -342,7 +347,7 @@ function Material({setSelected,selected,materialsTableData,data}) {
         ),
       },
     ],
-    [option1,selected]
+    [option1, selected]
   );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
@@ -350,7 +355,6 @@ function Material({setSelected,selected,materialsTableData,data}) {
 
   return (
     <div>
-    
       <div className=" overflow-auto ml-4 pt-3 border-solid border-red-500 ">
         <table {...getTableProps()} className="table-auto border-collapse ">
           <thead>
