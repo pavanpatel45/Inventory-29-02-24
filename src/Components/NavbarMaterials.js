@@ -1,23 +1,35 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
-import Location from "./Location";
+import down from "../Icons/arrow-down.svg";
+import locationIcon from "../Icons/location.svg";
 import Export from "./Export";
 import Button from "./Button";
 import search from "../Icons/search.png";
 
 import plus from "../Icons/plus-outline.svg";
-import downArrow from "../Icons/down-arrow.png";
 import dlt from "../Icons/Delete.svg";
 import cancel from "../Icons/x.svg";
 
 import "../CSS/NavbarMaterials.css";
+import Location from "./Location";
 
-export default function NavbarMaterials({ className,select=true,count ,handleDelete,selected,setSelected, materialsTableData}) {
+export default function NavbarMaterials({
+  className,
+  select = true,
+  count,
+  handleDelete,
+  selected,
+  setSelected,
+  materialsTableData,
+}) {
   const [exportOption, setExportOption] = useState("");
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [isSearchClicked, setIsSearchClicked] = useState(false);
   const handleChange = (e) => {
     setExportOption(e.target.value);
+  };
+  const togglePopoverOpen = () => {
+    setIsPopoverOpen(!isPopoverOpen);
   };
 
   const handleSearch = () => {
@@ -30,10 +42,13 @@ export default function NavbarMaterials({ className,select=true,count ,handleDel
         {!select && <div className="font-medium">Materials View</div>}
         {select && (
           <div className="flex flex-row gap-2">
-            <img src={cancel} onClick={()=>{
-               setSelected([]);
-               materialsTableData();
-            }}/>
+            <img
+              src={cancel}
+              onClick={() => {
+                setSelected([]);
+                materialsTableData();
+              }}
+            />
             <div style={{ color: "#343434", fontWeight: "500" }}>
               {count} Item(s) Selected
             </div>
@@ -52,29 +67,66 @@ export default function NavbarMaterials({ className,select=true,count ,handleDel
             <input
               type="text"
               className="pl-2 txt-style"
-              style={{ width: isSearchClicked ? "330px" : "190px" , fontSize:"14px", color:"#A2A1A1"}}
+              style={{
+                width: isSearchClicked ? "330px" : "190px",
+                fontSize: "14px",
+                color: "#A2A1A1",
+              }}
               placeholder={isSearchClicked ? "Type here to search" : "Search"}
-              
             />
           </div>
         )}
         {!select && (
           <div className="mr-4">
-            <Location />
+            <Location>
+              <div
+                className="border flex flex-row items-center justify-between cursor-pointer"
+                style={{
+                  width: "170px",
+                  height: "42px",
+                  borderRadius: "8px",
+                  backgroundColor: "#EFEFEF",
+                  position: "relative",
+                }}
+                onClick={togglePopoverOpen}
+              >
+                <div className="pl-2">
+                  <img
+                    src={locationIcon}
+                    alt="icon"
+                    style={{ color: "black" }}
+                  />
+                </div>
+                <div
+                  className="pr-2"
+                  style={{ fontSize: "16px", fontWeight: "500" }}
+                >
+                  All Locations
+                </div>
+                <div className="pr-5">
+                  <img src={down} alt="icon" />
+                </div>
+              </div>
+            </Location>
           </div>
         )}
         <div className="mr-4">
           <Export />
         </div>
 
-         {!select &&
-        <Link to="CreateBatch">
-          <Button btnTitle={"Add"} className="style" icon={plus}>
-            </Button>
-        </Link>}
-        {select &&
-          <Button btnTitle={"Delete"} className="style1" icon={dlt} onClickfunction={handleDelete}>
-            </Button> }
+        {!select && (
+          <Link to="CreateBatch">
+            <Button btnTitle={"Add"} className="style" icon={plus}></Button>
+          </Link>
+        )}
+        {select && (
+          <Button
+            btnTitle={"Delete"}
+            className="style1"
+            icon={dlt}
+            onClickfunction={handleDelete}
+          ></Button>
+        )}
       </div>
     </div>
   );
