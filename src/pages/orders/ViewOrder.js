@@ -9,6 +9,9 @@ import userIcon from '../../Icons/user.png'
 import shippingIcon from '../../Icons/Union.png'
 import paymentIcon from '../../Icons/dollar.png'
 import productIcon from '../../Icons/package.png'
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
  export default function ViewOrder(props) {
    const dispatch = useDispatch();
    const location = useLocation();
@@ -18,6 +21,7 @@ import productIcon from '../../Icons/package.png'
       // console.log("at handleConfirmOrder :{id}",order.id);
       const status = 3;
        dispatch(changeStatus({id:order.id,status}))
+       toast.success("Order Confirmed!");
    }
    const handleCancelOrder = ()=>{
       // console.log("at handleConfirmOrder :{id}",order.id);

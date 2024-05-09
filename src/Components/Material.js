@@ -6,6 +6,7 @@ import OutOfStock from "./OutOfStock";
 import FewLeft from "./FewLeft";
 import edit from "../Icons/edit.png";
 import bag from "../Icons/shopping-bag.png";
+import hover from "../Icons/Group 35195.svg";
 import * as Icon from "react-icons/fi";
 import Checkbox from "react-custom-checkbox";
 import "../CSS/OrderDropdown.css";
@@ -137,13 +138,7 @@ function Material({setSelected,selected,materialsTableData,data}) {
               }
               name="my-input"
               checked={false}
-              // onChange={(value, event) => {
-              //   let p = {
-              //     isTrue: value,
-              //   };
-              //   console.log(event);
-              //   return alert(value);
-              // }}
+             
               style={{ cursor: "pointer", height: "20px", width: "20px", border: "1px solid #2CAE66", overflow: "hidden" }}
             />
             <p>Material Name</p>
@@ -153,7 +148,19 @@ function Material({setSelected,selected,materialsTableData,data}) {
          width: "228px",
        
         Cell: ({ cell, row }) => (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2"
+          onMouseEnter={() => {
+            const img = document.getElementById(`image-${row.original.id}`);
+            if (img) {
+              img.style.display = "block";
+            }
+          }}
+          onMouseLeave={() => {
+            const img = document.getElementById(`image-${row.original.id}`);
+            if (img) {
+              img.style.display = "none";
+            }
+          }}>
             <Checkbox
               icon={
                 <div
@@ -214,6 +221,21 @@ function Material({setSelected,selected,materialsTableData,data}) {
                 {cell.value}{" "}
               </p>
             </a>
+            <img
+        id={`image-${row.original.id}`}
+        src={hover}
+        alt="Hover Image"
+        className="hover-image"
+        style={{
+          display: "none", // Initially hidden
+          width: "50px", // Adjust size as needed
+          height: "50px",
+          position: "absolute",
+          top: "50%", // Position in the middle of the row item
+          left: "100%", // Position to the right of the row item
+          transform: "translate(-50%, -50%)", // Center the image
+        }}
+      />
           </div>
         ),
       },

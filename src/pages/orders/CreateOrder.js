@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { customAlphabet } from 'nanoid';
+import { customAlphabet } from "nanoid";
 import { useSelector, useDispatch } from "react-redux";
 import { addOrder } from "../../features/orders/ordersSlice";
 import InputBox from "../../Components/InputBox";
 import NavbarForm from "../../Components/NavbarForm";
 import Dropdown from "../../Components/Dropdown";
-import "../../CSS/NavbarMaterials.css"
+import "../../CSS/NavbarMaterials.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 export default function CreateOrder() {
   const dispatch = useDispatch();
   const allOrders = useSelector((state) => state.orders);
-  const alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  const alphabet =
+    "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
   const idLength = 10;
   const generateUniqueId = customAlphabet(alphabet, idLength);
   console.log("all Orders at createOrder", allOrders);
@@ -19,7 +23,7 @@ export default function CreateOrder() {
   const [customerAddress, setCustomerAddress] = useState({});
   const [formData, setFormData] = useState({
     status: 1,
-    id: '',
+    id: "",
     customerDetails: {
       Address: "",
       City: "",
@@ -63,21 +67,27 @@ export default function CreateOrder() {
       deliveryDate: "",
     },
   });
-  const handleBillingCheckChange = (e) => { };
-  const handleDeliveryCheckChange = (e) => { };
+  const handleBillingCheckChange = (e) => {};
+  const handleDeliveryCheckChange = (e) => {};
   const handleSubmit = (e) => {
     e.preventDefault();
     formData.id = generateUniqueId();
     console.log("data at submit", formData);
     dispatch(addOrder(formData));
+    toast.success("New Order Successfully Created");
   };
   return (
-    <form onSubmit={handleSubmit}>
+    <form >
       <div className="p-3 bg-white pb-4">
-         
-        <NavbarForm title="Create Order" btnTitle="Save" className="NavbarCreateOrder" />
-        
-       
+        <NavbarForm
+          title="Create Order"
+          btnTitle="Save"
+          className="NavbarCreateOrder"
+          backLink="/sales"
+          nextLink="/sales"
+          onClickfunction={handleSubmit}
+        />
+
         <div className="grid gap-y-4">
           {/* Order Details Block Start */}
           <div className="grid gap-2">
@@ -98,7 +108,10 @@ export default function CreateOrder() {
                   }))
                 }
                 labelCss={
-                  formData.orderDetails.receivedDate.length > 0 ? 'label-up' : 'label-down'}
+                  formData.orderDetails.receivedDate.length > 0
+                    ? "label-up"
+                    : "label-down"
+                }
               />
 
               <Dropdown
@@ -115,7 +128,10 @@ export default function CreateOrder() {
                   }))
                 }
                 labelCss={
-                  formData.orderDetails.Location.length > 0 ? 'label-up' : 'label-down'}
+                  formData.orderDetails.Location.length > 0
+                    ? "label-up"
+                    : "label-down"
+                }
               />
               <InputBox
                 type="text"
@@ -133,7 +149,10 @@ export default function CreateOrder() {
                   }))
                 }
                 labelCss={
-                  formData.orderDetails.Note.length > 0 ? 'label-up' : 'label-down'}
+                  formData.orderDetails.Note.length > 0
+                    ? "label-up"
+                    : "label-down"
+                }
               />
             </div>
           </div>
@@ -156,7 +175,10 @@ export default function CreateOrder() {
                   }))
                 }
                 labelCss={
-                  formData.productDetails.Name.length > 0 ? 'label-up' : 'label-down'}
+                  formData.productDetails.Name.length > 0
+                    ? "label-up"
+                    : "label-down"
+                }
               />
               <InputBox
                 type="text"
@@ -173,7 +195,10 @@ export default function CreateOrder() {
                   }))
                 }
                 labelCss={
-                  formData.productDetails.code.length > 0 ? 'label-up' : 'label-down'}
+                  formData.productDetails.code.length > 0
+                    ? "label-up"
+                    : "label-down"
+                }
               />
               <InputBox
                 type="number"
@@ -191,7 +216,8 @@ export default function CreateOrder() {
                   }));
                 }}
                 labelCss={
-                  formData.productDetails.quantity ? 'label-up' : 'label-down'}
+                  formData.productDetails.quantity ? "label-up" : "label-down"
+                }
               />
               <InputBox
                 type="number"
@@ -209,7 +235,8 @@ export default function CreateOrder() {
                   }));
                 }}
                 labelCss={
-                  formData.productDetails.price ? 'label-up' : 'label-down'}
+                  formData.productDetails.price ? "label-up" : "label-down"
+                }
               />
             </div>
           </div>
@@ -233,7 +260,10 @@ export default function CreateOrder() {
                   }))
                 }
                 labelCss={
-                  formData.customerDetails.customerName.length > 0 ? 'label-up' : 'label-down'}
+                  formData.customerDetails.customerName.length > 0
+                    ? "label-up"
+                    : "label-down"
+                }
               />
               <InputBox
                 type="email"
@@ -250,7 +280,10 @@ export default function CreateOrder() {
                   }))
                 }
                 labelCss={
-                  formData.customerDetails.email.length > 0 ? 'label-up' : 'label-down'}
+                  formData.customerDetails.email.length > 0
+                    ? "label-up"
+                    : "label-down"
+                }
               />
               <InputBox
                 type="number"
@@ -268,7 +301,10 @@ export default function CreateOrder() {
                   }));
                 }}
                 labelCss={
-                  formData.customerDetails.mobileNumber ? 'label-up' : 'label-down'}
+                  formData.customerDetails.mobileNumber
+                    ? "label-up"
+                    : "label-down"
+                }
               />
               <InputBox
                 type="text"
@@ -286,7 +322,10 @@ export default function CreateOrder() {
                   }));
                 }}
                 labelCss={
-                  formData.customerDetails.Address.length> 0 ? 'label-up' : 'label-down'}
+                  formData.customerDetails.Address.length > 0
+                    ? "label-up"
+                    : "label-down"
+                }
               />
 
               <InputBox
@@ -304,7 +343,10 @@ export default function CreateOrder() {
                   }));
                 }}
                 labelCss={
-                  formData.customerDetails.PostalCode ? 'label-up' : 'label-down'}
+                  formData.customerDetails.PostalCode
+                    ? "label-up"
+                    : "label-down"
+                }
               />
 
               <Dropdown
@@ -321,7 +363,10 @@ export default function CreateOrder() {
                   }));
                 }}
                 labelCss={
-                  formData.customerDetails.City.length > 0 ? 'label-up' : 'label-down'}
+                  formData.customerDetails.City.length > 0
+                    ? "label-up"
+                    : "label-down"
+                }
               />
 
               <Dropdown
@@ -338,7 +383,10 @@ export default function CreateOrder() {
                   }));
                 }}
                 labelCss={
-                  formData.customerDetails.State.length > 0 ? 'label-up' : 'label-down'}
+                  formData.customerDetails.State.length > 0
+                    ? "label-up"
+                    : "label-down"
+                }
               />
 
               <Dropdown
@@ -355,7 +403,10 @@ export default function CreateOrder() {
                   }));
                 }}
                 labelCss={
-                  formData.customerDetails.Country.length > 0 ? 'label-up' : 'label-down'}
+                  formData.customerDetails.Country.length > 0
+                    ? "label-up"
+                    : "label-down"
+                }
               />
             </div>
           </div>
@@ -388,7 +439,10 @@ export default function CreateOrder() {
                   }))
                 }
                 labelCss={
-                  formData.paymentDetails.paymentMethod.length > 0 ? 'label-up' : 'label-down'}
+                  formData.paymentDetails.paymentMethod.length > 0
+                    ? "label-up"
+                    : "label-down"
+                }
               />
 
               <InputBox
@@ -407,7 +461,8 @@ export default function CreateOrder() {
                   }));
                 }}
                 labelCss={
-                  formData.paymentDetails.cardNo ? 'label-up' : 'label-down'}
+                  formData.paymentDetails.cardNo ? "label-up" : "label-down"
+                }
               />
 
               <InputBox
@@ -425,7 +480,10 @@ export default function CreateOrder() {
                   }))
                 }
                 labelCss={
-                  formData.paymentDetails.cardHolderName.length > 0 ? 'label-up' : 'label-down'}
+                  formData.paymentDetails.cardHolderName.length > 0
+                    ? "label-up"
+                    : "label-down"
+                }
               />
 
               <Dropdown
@@ -442,7 +500,10 @@ export default function CreateOrder() {
                   }))
                 }
                 labelCss={
-                  formData.paymentDetails.paymentStatus.length > 0 ? 'label-up' : 'label-down'}
+                  formData.paymentDetails.paymentStatus.length > 0
+                    ? "label-up"
+                    : "label-down"
+                }
               />
 
               <InputBox
@@ -460,7 +521,10 @@ export default function CreateOrder() {
                   }))
                 }
                 labelCss={
-                  formData.paymentDetails.paymentDate.length > 0 ? 'label-up' : 'label-down'}
+                  formData.paymentDetails.paymentDate.length > 0
+                    ? "label-up"
+                    : "label-down"
+                }
               />
 
               <InputBox
@@ -479,7 +543,8 @@ export default function CreateOrder() {
                   }));
                 }}
                 labelCss={
-                  formData.paymentDetails.amount ? 'label-up' : 'label-down'}
+                  formData.paymentDetails.amount ? "label-up" : "label-down"
+                }
               />
 
               <InputBox
@@ -498,7 +563,10 @@ export default function CreateOrder() {
                   }))
                 }
                 labelCss={
-                  formData.paymentDetails.paymentAddress.length > 0 ? 'label-up' : 'label-down'}
+                  formData.paymentDetails.paymentAddress.length > 0
+                    ? "label-up"
+                    : "label-down"
+                }
               />
 
               <InputBox
@@ -517,7 +585,8 @@ export default function CreateOrder() {
                   }));
                 }}
                 labelCss={
-                  formData.paymentDetails.PostalCode ? 'label-up' : 'label-down'}
+                  formData.paymentDetails.PostalCode ? "label-up" : "label-down"
+                }
               />
 
               <Dropdown
@@ -534,7 +603,10 @@ export default function CreateOrder() {
                   }))
                 }
                 labelCss={
-                  formData.paymentDetails.City.length > 0 ? 'label-up' : 'label-down'}
+                  formData.paymentDetails.City.length > 0
+                    ? "label-up"
+                    : "label-down"
+                }
               />
 
               <Dropdown
@@ -551,7 +623,10 @@ export default function CreateOrder() {
                   }))
                 }
                 labelCss={
-                  formData.paymentDetails.State.length > 0 ? 'label-up' : 'label-down'}
+                  formData.paymentDetails.State.length > 0
+                    ? "label-up"
+                    : "label-down"
+                }
               />
 
               <Dropdown
@@ -568,7 +643,10 @@ export default function CreateOrder() {
                   }))
                 }
                 labelCss={
-                  formData.paymentDetails.Country.length > 0 ? 'label-up' : 'label-down'}
+                  formData.paymentDetails.Country.length > 0
+                    ? "label-up"
+                    : "label-down"
+                }
               />
             </div>
           </div>
@@ -601,7 +679,10 @@ export default function CreateOrder() {
                   }))
                 }
                 labelCss={
-                  formData.shipmentDetails.deliveryDate.length > 0 ? 'label-up' : 'label-down'}
+                  formData.shipmentDetails.deliveryDate.length > 0
+                    ? "label-up"
+                    : "label-down"
+                }
               />
 
               <InputBox
@@ -620,7 +701,10 @@ export default function CreateOrder() {
                   }))
                 }
                 labelCss={
-                  formData.shipmentDetails.Address.length > 0 ? 'label-up' : 'label-down'}
+                  formData.shipmentDetails.Address.length > 0
+                    ? "label-up"
+                    : "label-down"
+                }
               />
 
               <InputBox
@@ -639,7 +723,10 @@ export default function CreateOrder() {
                   }));
                 }}
                 labelCss={
-                  formData.shipmentDetails.PostalCode ? 'label-up' : 'label-down'}
+                  formData.shipmentDetails.PostalCode
+                    ? "label-up"
+                    : "label-down"
+                }
               />
 
               <Dropdown
@@ -656,7 +743,10 @@ export default function CreateOrder() {
                   }))
                 }
                 labelCss={
-                  formData.shipmentDetails.City.length > 0 ? 'label-up' : 'label-down'}
+                  formData.shipmentDetails.City.length > 0
+                    ? "label-up"
+                    : "label-down"
+                }
               />
 
               <Dropdown
@@ -673,7 +763,10 @@ export default function CreateOrder() {
                   }))
                 }
                 labelCss={
-                  formData.shipmentDetails.State.length > 0 ? 'label-up' : 'label-down'}
+                  formData.shipmentDetails.State.length > 0
+                    ? "label-up"
+                    : "label-down"
+                }
               />
 
               <Dropdown
@@ -690,7 +783,10 @@ export default function CreateOrder() {
                   }))
                 }
                 labelCss={
-                  formData.shipmentDetails.Country.length> 0 ? 'label-up' : 'label-down'}
+                  formData.shipmentDetails.Country.length > 0
+                    ? "label-up"
+                    : "label-down"
+                }
               />
             </div>
           </div>

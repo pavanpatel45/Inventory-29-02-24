@@ -5,6 +5,7 @@ import location from "../Icons/filter icon.svg";
 import data from "../Icons/data.svg";
 import plus from "../Icons/plus.svg"
 import OrderDropdown from "./OrderDropdown";
+import Location from "./Location"
 
 
 export default function NavbarSales({ title, handleCreateOrder }) {
@@ -12,6 +13,11 @@ export default function NavbarSales({ title, handleCreateOrder }) {
   const handleIconClick = () => {
     setShowDropdown(!showDropdown);
   };
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const togglePopoverOpen = () => {
+    setIsPopoverOpen(!isPopoverOpen);
+  };
+
   return (
     <div className="flex flex-row justify-between items-center bg-white pl-4 pr-4 pt-2 pb-2">
       <div className="flex flex-row gap-3 " style={{ font: "16px" }}>
@@ -22,7 +28,11 @@ export default function NavbarSales({ title, handleCreateOrder }) {
           <img src={search}  />
         </div>
         <div className="cursor-pointer ">
-          <img src={location}  alt="location" className=" "/>  
+          <Location>
+            <div  onClick={togglePopoverOpen}>
+          <img src={location}  alt="location" />
+          </div>  
+          </Location>
         </div>
         <div className="cursor-pointer" >
           <img src={data} />
