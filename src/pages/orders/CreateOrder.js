@@ -6,6 +6,7 @@ import InputBox from "../../Components/InputBox";
 import NavbarForm from "../../Components/NavbarForm";
 import Dropdown from "../../Components/Dropdown";
 import "../../CSS/NavbarMaterials.css";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -68,18 +69,20 @@ export default function CreateOrder() {
     },
   });
   const handleBillingCheckChange = (e) => {};
+  const navigate = useNavigate();
   const handleDeliveryCheckChange = (e) => {};
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("data at submit create Order", formData);
     dispatch(addOrder(formData));
     toast.success("New Order Successfully Created");
+    navigate("/sales");
   };
   return (
     <form >
       <div className="p-3 bg-white pb-4">
          
-        <NavbarForm title="Create Order" btnTitle="Save" className="NavbarCreateOrder" handleClick={handleSubmit}/>
+        <NavbarForm title="Create Order" btnTitle="Save" className="NavbarCreateOrder" handleClick={handleSubmit} backLink="/sales" />
         
        
         <div className="grid gap-y-4">
