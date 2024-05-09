@@ -1,10 +1,28 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import OrderBoxMedium from './OrderBoxMedium'
 import DialogBox from './DialogBox'
 import DialogBoxCancelOrder from './DialogBoxCancelOrder'
+import axios from 'axios';
+import { api_url } from '../Data/Constants';
 export default function CancelledOrder() {
-    const allOrders = useSelector((state) => state.orders.orders);
+  const [allOrders,setAllOrders] = useState([])
+  const getData = async () => {
+    try {
+      const url = `${api_url}/createOrder`;
+      const response = await axios.get(url, {
+        headers: { 'ngrok-skip-browser-warning': '69420' }
+      });
+      console.log('Response at newOrderRequest', response.data);
+      setAllOrders(response.data);
+    }
+    catch (error) {
+      console.log("Error :", error);
+    }
+  }
+  useEffect(()=>{
+    getData();
+  },[])
   return (
     <div>
     {/* <DialogBoxCancelOrder isOpen={isOpen} setIsOpen={setIsOpen} handleReadytoShip={handleReadytoShip} handleCancelOrder={handleCancelOrder}/> */}
@@ -12,7 +30,7 @@ export default function CancelledOrder() {
     { 
      allOrders.map((order) => {
          if(order.status == 6){
-             return(  <OrderBoxMedium order={order} key={order.id} />)
+             return(  <OrderBoxMedium order={order} key={order.orderId} />)
          }
          else{
              return(<></> )

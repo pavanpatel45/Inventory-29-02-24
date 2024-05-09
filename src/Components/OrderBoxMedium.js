@@ -33,10 +33,10 @@ export default function OrderBox({ order, key, handleChangeStatus }) {
           </div>
           <div>
             <div className="text-sm font-medium" style={{ color: "#4A4A4A" }}>
-              Order Quantity: {order.productDetails.quantity}
+              Order Quantity: {order.quantity}
             </div>
             <div className="text-xs font-normal" style={{ color: "#2D2D2D" }}>
-              Paracetamol 500mg Capsules
+              {order.productName}
             </div>
           </div>
         </div>
@@ -50,7 +50,7 @@ export default function OrderBox({ order, key, handleChangeStatus }) {
       </div>
       <div className=" flex justify-between items-center">
         <div className="text-xs font-normal" style={{ color: "#666666" }}>
-          Received On 06 Jun 2024
+          Received On {order.receivedDate}
         </div>
         <div className="flex flex-row items-center gap-2">
           <div
@@ -66,7 +66,7 @@ export default function OrderBox({ order, key, handleChangeStatus }) {
         <div className="grid gap-2">
           <div>
             <div className="text-xs font-medium" style={{ color: "#2D2D2D" }}>
-              Order by :
+              Order by : {order.customerName}
             </div>
             <div
               className="text-xs font-normal"
@@ -75,7 +75,7 @@ export default function OrderBox({ order, key, handleChangeStatus }) {
           </div>
           <div>
             <div className="text-xs font-medium" style={{ color: "#2D2D2D" }}>
-              Est. Delivery Date :
+              Est. Delivery Date : {order.deliveryDate}
             </div>
             <div
               className="text-xs font-normal"
@@ -84,7 +84,7 @@ export default function OrderBox({ order, key, handleChangeStatus }) {
           </div>
           <div>
             <div className="text-xs font-medium" style={{ color: "#2D2D2D" }}>
-              Order Id :
+              Order Id : {order.orderId}
             </div>
             <div
               className="text-xs font-normal"
@@ -108,7 +108,7 @@ export default function OrderBox({ order, key, handleChangeStatus }) {
               <button
                 className=" my-1 mx-1 py-2 rounded-md orderBoxButton  "
                 style={{ border: "1px solid #2CAE66", color: "#2CAE66" }}
-                onClick={() => handleChangeStatus({ id: order.id })}
+                onClick={() => handleChangeStatus({ id: order.orderId })}
               >
                 Change Status
               </button>

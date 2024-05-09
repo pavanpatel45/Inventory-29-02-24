@@ -1,55 +1,73 @@
-import React,{useState} from 'react'
+import React, { useState,useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
-import {changeStatus} from '../features/orders/ordersSlice';
+import { changeStatus } from '../features/orders/ordersSlice';
+import axios from 'axios';
 import OrderBoxMedium from './OrderBoxMedium'
 import DialogBox from './DialogBox'
 import DialogBoxCancelOrder from './DialogBoxCancelOrder'
+import { api_url } from '../Data/Constants';
 export default function InProgressOrder() {
+    const [allOrders, setAllOrders] = useState([])
+    const getData = async () => {
+        try {
+            const url = `${api_url}/createOrder`;
+            const response = await axios.get(url, {
+                headers: { 'ngrok-skip-browser-warning': '69420' }
+            });
+            console.log('Response at newOrderRequest', response.data);
+            setAllOrders(response.data);
+        }
+        catch (error) {
+            console.log("Error :", error);
+        }
+    }
+    useEffect(() => {
+        getData();
+    }, [])
     const dispactch = useDispatch();
-    const allOrders = useSelector((state) => state.orders.orders);
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenCancelOrder, setIsOpenCancelOrder] = useState(false);
-    const [Note,setNote] = useState('');
-    const [id,setId] = useState('');
-    const handleChangeStatus = ({id}) =>{
+    const [Note, setNote] = useState('');
+    const [id, setId] = useState('');
+    const handleChangeStatus = ({ id }) => {
         setIsOpen(true);
         setId(id);
         // console.log("at handleChangeStatus is clicked by id",id);
     }
-    const handleReadytoShip = ({id})=>{
+    const handleReadytoShip = ({ id }) => {
         //  console.log("at readytoShip",id);
-         dispactch(changeStatus({id,status:4}))
+        dispactch(changeStatus({ id, status: 4 }))
     }
-    const handleCancelOrder = ({id})=>{
+    const handleCancelOrder = ({ id }) => {
         // console.log("at CancelOrder",id);
         setIsOpen(false);
         setIsOpenCancelOrder(true);
-       
+
     }
-    const handleCancelOrderSubmit = ({id})=>{
+    const handleCancelOrderSubmit = ({ id }) => {
         // console.log("at CancelOrderSubmit",id);
         // console.log("Note : ",Note);
         setIsOpenCancelOrder(false);
-        dispactch(changeStatus({id,status:6}))
+        dispactch(changeStatus({ id, status: 6 }))
 
     }
-  return (
-    <div>
-    <DialogBox isOpen={isOpen} setIsOpen={setIsOpen} id={id} handleReadytoShip={handleReadytoShip} handleCancelOrder={handleCancelOrder} content="Ready to Ship"/>
-    <DialogBoxCancelOrder isOpen={isOpenCancelOrder} id={id} setIsOpen={setIsOpenCancelOrder} setNote={setNote} Note={Note} handleCancelOrderSubmit={handleCancelOrderSubmit}/>
-    <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  p-3 gap-2'>
-    { 
-     allOrders.map((order) => {
-         if(order.status == 3){
-             return(  <OrderBoxMedium order={order} key={order.id} handleChangeStatus={handleChangeStatus}/>)
-         }
-         else{
+    return (
+        <div>
+            <DialogBox isOpen={isOpen} setIsOpen={setIsOpen} id={id} handleReadytoShip={handleReadytoShip} handleCancelOrder={handleCancelOrder} content="Ready to Ship" />
+            <DialogBoxCancelOrder isOpen={isOpenCancelOrder} id={id} setIsOpen={setIsOpenCancelOrder} setNote={setNote} Note={Note} handleCancelOrderSubmit={handleCancelOrderSubmit} />
+            <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  p-3 gap-2'>
+                {
+                    allOrders.map((order) => {
+                        if (1) {
+                            return (<OrderBoxMedium order={order} key={order.orderStatus} handleChangeStatus={handleChangeStatus} />)
+                        }
+                        else {
 
-             return(<></> )
-         }
-     })
-    }
-</div>
-</div>
-  )
+                            return (<></>)
+                        }
+                    })
+                }
+            </div>
+        </div>
+    )
 }

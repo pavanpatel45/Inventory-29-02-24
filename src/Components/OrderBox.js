@@ -66,7 +66,7 @@ export default function OrderBox({ order, key }) {
             style={{ backgroundColor: "#EF5E30" }}
           ></div>
           <div className="text-xs font-normal" style={{ color: "#EF5E30" }}>
-            Available
+            {order.orderStatus}
           </div>
         </div>
       </div>
