@@ -56,7 +56,7 @@ export const materialSlice = createSlice({
           description: String(payload.description),
           refrigeration:Boolean( payload.refrigeration)
         };
-        postData(state.material);
+        
       }
     },
     addBatch: (state, action) => {
@@ -75,7 +75,7 @@ export const materialSlice = createSlice({
           quantity:parseInt(payload.quantity, 10)     ,
           price: parseFloat(payload.price)     ,
         };
-
+        postData(state.material);
       }
     }
   }

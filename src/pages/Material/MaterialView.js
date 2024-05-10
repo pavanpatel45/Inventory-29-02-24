@@ -13,9 +13,10 @@ const MaterialView = () => {
   const [data, setData] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [confirm, setConfirm] = useState(false);
-  const url = `${api_url}/material`;
+  
 
   const materialsTableData = async () => {
+    const url = `${api_url}/material`;
     try {
       const response = await axios.get(url, {
         headers: { "ngrok-skip-browser-warning": "69420" },
@@ -23,6 +24,7 @@ const MaterialView = () => {
 
       if (response?.status === 200) {
         setData(response?.data);
+        console.log(response?.data);
       } else {
         console.error("Received unexpected response:", response);
       }

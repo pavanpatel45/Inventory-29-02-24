@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { addBatch } from "../../features/Materials/materialSlice";
 import InputBox from "../../Components/InputBox";
 import DropDown from "../../Components/Dropdown";
@@ -13,7 +14,9 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function CreateBatch() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [materialsTableData,setMaterialTableData] = useState([]);
   const [formData,setFormData]= useState({
     materialName :'',
     storageLocation:'',
@@ -38,7 +41,41 @@ export default function CreateBatch() {
     console.log("form Data",formData);
     // postData();
     dispatch(addBatch(formData));
+    toast.success("Batch Successfully Added")
+    navigate("/materials")
+    
   }
+  const getMaterialsTableData = async () => {
+    const url = `${api_url}/material`;
+    try {
+      const response = await axios.get(url, {
+        headers: { "ngrok-skip-browser-warning": "69420" },
+      });
+
+      if (response?.status === 200) {
+        setMaterialTableData(response?.data);
+      } else {
+        console.error("Received unexpected response:", response);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  useEffect(()=>{
+    getMaterialsTableData();
+  },[])
+  useEffect(()=>{
+      console.log("on formData.materialName change");
+      materialsTableData.map((d)=>{
+          console.log("Inside material table Data",d.materialName.trim(),formData.materialName.trim());
+          if(d.materialName.trim() == formData.materialName.trim()){
+              console.log("at create BAth :",d.materialName);
+          }
+          else{
+             console.log("add Material");
+          }
+      })
+  },[formData.materialName])
   return (
     
     <form onSubmit={handleSubmit} >
@@ -129,7 +166,7 @@ export default function CreateBatch() {
                 btnTitle="Save"
                 className=" pt-0 pb-0 text-style"
                 type="submit"
-                onClickfunction={()=>{toast.success("Batch Successfully Added")}}
+                onClickfunction={handleSubmit}
               />
               </Link>
             </div>

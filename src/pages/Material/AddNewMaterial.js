@@ -12,8 +12,6 @@ import "../../CSS/NavbarMaterials.css"
 import { api_url } from "../../Data/Constants";
 import axios from "axios";
 export default function AddNewMaterial() {
-  const materials = useSelector((state) => state.materials);
-  console.log("materials ",materials)
   const dispatch = useDispatch();
 const navigate= useNavigate();
   const [formData,setFormData] = useState({
@@ -29,10 +27,11 @@ const navigate= useNavigate();
     refrigeration:''
   })
   const [categoryData,setCategoryData] = useState([]);
+  const [subCategoryData,setSubCategoryData] = useState([]);
   const handleInputChange = (e) => {
-    console.log(e);
-    const { name, value } = e.target;
-    console.log("Input value changed:", name,":",value);
+    console.log('at handle input change:',e);
+    const { name, value,key} = e.target;
+    // console.log("Input value changed:", name,":",value,key);
     setFormData(prevData => ({
       ...prevData,
       [name]: value
@@ -51,7 +50,22 @@ const navigate= useNavigate();
       console.log("Error :", error);
   }
   }
-
+  // const getSubCategoryData = async () =>{
+  //   try {
+  //     const url = `${api_url}/getAllMaterialCategory`;
+  //     const response = await axios.get(url, {
+  //         headers: { 'ngrok-skip-browser-warning': '69420' }
+  //     });
+  //     console.log('Response at newOrderRequest', response.data);
+  //     setCategoryData(response.data);
+  // }
+  // catch (error) {
+  //     console.log("Error :", error);
+  // }
+  // }
+  // useEffect(()=>{
+  //     getSubCategoryData(form.category);
+  // },[form.category]);
   const handleSubmit = (e)=>{
      e.preventDefault();
      console.log("at handle Submit",formData);
@@ -61,7 +75,7 @@ const navigate= useNavigate();
   }
   useEffect(()=>{
     getCategoryData();
-  })
+  },[])
   return (
     <form >
       <div className="p-3 bg-white">

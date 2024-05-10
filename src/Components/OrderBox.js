@@ -5,7 +5,7 @@ import uparrow from "../Icons/ArrowLineopen.svg";
 import downarrow from "../Icons/ArrowLineclose.svg";
 import productImg from "../Icons/product.png";
 import { Link } from "react-router-dom";
-export default function OrderBox({ order, key }) {
+export default function OrderBox({ order, key,updateStatus }) {
   const dispatch = useDispatch();
   console.log("order at OrderBox : ",order);
   const [isOpen, setIsOpen] = useState(false);
@@ -17,8 +17,7 @@ export default function OrderBox({ order, key }) {
     }
   }
   const handleCancelledOrder = () =>{
-    const status = 6;
-    dispatch(changeStatus({id:order.orderId,status}))
+    updateStatus(order.orderId,3);
   }
   return (
     <div
