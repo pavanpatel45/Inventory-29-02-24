@@ -31,11 +31,12 @@ const navigate= useNavigate();
   const handleInputChange = (e) => {
     console.log('at handle input change:',e);
     const { name, value,key} = e.target;
-    // console.log("Input value changed:", name,":",value,key);
+    
     setFormData(prevData => ({
       ...prevData,
       [name]: value
     }));
+    console.log("Input value changed:", name,":",value,":",formData);
   };
   const getCategoryData = async () =>{
     try {
@@ -50,22 +51,33 @@ const navigate= useNavigate();
       console.log("Error :", error);
   }
   }
-  // const getSubCategoryData = async () =>{
-  //   try {
-  //     const url = `${api_url}/getAllMaterialCategory`;
-  //     const response = await axios.get(url, {
-  //         headers: { 'ngrok-skip-browser-warning': '69420' }
-  //     });
-  //     console.log('Response at newOrderRequest', response.data);
-  //     setCategoryData(response.data);
-  // }
-  // catch (error) {
-  //     console.log("Error :", error);
-  // }
-  // }
-  // useEffect(()=>{
-  //     getSubCategoryData(form.category);
-  // },[form.category]);
+  const getSubCategoryData = async (value) =>{
+    const obj = categoryData.find((obj)=>{
+        if(obj.value.trim() ==  value.trim()){
+            return obj;
+        }
+    });
+     const id = obj?.id;
+    console.log("id at getsubcategoryData",id);
+    try {
+      const url = `${api_url}/getAllMaterialSubCategory/${id}`;
+      const response = await axios.get(url, {
+          headers: { 'ngrok-skip-browser-warning': '69420' }
+      });
+      console.log('Response at newOrderRequest', response.data);
+      setSubCategoryData(response.data);
+  }
+  catch (error) {
+      console.log("Error :", error);
+  }
+  }
+  useEffect(()=>{
+      getSubCategoryData(formData.category);
+      setFormData((prevData) =>({
+        ...prevData,
+        subCategory:''
+      }))
+  },[formData.category]);
   const handleSubmit = (e)=>{
      e.preventDefault();
      console.log("at handle Submit",formData);
@@ -128,13 +140,14 @@ const navigate= useNavigate();
               onChange={handleInputChange}
               options={categoryData}
               labelCss={
-                formData.categorylength > 0 ? 'label-up' : 'label-down'}
+                formData.category.length >0 ? 'label-up' : 'label-down'}
             />
 
             <DropDown
               title="Sub Category*"
               name="subCategory"
               onChange={handleInputChange}
+              options={subCategoryData}
               labelCss={
                 formData.subCategory.length > 0 ? 'label-up' : 'label-down'}
             />
