@@ -89,15 +89,19 @@ function Location({children}) {
            className=" pl-1"
            onChange={handleCheckboxChange}
          />
-         <li className=" pl-2 mb-0.5">Item1</li>
+         <li className=" pl-2 mb-0.5">Indore</li>
        </div>
        <div className="flex flex-row items-center dropHover">
          <input type="checkbox" onChange={handleCheckboxChange} />
-         <li className=" pl-2 mb-0.5">Item1</li>
+         <li className=" pl-2 mb-0.5">Pune</li>
        </div>{" "}
        <div className="flex flex-row items-center dropHover">
          <input type="checkbox" onChange={handleCheckboxChange} />
-         <li className=" pl-2 mb-0.5">Item1</li>
+         <li className=" pl-2 mb-0.5">Mumbai</li>
+       </div>
+       <div className="flex flex-row items-center dropHover">
+         <input type="checkbox" onChange={handleCheckboxChange} />
+         <li className=" pl-2 mb-0.5">Bangalore</li>
        </div>
      </ul>
      <div className="flex justify-end pt-1">

@@ -35,7 +35,7 @@ export default function NavbarSales({ title, handleCreateOrder }) {
         <div className="cursor-pointer" onClick={handleSearch}>
         {!isSearchClicked && <img src={search} alt="icon" />}
           {isSearchClicked &&
-          <div className="flex flex-row items-center border border-1 border-r mr-4 flex flex-row items-center relative box-style" style={{ borderRadius: "100px"}}>
+          <div className="flex flex-row items-center border border-1 border-r mr-4  relative box-style" style={{ borderRadius: "100px"}}>
             <div className="pl-3">
             <img src={searchBox} alt="icon" />
             </div>
