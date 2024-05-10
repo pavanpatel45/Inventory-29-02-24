@@ -34,7 +34,7 @@ export default function CompletedOrder() {
       <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  p-3 gap-2'>
         {
           allOrders.map((order) => {
-            if (order.orderStatus == 5) {
+            if (order.orderStatus === "completed order") {
               return (<OrderBoxMedium order={order} key={order.orderId} />)
             }
             else {

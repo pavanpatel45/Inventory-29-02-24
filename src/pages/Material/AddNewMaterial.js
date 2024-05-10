@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addMaterial } from "../../features/Materials/materialSlice";
 import InputBox from "../../Components/InputBox";
 import DropDown from "../../Components/Dropdown";
 import Navbar from "../../Components/NavbarForm";
 import CheckBox from "../../Components/CheckBox";
-
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "../../CSS/NavbarMaterials.css"
+import { api_url } from "../../Data/Constants";
+import axios from "axios";
 export default function AddNewMaterial() {
   const materials = useSelector((state) => state.materials);
   console.log("materials ",materials)
@@ -27,6 +28,7 @@ const navigate= useNavigate();
     Description:'',
     refrigeration:''
   })
+  const [categoryData,setCategoryData] = useState([]);
   const handleInputChange = (e) => {
     console.log(e);
     const { name, value } = e.target;
@@ -36,7 +38,19 @@ const navigate= useNavigate();
       [name]: value
     }));
   };
- 
+  const getCategoryData = async () =>{
+    try {
+      const url = `${api_url}/getAllMaterialCategory`;
+      const response = await axios.get(url, {
+          headers: { 'ngrok-skip-browser-warning': '69420' }
+      });
+      console.log('Response at newOrderRequest', response.data);
+      setCategoryData(response.data);
+  }
+  catch (error) {
+      console.log("Error :", error);
+  }
+  }
 
   const handleSubmit = (e)=>{
      e.preventDefault();
@@ -45,6 +59,9 @@ const navigate= useNavigate();
      toast.success("New Material Successfully Added");
     navigate("/materials/CreateBatch");  
   }
+  useEffect(()=>{
+    getCategoryData();
+  })
   return (
     <form >
       <div className="p-3 bg-white">
@@ -95,6 +112,7 @@ const navigate= useNavigate();
               title="Category*"
               name="category"
               onChange={handleInputChange}
+              options={categoryData}
               labelCss={
                 formData.categorylength > 0 ? 'label-up' : 'label-down'}
             />

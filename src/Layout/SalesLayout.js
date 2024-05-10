@@ -1,10 +1,11 @@
 import React from 'react'
-import {Outlet} from "react-router-dom";
+import {Outlet,useNavigate} from "react-router-dom";
 import NavbarSales from '../Components/NavbarSales';
 import NavbarSalesInner from '../Components/NavbarSalesInner';
 import FooterPagination from '../Components/FooterPagination';
 
 export default function SalesLayout() {
+  const Navigate = useNavigate();
   return (
     <div className="bg-white flex flex-col justify-start ">
     <div className="scrollbar" style={{height: "80vh" , overflow: 'auto' }}>

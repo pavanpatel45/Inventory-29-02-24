@@ -20,8 +20,8 @@ export default function Dropdown({
         {options ? (
           <>
             <option default className="hidden"></option>
-            {options.map((ele, index) => (
-              <option key={index}>{ele}</option>
+            {options.map((ele) => (
+              <option key={ele.id}>{ele.value}</option>
             ))}
           </>
         ) : (

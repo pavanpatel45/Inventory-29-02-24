@@ -13,7 +13,7 @@ export default function CancelledOrder() {
       const response = await axios.get(url, {
         headers: { 'ngrok-skip-browser-warning': '69420' }
       });
-      console.log('Response at newOrderRequest', response.data);
+      console.log('Response at cancelled Order', response.data);
       setAllOrders(response.data);
     }
     catch (error) {
@@ -29,7 +29,8 @@ export default function CancelledOrder() {
     <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  p-3 gap-2'>
     { 
      allOrders.map((order) => {
-         if(order.status == 6){
+          console.log("order status at cancelled order :",order.orderStatus)
+         if(order.orderStatus === 'cancelled order'){
              return(  <OrderBoxMedium order={order} key={order.orderId} />)
          }
          else{

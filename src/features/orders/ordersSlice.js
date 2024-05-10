@@ -7,7 +7,7 @@ const initialState = {
 };
 const postData = async (Data) => {
   try {
-    const url = `${api_url}/api/createOrder/`;
+    const url = `${api_url}/createOrder/`;
     console.log("data : ", Data);
     const resp = await axios.post(url, Data);
     console.log('Response at createOrder', resp);

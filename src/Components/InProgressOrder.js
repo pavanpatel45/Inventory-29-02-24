@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 import { changeStatus } from '../features/orders/ordersSlice';
 import axios from 'axios';
 import OrderBoxMedium from './OrderBoxMedium'
@@ -7,6 +8,7 @@ import DialogBox from './DialogBox'
 import DialogBoxCancelOrder from './DialogBoxCancelOrder'
 import { api_url } from '../Data/Constants';
 export default function InProgressOrder() {
+    const navigate = useNavigate();
     const [allOrders, setAllOrders] = useState([])
     const getData = async () => {
         try {
@@ -24,6 +26,16 @@ export default function InProgressOrder() {
     useEffect(() => {
         getData();
     }, [])
+    const updateStatus = async(orderId,status)=>{
+        try {
+           const url = `${api_url}/createOrder/${orderId}/${status}`;
+           const resp = await axios.put(url);
+           console.log('Response at createOrder', resp);
+         }
+         catch (error) {
+           console.log("Error :", error);
+         }
+     }
     const dispactch = useDispatch();
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenCancelOrder, setIsOpenCancelOrder] = useState(false);
@@ -36,13 +48,15 @@ export default function InProgressOrder() {
     }
     const handleReadytoShip = ({ id }) => {
         //  console.log("at readytoShip",id);
-        dispactch(changeStatus({ id, status: 4 }))
+        updateStatus(id,6);
+        navigate("/sales/Shipped")
     }
     const handleCancelOrder = ({ id }) => {
         // console.log("at CancelOrder",id);
         setIsOpen(false);
         setIsOpenCancelOrder(true);
-
+        updateStatus(id,3);
+        navigate("/sales/Cancelled")
     }
     const handleCancelOrderSubmit = ({ id }) => {
         // console.log("at CancelOrderSubmit",id);
@@ -58,7 +72,7 @@ export default function InProgressOrder() {
             <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  p-3 gap-2'>
                 {
                     allOrders.map((order) => {
-                        if (1) {
+                        if (order.orderStatus === "in progress") {
                             return (<OrderBoxMedium order={order} key={order.orderStatus} handleChangeStatus={handleChangeStatus} />)
                         }
                         else {

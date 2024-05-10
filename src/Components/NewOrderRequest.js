@@ -3,7 +3,17 @@ import OrderBox from "./OrderBox";
 import { api_url } from "../Data/Constants";
 import axios from "axios";
 export default function NewOrderRequest( ) {
-  const [allOrders,setAllOrders] = useState([])
+  const [allOrders,setAllOrders] = useState([]);
+  const updateStatus = async(orderId,status)=>{
+    try {
+       const url = `${api_url}/createOrder/${orderId}/${status}`;
+       const resp = await axios.put(url);
+       console.log('Response at createOrder', resp);
+     }
+     catch (error) {
+       console.log("Error :", error);
+     }
+ }
   const getData = async () => {
     try {
       const url = `${api_url}/createOrder`;
@@ -25,7 +35,7 @@ export default function NewOrderRequest( ) {
   return (
     <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  p-3 gap-2">
       {allOrders?allOrders.map((order) => {
-        if (1) {
+        if (order.orderStatus === "New Order Request") {
           return <OrderBox order={order} key={order.orderId } />;
         } else {
           return <></>;
