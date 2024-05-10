@@ -95,7 +95,7 @@ export default function CreateBatch() {
                 onChange={handleInputChange}
                 labelCss={formData.materialName.length > 0 ? "label-up" : "label-down"}
               />
-              {showAddThisMaterial && <AddThisMaterial />}
+              {showAddThisMaterial && <AddThisMaterial title="material" link="/materials/AddMaterial" />}
               </div>
               <DropDown
                 title="Storage Location*"
