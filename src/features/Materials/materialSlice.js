@@ -21,17 +21,17 @@ const initialState = {
     "description": "A high-quality widget for various applications."
   }
 };
-const postData = async(Data) =>{
-    try{
-       const url = `${api_url}/material/`;
-       console.log("data : ", Data);
-       const resp = await axios.post(url, Data);
-       console.log('Response',resp);
-    }
-    catch(error){
-      console.log("Error :",error);
-    }
+const postData = async (Data) => {
+  try {
+    const url = `${api_url}/material/`;
+    console.log("data : ", Data);
+    const resp = await axios.post(url, Data);
+    console.log('Response', resp);
   }
+  catch (error) {
+    console.log("Error :", error);
+  }
+}
 
 export const materialSlice = createSlice({
   name: "materials",
@@ -51,12 +51,12 @@ export const materialSlice = createSlice({
           subCategory: String(payload.subCategory),
           upc: String(payload.upc),
           barcode: String(payload.barcode),
-          minimumQuantity: parseInt(payload.minimumQuantity,10),
+          minimumQuantity: parseInt(payload.minimumQuantity, 10),
           measurementType: String(payload.measurementType),
           description: String(payload.description),
-          refrigeration:Boolean( payload.refrigeration)
+          refrigeration: Boolean(payload.refrigeration)
         };
-        
+
       }
     },
     addBatch: (state, action) => {
@@ -66,14 +66,22 @@ export const materialSlice = createSlice({
         // Modify state here if needed
         const payload = action.payload;
         state.material = {
-          ...state.material,
-          materialName: String(payload.materialName),
-          storageLocation: String(payload.storageLocation),
-          batchId:String( payload.batchId),
-          purchaseOrder: String(payload.makeOrder),
-          expiryDate: String(payload.expiryDate),
-          quantity:parseInt(payload.quantity, 10)     ,
-          price: parseFloat(payload.price)     ,
+          "materialName": payload.materialName,
+          "storageLocation": String(payload.storageLocation),
+          "batchId": String(payload.batchId),
+          "purchaseOrder": String(payload.makeOrder),
+          "expiryDate": String(payload.expiryDate),
+          "quantity": parseInt(payload.quantity, 10),
+          "price": parseFloat(payload.price),
+          "shortName": '',
+          "category": payload.category,
+          "subCategory": '',
+          "upc": payload.upc,
+          "barcode": '',
+          "refrigeration": false,
+          "minimumQuantity": '',
+          "measurementType": '',
+          "description": ''
         };
         postData(state.material);
       }

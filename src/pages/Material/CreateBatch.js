@@ -18,6 +18,7 @@ export default function CreateBatch() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [materialsTableData, setMaterialTableData] = useState([]);
+  const [materialData,setMaterialData] = useState();
   const [formData, setFormData] = useState({
     materialName: "",
     storageLocation: "",
@@ -39,7 +40,26 @@ export default function CreateBatch() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addBatch(formData));
+    console.log("Material Data :",materialData);
+    const Data = {
+      "materialName": materialData.materialName,
+      "storageLocation": String(formData.storageLocation),
+      "batchId": String( formData.batchId),
+      "purchaseOrder":String(formData.makeOrder),
+      "expiryDate": String(formData.expiryDate),
+      "quantity":parseInt(formData.quantity, 10)  ,
+      "price": parseFloat(formData.price),
+      "shortName":'',
+      "category":materialData.category      ,
+      "subCategory": '',
+      "upc": materialData.upc,
+      "barcode": '',
+      "refrigeration": false,
+      "minimumQuantity": '',
+      "measurementType": '',
+      "description": ''
+    }
+    dispatch(addBatch(Data));
     toast.success("Batch Successfully Added");
     navigate("/materials");
   };
@@ -71,6 +91,7 @@ export default function CreateBatch() {
       if (d.materialName.trim() !== formData.materialName.trim()) {
         console.log("add this");
         setShowAddThisMaterial(true);
+        setMaterialData(d);
       } else {
         console.log("material present");
         setShowAddThisMaterial(false);
