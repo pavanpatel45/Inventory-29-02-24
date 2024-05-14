@@ -9,8 +9,7 @@ function  AddedMaterialsTable(Data) {
   const handleImageClick1 = () => {
     console.log("edit icon was clicked");
   };
-  const data = React.useMemo(() => Data, []);
-  const columns = React.useMemo(
+  const data = React.useMemo(() => Array.isArray(Data) ? Data : [], [Data]);  const columns = React.useMemo(
     () => [
       {
         Header: (

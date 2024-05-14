@@ -52,6 +52,42 @@ const navigate= useNavigate();
       console.log("Error :", error);
   }
   }
+  const [isFormComplete, setIsFormComplete] = useState(false);
+
+  const checkFormCompletion = () => {
+    const formEntries = Object.entries(formData);
+
+    console.log(formEntries);
+
+    const allFieldsFilled = formEntries.every((formEntriesData) => {
+      const [name, value] = formEntriesData;
+
+      if (typeof value === "object" && value !== null) {
+        // For objects, check each value inside the object
+        const isValidData = Object.values(value).every(
+          (val) =>
+            (typeof val === "string" || "number") && String(val).trim() !== ""
+        );
+        if (!isValidData) {
+          console.log(name);
+        }
+        return isValidData;
+      } else {
+        // For non-objects, directly check the value
+        const isValidData =
+          typeof (value === "string" || "number") &&
+          String(value).trim() !== "";
+        if (!isValidData) {
+          console.log(name);
+        }
+        return isValidData;
+      }
+    });
+
+    console.log(allFieldsFilled);
+    console.log("filled forms", allFieldsFilled);
+    setIsFormComplete(allFieldsFilled);
+  };
   const getSubCategoryData = async (value) =>{
     const obj = categoryData.find((obj)=>{
         if(obj.value.trim() ==  value.trim()){
@@ -85,6 +121,12 @@ const navigate= useNavigate();
       console.log("Error :", error);
   }
   }
+
+  useEffect(() => {
+    checkFormCompletion();
+  }, [formData]);
+
+
   useEffect(()=>{
       getSubCategoryData(formData.category);
       setFormData((prevData) =>({
@@ -92,6 +134,7 @@ const navigate= useNavigate();
         subCategory:''
       }))
   },[formData.category]);
+
   const handleSubmit = (e)=>{
      e.preventDefault();
      console.log("at handle Submit",formData);
@@ -99,21 +142,29 @@ const navigate= useNavigate();
      toast.success("New Material Successfully Added");
     navigate("/materials/CreateBatch");  
   }
+
   useEffect(()=>{
     getCategoryData();
     getMearsurmentData();
   },[])
+
+
+
+  
   return (
     <form >
       <div className="p-3 bg-white">
         <Navbar
           title="Add Material"
           btnTitle="Next"
+          btnStyle={{ backgroundColor: isFormComplete ? "#2CAE66" : "#B3B3B3",cursor: isFormComplete ? "pointer" : "not-allowed"}}
+         
           className="NavbarForm"
           btnType="submit"
           handleClick={handleSubmit}
           nextLink="/materials/CreateBatch"
           backLink="/materials/CreateBatch"
+          disabled={!isFormComplete}
          
         />
 

@@ -23,6 +23,7 @@ export default function CreateOrder() {
   console.log("all Orders at createOrder", allOrders);
   const [billingAddressCheck, setBillingAddressCheck] = useState(false);
   const [deliveryAddressCheck, setDeliveryAddressCheck] = useState(false);
+  const [isFormComplete, setIsFormComplete] = useState(false);
   const [customerAddress, setCustomerAddress] = useState({});
   const [paymentMethod,setPaymentMethod] = useState([]);
   const [paymentStatus,setPaymentStatus] = useState([]);
@@ -36,7 +37,7 @@ export default function CreateOrder() {
   const [locations,setLocations] = useState([]);
   const [formData, setFormData] = useState({
     status: 1,
-    id: "",
+    // id: "",
     customerDetails: {
       Address: "",
       City: "",
@@ -143,6 +144,48 @@ export default function CreateOrder() {
   //   }
   // };
   const navigate = useNavigate();
+
+ 
+  const checkFormCompletion = () => {
+    const formEntries= Object.entries(formData);
+
+    console.log(formEntries)
+
+    const allFieldsFilled = formEntries.every((formEntriesData) => {
+      const [name, value] = formEntriesData
+    
+      
+      
+      if (typeof value === "object" && value !== null) {
+        // For objects, check each value inside the object
+        const isValidData = Object.values(value).every(
+          (val) => (typeof val === "string"||"number") && String(val).trim() !== ""
+        );
+        if(!isValidData){
+          console.log(name)
+        }
+        return isValidData
+      } else {
+        // For non-objects, directly check the value
+        const isValidData = typeof (value === "string" || "number") && String(value).trim() !== ""
+        if(!isValidData){
+          console.log(name)
+        }
+        return isValidData
+      }
+    });
+
+
+    console.log(allFieldsFilled)
+    console.log("filled forms",allFieldsFilled);
+    setIsFormComplete(allFieldsFilled);
+  };
+
+  useEffect(() => {
+    checkFormCompletion();
+  }, [formData]);
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("data at submit create Order", formData);
@@ -322,12 +365,28 @@ export default function CreateOrder() {
        getLocations();
   },[])
   return (
-    <form >
+    <form>
       <div className="p-3 bg-white pb-4">
-         
-        <NavbarForm title="Create Order" btnTitle="Save" className="NavbarCreateOrder" handleClick={handleSubmit} backLink="/sales" />
-        
-       
+        <NavbarForm
+          title="Create Order"
+          btnTitle="Save"
+          className={`NavbarCreateOrder`}
+
+          btnStyle={{ backgroundColor: isFormComplete ? "#2CAE66" : "#B3B3B3",cursor: isFormComplete ? "pointer" : "not-allowed"}}
+          handleClick={handleSubmit}
+          backLink="/sales"
+          disabled={!isFormComplete}
+        />
+
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            checkFormCompletion();
+          }}
+        >
+          Test
+        </button>
+
         <div className="grid gap-y-4">
           {/* Order Details Block Start */}
           <div className="grid gap-2">

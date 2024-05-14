@@ -6,8 +6,8 @@ import axios from "axios";
 import InStock from "./InStock";
 import OutOfStock from "./OutOfStock";
 import FewLeft from "./FewLeft";
-import edit from '../Icons/edit.png'
-import bag from '../Icons/shopping-bag.png'
+import edit from "../Icons/edit.png";
+import bag from "../Icons/shopping-bag.png";
 import * as Icon from "react-icons/fi";
 import Checkbox from "react-custom-checkbox";
 import { CgOverflow } from "react-icons/cg";
@@ -16,39 +16,35 @@ import { useState } from "react";
 
 import "../CSS/OrderDropdown.css";
 import TableDropdown from "./TableDropdown";
-function Products({selected,setSelected,productsTableData,data}) {
+function Products({ selected, setSelected, productsTableData, data }) {
   const handleImageClick1 = () => {
     console.log("edit icon was clicked");
   };
   const handleImageClick2 = (row) => {
-    console.log("shopping-bag icon was clicked",row);
+    console.log("shopping-bag icon was clicked", row);
   };
-  const handleCheck = (id) =>{
-    console.log("at handleCheck :",id);
-    if(selected.includes(id)){
+  const handleCheck = (id) => {
+    console.log("at handleCheck :", id);
+    if (selected.includes(id)) {
       console.log("return true");
       return true;
-    }
-    else{
+    } else {
       console.log("return false");
       return false;
     }
-  }
+  };
   const options = [
     {
       value: "inStock",
       label: "In Stock",
-     
     },
     {
       value: "fewLeft",
       label: "Few Left",
-     
     },
     {
       value: "outOfStock",
       label: "Out of Stock",
-     
     },
   ];
 
@@ -56,27 +52,22 @@ function Products({selected,setSelected,productsTableData,data}) {
     {
       value: "fillersBinders",
       label: "Fillers and Binders",
-     
     },
     {
       value: "solvents",
       label: "Solvents",
-     
     },
     {
       value: "stabilizersLubricants",
       label: "Stabilizers and Lubricants",
-     
     },
     {
       value: "preservatives",
       label: "Preservatives",
-     
     },
     {
       value: "modifiersAdditives",
       label: "Modifiers and Additives",
-     
     },
   ];
 
@@ -100,20 +91,20 @@ function Products({selected,setSelected,productsTableData,data}) {
               }
               name="my-input"
               checked={false}
-              // onChange={(value, event) => {
-              //   let p = {
-              //     isTrue: value,
-              //   };
-              //   console.log(event);
-              //   return alert(value);
-              // }}
-              style={{ cursor: "pointer", height: "20px", width: "20px", border: "1px solid #2CAE66", overflow: "hidden" }}
+              style={{
+                cursor: "pointer",
+                height: "20px",
+                width: "20px",
+                border: "1px solid #2CAE66",
+                overflow: "hidden",
+              }}
             />
             <p>Product</p>
           </div>
         ),
         accessor: "productName",
-        width: "228px",
+        width: "240px",
+        height: "52px",
         Cell: ({ cell, row }) => (
           <div className="flex items-center gap-2">
             <Checkbox
@@ -136,23 +127,28 @@ function Products({selected,setSelected,productsTableData,data}) {
                 if (value == true) {
                   console.log("true");
                   setSelected((prevSelected) => {
-                    if(!prevSelected.includes(row.original.id)){
-                      return [...prevSelected, row.original.id]
+                    if (!prevSelected.includes(row.original.id)) {
+                      return [...prevSelected, row.original.id];
+                    } else {
+                      return prevSelected;
                     }
-                    else{
-
-                      return prevSelected ;
-                    }
-                  })
-                }
-                else if (value == false) {
-                  return setSelected(prevSelected => prevSelected.filter(item => item !== row.original.id));
+                  });
+                } else if (value == false) {
+                  return setSelected((prevSelected) =>
+                    prevSelected.filter((item) => item !== row.original.id)
+                  );
                 }
               }}
-              style={{ cursor: "pointer", height: "20px", width: "20px", border: "1px solid #2CAE66", overflow: "hidden" }}
+              style={{
+                cursor: "pointer",
+                height: "20px",
+                width: "20px",
+                border: "1px solid #2CAE66",
+                overflow: "hidden",
+              }}
 
-            // labelStyle={{ marginLeft: 5, userSelect: "none" }}
-            // label="Have you started using it?"
+              // labelStyle={{ marginLeft: 5, userSelect: "none" }}
+              // label="Have you started using it?"
             />
             <a
               href="https://www.google.com" //href={`#/${value}`}
@@ -166,38 +162,24 @@ function Products({selected,setSelected,productsTableData,data}) {
                 textDecoration: "underline",
               }}
             >
-              <p
-                className="truncate max-w-36"
-              >
-                {cell.value}{" "}
-              </p>
+              <p className="truncate max-w-36">{cell.value} </p>
             </a>
           </div>
-
         ),
       },
       {
         Header: "Code",
         accessor: "upc",
-        width: "102px",
+        width: "120px",
+        height: "52px",
       },
       {
         Header: "Batch ID",
         accessor: "batchId",
-        width: "122px",
-        // height: "40px",
+        width: "120px",
+        height: "52px",
       },
-      {
-        Header: (
-          <>
-            <TableDropdown title="Category" options={options1}/>
-          </>
-        ),
-        accessor: "category",
-        className: "truncate max-w-24",
-        width: "144px",
-        // height: "40px",
-      },
+    
       {
         Header: (
           <>
@@ -212,25 +194,36 @@ function Products({selected,setSelected,productsTableData,data}) {
           </>
         ),
         accessor: "expiryDate",
-        width: "122px",
-        // height: "40px",
-      },
-      {
-        Header: "Quantity",
-        accessor: "quantity",
-        width: "102px",
-        // height: "40px",
-      },
-      {
-        Header: "Price($)",
-        accessor: "price",
-        width: "102px",
-        // height: "40px",
+        width: "131px",
+        height: "52px",
       },
       {
         Header: (
           <>
-            <TableDropdown title="Availability" options={options}/>
+            <TableDropdown title="Category" options={options1} />
+          </>
+        ),
+        accessor: "category",
+        className: "truncate max-w-24",
+        width: "120px",
+        height: "40px",
+      },
+      {
+        Header: "Quantity",
+        accessor: "quantity",
+        width: "90px",
+        height: "40px",
+      },
+      {
+        Header: "Price($)",
+        accessor: "price",
+        width: "90px",
+        height: "52px",
+      },
+      {
+        Header: (
+          <>
+            <TableDropdown title="Availability" options={options} />
           </>
         ),
         accessor: "availability",
@@ -244,19 +237,20 @@ function Products({selected,setSelected,productsTableData,data}) {
           }
         },
         width: "154px",
-        // height: "40px",
+        height: "52px",
       },
       {
         Header: "Committed",
         accessor: "committed",
-        width: "102px",
-        // height: "40px",
+        width: "90px",
+        height: "40px",
       },
       {
         Header: "Action",
         accessor: "action",
-        width:"102px",
-        Cell: ({ cell,row }) => (
+        width: "125px",
+        height:"40px",
+        Cell: ({ cell, row }) => (
           <div className="flex flex-row justify-center">
             <img
               src={bag}
@@ -265,15 +259,14 @@ function Products({selected,setSelected,productsTableData,data}) {
               onClick={handleImageClick1}
               style={{ cursor: "pointer" }}
             />
-           {/* <Link to="/products/UpdateProduct" state={row}> */}
-           <Link to="/products/UpdateProduct">
-            <img
-              src={edit}
-              alt="icon"
-              onClick={() => handleImageClick2(row)}
-              style={{ cursor: "pointer" }}
-              
-            />
+            {/* <Link to="/products/UpdateProduct" state={row}> */}
+            <Link to="/products/UpdateProduct">
+              <img
+                src={edit}
+                alt="icon"
+                onClick={() => handleImageClick2(row)}
+                style={{ cursor: "pointer" }}
+              />
             </Link>
             {/* </Link> */}
           </div>
@@ -303,6 +296,7 @@ function Products({selected,setSelected,productsTableData,data}) {
                       // width: column.width,
                       whiteSpace: "nowrap",
                       height: column.height,
+                      width: column.width,
                       fontSize: "14px",
                       fontWeight: "600",
                       fontFamily: "Roboto",
@@ -331,6 +325,7 @@ function Products({selected,setSelected,productsTableData,data}) {
                         lineHeight: "22px",
                         fontFamily: "Roboto",
                         width: cell.column.width,
+                        height: cell.column.height,
                       }}
                     >
                       {cell.render("Cell")}
