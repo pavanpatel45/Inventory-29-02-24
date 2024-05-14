@@ -266,6 +266,7 @@ function Products({selected,setSelected,productsTableData,data}) {
               style={{ cursor: "pointer" }}
             />
            {/* <Link to="/products/UpdateProduct" state={row}> */}
+           <Link to="/products/UpdateProduct">
             <img
               src={edit}
               alt="icon"
@@ -273,6 +274,7 @@ function Products({selected,setSelected,productsTableData,data}) {
               style={{ cursor: "pointer" }}
               
             />
+            </Link>
             {/* </Link> */}
           </div>
         ),

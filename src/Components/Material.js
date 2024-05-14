@@ -13,6 +13,7 @@ import "../CSS/OrderDropdown.css";
 import { api_url } from "../Data/Constants";
 import "../CSS/OrderDropdown.css";
 import TableDropdown from "./TableDropdown";
+import { Link } from "react-router-dom";
 
 function Material({ setSelected, selected, materialsTableData, data }) {
   const [option1, setOption1] = React.useState([]);
@@ -336,12 +337,14 @@ function Material({ setSelected, selected, materialsTableData, data }) {
               onClick={handleImageClick1}
               style={{ cursor: "pointer" }}
             />
+            <Link to="/materials/UpdateMaterial">
             <img
               src={edit}
               alt="icon"
               onClick={handleImageClick2}
               style={{ cursor: "pointer" }}
             />
+            </Link>
           </div>
         ),
       },
