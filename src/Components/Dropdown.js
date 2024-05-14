@@ -20,9 +20,10 @@ export default function Dropdown({
         {options ? (
           <>
             <option default className="hidden"></option>
-            {options.map((ele) => (
-              <option key={ele.id}>{ele.value}</option>
-            ))}
+            {options.map((ele) => {
+              console.log(" at payment option :" , ele);
+              return <option key={ele.id}>{ele.value}</option>
+            })}
           </>
         ) : (
           <>
