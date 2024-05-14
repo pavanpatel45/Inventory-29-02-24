@@ -28,6 +28,7 @@ const navigate= useNavigate();
   })
   const [categoryData,setCategoryData] = useState([]);
   const [subCategoryData,setSubCategoryData] = useState([]);
+  const [measurementData,setMeasurementData] = useState([]);
   const handleInputChange = (e) => {
     console.log('at handle input change:',e);
     const { name, value,key} = e.target;
@@ -71,6 +72,20 @@ const navigate= useNavigate();
       console.log("Error :", error);
   }
   }
+  const getMeasurementData = async () =>{
+    try {
+      const url = `${api_url}/productCategory/getAllMeasurement`;
+      const response = await axios.get(url, {
+          headers: { 'ngrok-skip-browser-warning': '69420' }
+      });
+      console.log('Response at newOrderRequest', response.data);
+      setMeasurementData(response.data);
+  }
+  catch (error) {
+      console.log("Error :", error);
+  }
+  }
+
   useEffect(()=>{
       getSubCategoryData(formData.category);
       setFormData((prevData) =>({
@@ -78,6 +93,7 @@ const navigate= useNavigate();
         subCategory:''
       }))
   },[formData.category]);
+
   const handleSubmit = (e)=>{
      e.preventDefault();
      console.log("at handle Submit",formData);
@@ -85,9 +101,17 @@ const navigate= useNavigate();
      toast.success("New Material Successfully Added");
     navigate("/materials/CreateBatch");  
   }
+
   useEffect(()=>{
     getCategoryData();
   },[])
+
+  useEffect(()=>{
+    getMeasurementData();
+  },[])
+
+
+  
   return (
     <form >
       <div className="p-3 bg-white">
@@ -200,6 +224,7 @@ const navigate= useNavigate();
               title="Measurement Type*"
               name="measurementType"
               onChange={handleInputChange}
+              options={measurementData}
               labelCss={
                 formData.measurementType.length > 0 ? 'label-up' : 'label-down'}
             />

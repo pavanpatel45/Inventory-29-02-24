@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 export default function CreateOrder() {
   const dispatch = useDispatch();
   const allOrders = useSelector((state) => state.orders);
@@ -22,6 +21,7 @@ export default function CreateOrder() {
   const [billingAddressCheck, setBillingAddressCheck] = useState(false);
   const [deliveryAddressCheck, setDeliveryAddressCheck] = useState(false);
   const [customerAddress, setCustomerAddress] = useState({});
+  const [isFormComplete, setIsFormComplete] = useState(false);
   const [formData, setFormData] = useState({
     status: 1,
     id: "",
@@ -70,21 +70,55 @@ export default function CreateOrder() {
   });
   const handleBillingCheckChange = (e) => {};
   const navigate = useNavigate();
+
+  const checkFormCompletion = () => {
+    console.log("checkiig");
+    const formValues = Object.values(formData);
+    const allFieldsFilled = formValues.every((value) => {
+      if (typeof value === "object" && value !== null) {
+        // For objects, check each value inside the object
+        return Object.values(value).every(
+          (val) => typeof val === "string" && String(val).trim() !== ""
+        );
+      } else {
+        // For non-objects, directly check the value
+        return typeof value === "string" && String(value).trim() !== "";
+      }
+    });
+    console.log("all fields", allFieldsFilled);
+   setIsFormComplete(allFieldsFilled);
+  };
+  
+
+  useEffect(() => {
+    checkFormCompletion();
+  }, [formData]);
+
   const handleDeliveryCheckChange = (e) => {};
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("data at submit create Order", formData);
+    
     dispatch(addOrder(formData));
     toast.success("New Order Successfully Created");
     navigate("/sales");
   };
   return (
-    <form >
+    <form>
       <div className="p-3 bg-white pb-4">
-         
-        <NavbarForm title="Create Order" btnTitle="Save" className="NavbarCreateOrder" handleClick={handleSubmit} backLink="/sales" />
-        
-       
+        <NavbarForm
+          title="Create Order"
+          btnTitle="Save"
+          className={`NavbarCreateOrder cursor-${
+            isFormComplete ? "pointer" : "disabled"
+          }`}
+          
+          handleClick={handleSubmit}
+          backLink="/sales"
+          disabled={!isFormComplete}
+        />
+
         <div className="grid gap-y-4">
           {/* Order Details Block Start */}
           <div className="grid gap-2">
@@ -421,6 +455,7 @@ export default function CreateOrder() {
               Billing Address Same as Customer Address
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 grid-flow-row gap-x-8 gap-y-8">
+              
               <Dropdown
                 title="Payment Method*"
                 options={["Credit Card", "Debit Card"]}
