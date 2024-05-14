@@ -14,6 +14,13 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function CreateProductMaterials() {
+  const [Data,setData] = useState([{
+    materialName:'',
+    materialCode:'',
+    quantity:'',
+    unit:'',
+    category:''
+  }])
   const dispatch = useDispatch();
 const navigate= useNavigate();
   const [formData, setFormData] = useState({
@@ -27,6 +34,22 @@ const navigate= useNavigate();
     dispatch(addProductMaterial(formData));
     toast.success("New Product Successfully Added");
     navigate('/products/CreateBatchProduct')
+  }
+  const addData = ()=>{
+    setData((prevData)=>(
+      [prevData,{
+          materialName:formData.materialNameCode,
+          materialCode:'',
+          quantity:formData.requiredQuantity,
+          unit:formData.unit,
+          category:''
+      }]
+   ))
+   setFormData({
+    materialNameCode: "",
+    requiredQuantity: "",
+    unit: "",
+   })
   }
   return (
     <div className="bg-white">
@@ -160,7 +183,7 @@ const navigate= useNavigate();
           </div>
         </div>
       </form>
-      <AddedMaterialsTable />
+      <AddedMaterialsTable Data={Data} />
     </div>
   );
 }

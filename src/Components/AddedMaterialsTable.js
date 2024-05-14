@@ -4,7 +4,7 @@ import dummy from "./dummy.json";
 import edit from '../Icons/edit.png'
 
 
-function  AddedMaterialsTable() {
+function  AddedMaterialsTable(Data) {
   const handleImageClick1 = () => {
     console.log("edit icon was clicked");
   };
