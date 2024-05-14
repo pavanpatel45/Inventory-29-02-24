@@ -14,13 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function CreateProductMaterials() {
-  const [Data,setData] = useState([{
-    materialName:'',
-    materialCode:'',
-    quantity:'',
-    unit:'',
-    category:''
-  }])
+  const [Data,setData] = useState([])
   const dispatch = useDispatch();
 const navigate= useNavigate();
   const [formData, setFormData] = useState({
@@ -31,8 +25,9 @@ const navigate= useNavigate();
   const handleSubmit = (e)=>{
     e.preventDefault();
     console.log("form Data at createProductMaterials :",formData);
-    dispatch(addProductMaterial(formData));
+    // dispatch(addProductMaterial(formData));
     toast.success("New Product Successfully Added");
+    addData();
     navigate('/products/CreateBatchProduct')
   }
   const addData = ()=>{

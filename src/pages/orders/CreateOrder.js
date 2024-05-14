@@ -9,6 +9,8 @@ import "../../CSS/NavbarMaterials.css";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { api_url } from "../../Data/Constants";
+import axios from "axios";
 
 
 export default function CreateOrder() {
@@ -22,6 +24,8 @@ export default function CreateOrder() {
   const [billingAddressCheck, setBillingAddressCheck] = useState(false);
   const [deliveryAddressCheck, setDeliveryAddressCheck] = useState(false);
   const [customerAddress, setCustomerAddress] = useState({});
+  const [paymentMethod,setPaymentMethod] = useState([]);
+  const [paymentStatus,setPaymentStatus] = useState([]);
   const [formData, setFormData] = useState({
     status: 1,
     id: "",
@@ -68,7 +72,35 @@ export default function CreateOrder() {
       deliveryDate: "",
     },
   });
-  const handleBillingCheckChange = (e) => {};
+  const handleBillingCheckChange = (e) => {
+    const isChecked = e.target.checked;
+    if (isChecked) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        paymentDetails: {
+          ...prevFormData.paymentDetails,
+          City: prevFormData.customerDetails.City,
+          Country: prevFormData.customerDetails.Country,
+          PostalCode: prevFormData.customerDetails.PostalCode,
+          State: prevFormData.customerDetails.State,
+          paymentAddress: prevFormData.customerDetails.Address,
+        },
+      }));
+    }
+    else{
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        paymentDetails: {
+          ...prevFormData.paymentDetails,
+          City: '',
+          Country: '',
+          PostalCode: '',
+          State: '',
+          paymentAddress: '',
+        },
+      }));
+    }
+  };
   const navigate = useNavigate();
   const handleDeliveryCheckChange = (e) => {};
   const handleSubmit = (e) => {
@@ -78,6 +110,36 @@ export default function CreateOrder() {
     toast.success("New Order Successfully Created");
     navigate("/sales");
   };
+  const getPaymentMethod = async ()=>{
+    try {
+      const url = `${api_url}/productCategory/getAllPaymentMethod`;
+      const response = await axios.get(url, {
+          headers: { 'ngrok-skip-browser-warning': '69420' }
+      });
+      console.log('Response at newOrderRequest', response.data);
+      setPaymentMethod(response.data);
+    }
+    catch (error) {
+        console.log("Error :", error);
+    }
+  }
+  const getPaymentStatus = async ()=>{
+    try {
+      const url = `${api_url}/productCategory/getAllPaymentStatus`;
+      const response = await axios.get(url, {
+          headers: { 'ngrok-skip-browser-warning': '69420' }
+      });
+      console.log('Response at newOrderRequest', response.data);
+      setPaymentStatus(response.data);
+    }
+    catch (error) {
+        console.log("Error :", error);
+    }
+  }
+  useEffect(()=>{
+       getPaymentMethod();
+       getPaymentStatus();
+  },[])
   return (
     <form >
       <div className="p-3 bg-white pb-4">
@@ -423,7 +485,7 @@ export default function CreateOrder() {
             <div className="grid grid-cols-1 md:grid-cols-3 grid-flow-row gap-x-8 gap-y-8">
               <Dropdown
                 title="Payment Method*"
-                options={["Credit Card", "Debit Card"]}
+                options={paymentMethod}
                 name="paymentDetails.paymentMethod"
                 value={formData.paymentDetails.paymentMethod}
                 onChange={(e) =>
@@ -487,6 +549,7 @@ export default function CreateOrder() {
                 title="Payment Status*"
                 name="paymentDetails.paymentStatus"
                 value={formData.paymentDetails.paymentStatus}
+                options={paymentStatus}
                 onChange={(e) =>
                   setFormData((prevData) => ({
                     ...prevData,

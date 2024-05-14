@@ -22,18 +22,14 @@ export default function Dropdown({
             <option default className="hidden"></option>
             {options.map((ele) => {
               console.log(" at payment option :" , ele);
-              return <option key={ele.id}>{ele.value}</option>
+              return <option key={ele.id} style={{color:"black"}}>{ele.value}</option>
             })}
           </>
         ) : (
           <>
             <option  disabled selected hidden></option>
-            <option>option1</option>
-            <option>option2</option>
-            <option>option3</option>
-            <option>option4</option>
-            <option>option5</option>
-            <option>option6</option>
+            <option>!No Option Available!</option>
+        
           </>
         )}
       </select>

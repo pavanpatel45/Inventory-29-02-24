@@ -40,7 +40,7 @@ const navigate= useNavigate();
   };
   const getCategoryData = async () =>{
     try {
-      const url = `${api_url}/getAllMaterialCategory`;
+      const url = `${api_url}/materialCategory/getAllMaterialCategory`;
       const response = await axios.get(url, {
           headers: { 'ngrok-skip-browser-warning': '69420' }
       });
@@ -60,7 +60,7 @@ const navigate= useNavigate();
      const id = obj?.id;
     console.log("id at getsubcategoryData",id);
     try {
-      const url = `${api_url}/getAllMaterialSubCategory/${id}`;
+      const url = `${api_url}/materialCategory/getAllMaterialSubCategory/${id}`;
       const response = await axios.get(url, {
           headers: { 'ngrok-skip-browser-warning': '69420' }
       });

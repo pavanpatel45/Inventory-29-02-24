@@ -40,24 +40,17 @@ export default function CreateBatch() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Material Data :",materialData);
     const Data = {
-      "materialName": materialData.materialName,
+      "materialName": String(formData.materialName),
       "storageLocation": String(formData.storageLocation),
       "batchId": String( formData.batchId),
       "purchaseOrder":String(formData.makeOrder),
       "expiryDate": String(formData.expiryDate),
       "quantity":parseInt(formData.quantity, 10)  ,
       "price": parseFloat(formData.price),
-      "shortName":'',
       "category":materialData.category      ,
-      "subCategory": '',
       "upc": materialData.upc,
-      "barcode": '',
       "refrigeration": false,
-      "minimumQuantity": '',
-      "measurementType": '',
-      "description": ''
     }
     dispatch(addBatch(Data));
     toast.success("Batch Successfully Added");

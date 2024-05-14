@@ -5,10 +5,11 @@ import edit from '../Icons/edit.png'
 
 
 function  AddedMaterialsTable(Data) {
+  console.log("data at added materials table:",Data);
   const handleImageClick1 = () => {
     console.log("edit icon was clicked");
   };
-  const data = React.useMemo(() => dummy, []);
+  const data = React.useMemo(() => Data, []);
   const columns = React.useMemo(
     () => [
       {
