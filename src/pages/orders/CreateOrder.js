@@ -26,6 +26,14 @@ export default function CreateOrder() {
   const [customerAddress, setCustomerAddress] = useState({});
   const [paymentMethod,setPaymentMethod] = useState([]);
   const [paymentStatus,setPaymentStatus] = useState([]);
+  const [countryData,setCountryData] = useState([]);
+  const [stateDataCustomer,setStateDataCustomer] =  useState([]);
+  const [stateDataPayment,setStateDataPayment] =  useState([]);
+  const [stateDataShipment,setStateDataShipment] =  useState([]);
+  const [cityDataCustomer,setCityDataCustomer] =  useState([]);
+  const [cityDataPayment,setCityDataPayment] =  useState([]);
+  const [cityDataShipment,setCityDataShipment] =  useState([]);
+  const [locations,setLocations] = useState([]);
   const [formData, setFormData] = useState({
     status: 1,
     id: "",
@@ -74,6 +82,8 @@ export default function CreateOrder() {
   });
   const handleBillingCheckChange = (e) => {
     const isChecked = e.target.checked;
+    console.log("at create order billingCheck:",isChecked);
+    setBillingAddressCheck(isChecked);
     if (isChecked) {
       setFormData((prevFormData) => ({
         ...prevFormData,
@@ -101,8 +111,38 @@ export default function CreateOrder() {
       }));
     }
   };
+    const handleDeliveryCheckChange = (e) => {}
+  //   const isChecked = e.target.checked;
+  //   console.log("at create order delivery addresscheck:",isChecked);
+  //   setDeliveryAddressCheck(isChecked);
+  //   if (isChecked) {
+  //     setFormData((prevFormData) => ({
+  //       ...prevFormData,
+  //       shipmentDetails: {
+  //       //   ...prevFormData.paymentDetails,
+  //         // City: prevFormData.customerDetails.City,
+  //         // Country: prevFormData.customerDetails.Country,
+  //         // PostalCode: prevFormData.customerDetails.PostalCode,
+  //         // State: prevFormData.customerDetails.State,
+  //         // Address: prevFormData.customerDetails.Address,
+  //       },
+  //     }));
+  //   }
+  //   else{
+  //     // setFormData((prevFormData) => ({
+  //     //   ...prevFormData,
+  //     //   paymentDetails: {
+  //     //     ...prevFormData.shipmentDetails,
+  //     //     City: '',
+  //     //     Country: '',
+  //     //     PostalCode: '',
+  //     //     State: '',
+  //     //     Address: '',
+  //     //   },
+  //     // }));
+  //   }
+  // };
   const navigate = useNavigate();
-  const handleDeliveryCheckChange = (e) => {};
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("data at submit create Order", formData);
@@ -110,13 +150,26 @@ export default function CreateOrder() {
     toast.success("New Order Successfully Created");
     navigate("/sales");
   };
+  const getLocations = async () =>{
+    try {
+      const url = `${api_url}/productCategory/getAllLocations`;
+      const response = await axios.get(url, {
+          headers: { 'ngrok-skip-browser-warning': '69420' }
+      });
+      console.log('Response at newOrderRequest', response.data);
+      setLocations(response.data);
+    }
+    catch (error) {
+        console.log("Error :", error);
+    }
+  }
   const getPaymentMethod = async ()=>{
     try {
       const url = `${api_url}/productCategory/getAllPaymentMethod`;
       const response = await axios.get(url, {
           headers: { 'ngrok-skip-browser-warning': '69420' }
       });
-      console.log('Response at newOrderRequest', response.data);
+      // console.log('Response at newOrderRequest', response.data);
       setPaymentMethod(response.data);
     }
     catch (error) {
@@ -129,16 +182,144 @@ export default function CreateOrder() {
       const response = await axios.get(url, {
           headers: { 'ngrok-skip-browser-warning': '69420' }
       });
-      console.log('Response at newOrderRequest', response.data);
+      // console.log('Response at newOrderRequest', response.data);
       setPaymentStatus(response.data);
     }
     catch (error) {
         console.log("Error :", error);
     }
   }
+  const getCountry= async()=>{
+    try {
+      const url = `${api_url}/getAllCountry`;
+      const response = await axios.get(url, {
+          headers: { 'ngrok-skip-browser-warning': '69420' }
+      });
+      console.log('Response at newOrderRequest', response.data);
+      setCountryData(response.data);
+    }
+    catch (error) {
+        console.log("Error :", error);
+    }
+  }
+  const getCity= async(callBy,id)=>{
+    try {
+      console.log("at getState :",callBy," : ",id,":");
+      const url = `${api_url}/getAllCity/${id}`;
+      console.log(url);
+      const response = await axios.get(url, {
+          headers: { 'ngrok-skip-browser-warning': '69420' }
+      });
+      // console.log('Response at newOrderRequest', response.data);
+
+      if(callBy == 1){
+        setCityDataCustomer(response.data);
+        console.log("city data is updataed for custormer")
+      }
+      else if(callBy == 2){
+        setCityDataPayment(response.data);
+      }
+      else if(callBy == 3){
+        setCityDataShipment(response.data);
+      }
+      
+    }
+    catch (error) {
+        console.log("Error :", error);
+    }
+  }
+  const getState= async(callBy,id)=>{
+    try {
+      console.log("at getState :",callBy," : ",id,":");
+      const url = `${api_url}/getAllState/${id}`;
+      console.log(url);
+      const response = await axios.get(url, {
+          headers: { 'ngrok-skip-browser-warning': '69420' }
+      });
+      console.log('Response at newOrderRequest', response.data);
+      if(callBy == 1){
+        setStateDataCustomer(response.data);
+      }
+      else if(callBy == 2){
+        setStateDataPayment(response.data);
+      }
+      else if(callBy == 3){
+        setStateDataShipment(response.data);
+      }
+      
+    }
+    catch (error) {
+        console.log("Error :", error);
+    }
+  }
+  useEffect(()=>{
+    const obj = countryData.find((obj)=>{
+      if(obj.value.trim() ==  formData.customerDetails.Country.trim()){
+          return obj;
+      }
+  });
+   const id = obj?.id;
+      getState(1,id)
+  },[formData.customerDetails.Country]);
+  useEffect(()=>{
+    const obj = countryData.find((obj)=>{
+      if(obj.value.trim() ==  formData.customerDetails.Country.trim()){
+          return obj;
+      }
+  });
+   const id = obj?.id;
+      getState(2,id)
+  },[formData.paymentDetails.Country]);
+  useEffect(()=>{
+    const obj = countryData.find((obj)=>{
+      if(obj.value.trim() ==  formData.customerDetails.Country.trim()){
+          return obj;
+      }
+  });
+   const id = obj?.id;
+      getState(2,id)
+  },[formData.shipmentDetails.Country]);
+  useEffect(()=>{
+    const obj = stateDataCustomer.find((obj)=>{
+      if(obj.value.trim() ==  formData.customerDetails.State.trim()){
+          return obj;
+      }
+  });
+   const id = obj?.id;
+      getCity(1,id)
+  },[formData.customerDetails.State]);
+  useEffect(()=>{
+    const obj = stateDataPayment.find((obj)=>{
+      if(obj.value.trim() ==  formData.paymentDetails.State.trim()){
+          return obj;
+      }
+  });
+   const id = obj?.id;
+      getCity(2,id)
+  },[formData.paymentDetails.State]);
+  useEffect(()=>{
+    const obj = stateDataShipment.find((obj)=>{
+      if(obj.value.trim() ==  formData.shipmentDetails.State.trim()){
+          return obj;
+      }
+  });
+   const id = obj?.id;
+      getCity(3,id)
+  },[formData.shipmentDetails.State]);
+  useEffect(()=>{
+    const obj = countryData.find((obj)=>{
+      if(obj.value.trim() ==  formData.customerDetails.Country.trim()){
+          return obj;
+      }
+  });
+   const id = obj?.id;
+      getState(3,id)
+  },[formData.shipmentDetails.Country])
   useEffect(()=>{
        getPaymentMethod();
        getPaymentStatus();
+       getCountry();
+       getLocations();
   },[])
   return (
     <form >
@@ -177,6 +358,7 @@ export default function CreateOrder() {
                 title="Order Location*"
                 name="orderDetails.Location"
                 value={formData.orderDetails.Location}
+                options={locations}
                 onChange={(e) =>
                   setFormData((prevData) => ({
                     ...prevData,
@@ -412,6 +594,7 @@ export default function CreateOrder() {
                 title="City*"
                 name="customerDetails.City"
                 value={formData.customerDetails.City}
+                options={cityDataCustomer}
                 onChange={(e) => {
                   setFormData((prevData) => ({
                     ...prevData,
@@ -432,6 +615,7 @@ export default function CreateOrder() {
                 title="State*"
                 name="customerDetails.State"
                 value={formData.customerDetails.State}
+                options={stateDataCustomer}
                 onChange={(e) => {
                   setFormData((prevData) => ({
                     ...prevData,
@@ -452,6 +636,7 @@ export default function CreateOrder() {
                 title="Country*"
                 name="customerDetails.Country"
                 value={formData.customerDetails.Country}
+                options={countryData}
                 onChange={(e) => {
                   setFormData((prevData) => ({
                     ...prevData,
@@ -653,6 +838,7 @@ export default function CreateOrder() {
                 title="City*"
                 name="paymentDetails.City"
                 value={formData.paymentDetails.City}
+                options={cityDataPayment}
                 onChange={(e) =>
                   setFormData((prevData) => ({
                     ...prevData,
@@ -673,6 +859,7 @@ export default function CreateOrder() {
                 title="State*"
                 name="paymentDetails.State"
                 value={formData.paymentDetails.State}
+                options={stateDataPayment}
                 onChange={(e) =>
                   setFormData((prevData) => ({
                     ...prevData,
@@ -693,6 +880,7 @@ export default function CreateOrder() {
                 title="Country*"
                 name="paymentDetails.Country"
                 value={formData.paymentDetails.Country}
+                options={countryData}
                 onChange={(e) =>
                   setFormData((prevData) => ({
                     ...prevData,
@@ -793,6 +981,7 @@ export default function CreateOrder() {
                 title="City*"
                 name="shipmentDetails.City"
                 value={formData.shipmentDetails.City}
+                options={cityDataShipment}
                 onChange={(e) =>
                   setFormData((prevData) => ({
                     ...prevData,
@@ -813,6 +1002,7 @@ export default function CreateOrder() {
                 title="State*"
                 name="shipmentDetails.State"
                 value={formData.shipmentDetails.State}
+                options={stateDataShipment}
                 onChange={(e) =>
                   setFormData((prevData) => ({
                     ...prevData,
@@ -833,6 +1023,7 @@ export default function CreateOrder() {
                 title="Country*"
                 name="shipmentDetails.Country"
                 value={formData.shipmentDetails.Country}
+                options={countryData}
                 onChange={(e) =>
                   setFormData((prevData) => ({
                     ...prevData,

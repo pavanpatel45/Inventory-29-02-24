@@ -29,7 +29,7 @@ export default function CreateBatch() {
     price: "",
   });
   const [showAddThisMaterial, setShowAddThisMaterial] = useState(false);
-
+  const [storageLocation,setStorageLocation] = useState([]);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -72,9 +72,25 @@ export default function CreateBatch() {
       console.error("Error fetching data:", error);
     }
   };
+  const getStorageLocation = async () => {
+    const url = `${api_url}/materialCategory/getAllLocations`;
+    try {
+      const response = await axios.get(url, {
+        headers: { "ngrok-skip-browser-warning": "69420" },
+      });
+      if (response?.status === 200) {
+        setStorageLocation(response?.data);
+      } else {
+        console.error("Received unexpected response:", response);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   useEffect(() => {
     getMaterialsTableData();
+    getStorageLocation();
   }, []);
 
   useEffect(() => {
@@ -114,6 +130,7 @@ export default function CreateBatch() {
               <DropDown
                 title="Storage Location*"
                 name="storageLocation"
+                options={storageLocation}
                 onChange={handleInputChange}
                 labelCss={formData.storageLocation.length > 0 ? "label-up" : "label-down"}
               />

@@ -21,7 +21,7 @@ export default function Dropdown({
           <>
             <option default className="hidden"></option>
             {options.map((ele) => {
-              console.log(" at payment option :" , ele);
+              // console.log(" at payment option :" , ele);
               return <option key={ele.id} style={{color:"black"}}>{ele.value}</option>
             })}
           </>

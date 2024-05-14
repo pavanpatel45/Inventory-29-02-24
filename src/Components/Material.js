@@ -15,7 +15,7 @@ import "../CSS/OrderDropdown.css";
 import TableDropdown from "./TableDropdown";
 import { Link } from "react-router-dom";
 
-function Material({ setSelected, selected, materialsTableData, data }) {
+function Material({ setSelected, selected, data }) {
   const [option1, setOption1] = React.useState([]);
   const handleImageClick1 = () => {
     console.log("edit icon was clicked");
@@ -228,7 +228,6 @@ function Material({ setSelected, selected, materialsTableData, data }) {
               checked={handleCheck(row.original.id)}
             />
             <a
-              href="https://www.google.com"
               className="hover:underline"
               style={{
                 color: "#103BD5",
@@ -246,7 +245,7 @@ function Material({ setSelected, selected, materialsTableData, data }) {
       },
       {
         Header: "Code",
-        accessor: "upc",
+        accessor: "code",
         width: "102px",
       },
       {

@@ -13,7 +13,9 @@ const MaterialView = () => {
   const [data, setData] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [confirm, setConfirm] = useState(false);
-  
+  const [category,setCategory] = useState([]);
+  const [location,setLocation] = useState([]);
+  const [expiryDate,setExpirtyDate] = useState([]);
 
   const materialsTableData = async () => {
     const url = `${api_url}/materialBatch`;
@@ -21,10 +23,10 @@ const MaterialView = () => {
       const response = await axios.get(url, {
         headers: { "ngrok-skip-browser-warning": "69420" },
       });
-
+      console.log("Response of material TableData");
       if (response?.status === 200) {
         setData(response?.data);
-        console.log(response?.data);
+        console.log("data is get Sucessfully:",response?.data);
       } else {
         console.error("Received unexpected response:", response);
       }
@@ -71,7 +73,75 @@ const MaterialView = () => {
   //     confirmDelete();
   //   }
   // }, [confirm]);
+  // const filterDataByCategory = async () => {
+  //   const url = `${api_url}/materialBatch/category/${category}`;
+  //   try {
+  //     const response = await axios.get(url, {
+  //       headers: { "ngrok-skip-browser-warning": "69420" },
+  //     });
 
+  //     if (response?.status === 200) {
+  //       setData(response?.data);
+  //       console.log(response?.data);
+
+  //     } else {
+  //       console.error("Received unexpected response:", response);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // }
+  // const filterDataByDate = async () => {
+  //   const url = `${api_url}/materialBatch/location/${location}`;
+  //   try {
+  //     const response = await axios.get(url, {
+  //       headers: { "ngrok-skip-browser-warning": "69420" },
+  //     });
+
+  //     if (response?.status === 200) {
+  //       setData(response?.data);
+  //       console.log(response?.data);
+        
+  //     } else {
+  //       console.error("Received unexpected response:", response);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // }
+  // const filterDataByLocation = async () => {
+  //   const url = `${api_url}/materialBatch/expiryDate/${expiryDate}`;
+  //   try {
+  //     const response = await axios.get(url, {
+  //       headers: { "ngrok-skip-browser-warning": "69420" },
+  //     });
+
+  //     if (response?.status === 200) {
+  //       setData(response?.data);
+  //       console.log(response?.data);
+
+  //     } else {
+  //       console.error("Received unexpected response:", response);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // }
+  // useEffect(()=>{
+  //    if(location){
+  //      filterDataByLocation();
+  //    }
+  // },[location])
+  // useEffect(()=>{
+  //   if(expiryDate){
+  //     filterDataByDate();
+  //   }
+  // },[expiryDate])
+  // useEffect(()=>{
+  //   if(category){
+  //     filterDataByCategory();
+  //   }
+  // },[category])
   useEffect(() => {
     materialsTableData();
   }, []);
@@ -96,6 +166,8 @@ const MaterialView = () => {
           selected={selected}
           setSelected={setSelected}
           materialsTableData={materialsTableData}
+          locations ={location}
+          setLocations={setLocation}
         />
         <Material
           selected={selected}

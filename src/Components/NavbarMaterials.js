@@ -22,11 +22,13 @@ export default function NavbarMaterials({
   selected,
   setSelected,
   materialsTableData,
+  locations,
+  setLocations
 }) {
   const [exportOption, setExportOption] = useState("");
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [isSearchClicked, setIsSearchClicked] = useState(false);
-  const [locations,setLocations] = useState([]);
+  // const [locations,setLocations] = useState([]);
   const handleChange = (e) => {
     setExportOption(e.target.value);
   };

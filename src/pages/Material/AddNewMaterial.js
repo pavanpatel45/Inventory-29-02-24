@@ -28,6 +28,7 @@ const navigate= useNavigate();
   })
   const [categoryData,setCategoryData] = useState([]);
   const [subCategoryData,setSubCategoryData] = useState([]);
+  const [mearsumentData,setMearsumentData] = useState([]);
   const handleInputChange = (e) => {
     console.log('at handle input change:',e);
     const { name, value,key} = e.target;
@@ -71,6 +72,19 @@ const navigate= useNavigate();
       console.log("Error :", error);
   }
   }
+  const getMearsurmentData = async () =>{
+    try {
+      const url = `${api_url}/materialCategory/getAllMeasurement`;
+      const response = await axios.get(url, {
+          headers: { 'ngrok-skip-browser-warning': '69420' }
+      });
+      console.log('Response at newOrderRequest', response.data);
+      setMearsumentData(response.data);
+  }
+  catch (error) {
+      console.log("Error :", error);
+  }
+  }
   useEffect(()=>{
       getSubCategoryData(formData.category);
       setFormData((prevData) =>({
@@ -87,6 +101,7 @@ const navigate= useNavigate();
   }
   useEffect(()=>{
     getCategoryData();
+    getMearsurmentData();
   },[])
   return (
     <form >
@@ -199,6 +214,7 @@ const navigate= useNavigate();
             <DropDown
               title="Measurement Type*"
               name="measurementType"
+              options={mearsumentData}
               onChange={handleInputChange}
               labelCss={
                 formData.measurementType.length > 0 ? 'label-up' : 'label-down'}
