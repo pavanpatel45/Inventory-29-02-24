@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import InputBox from "../../Components/InputBox";
 import DropDown from "../../Components/Dropdown";
-import Navbar from "../../Components/NavbarCreateBatchProduct";
+import Navbar from "../../Components/NavbarCreateBatch";
 import Button from "../../Components/Button";
 import "../../CSS/CreateBatch.css"
 import { Link,useLocation} from "react-router-dom";
 
-export default function UpdateProduct() {
+export default function UpdateMaterial() {
   const location = useLocation();
   const data = location?.state;
-  console.log("data at update product",data);
+  console.log("data at update material",data);
   const [formData, setFormData] = useState({
-    productName: '',
+    materialName: '',
     storageLocation: '',
     batchId: '',
     makeOrder: '',
@@ -34,18 +34,18 @@ export default function UpdateProduct() {
       <div className="p-8 bg-white">
         <Navbar
           title="Edit Batch"
-          backLink="/products"
+          backLink="/materials"
         />
         <div className="grid gap-y-4 pt-8">
           <div className="grid gap-2">
             <div className="grid  grid-cols-1 md:grid-cols-3 grid-flow-row gap-x-8 gap-y-8">
               <InputBox
                 type="text"
-                title="Product Name/Code*"
-                name="productName"
+                title="Material Name/Code*"
+                name="materialName"
                 onChange={handleInputChange}
                 labelCss={
-                  formData.productName.length > 0 ? 'label-up' : 'label-down'}
+                  formData.materialName.length > 0 ? 'label-up' : 'label-down'}
               />
 
               <DropDown

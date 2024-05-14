@@ -39,6 +39,7 @@ import CreateBatchProduct from "./pages/Product/CreateBatchProduct";
 import CreateProduct from "./pages/Product/CreateProduct";
 import UpdateProduct from "./pages/Product/UpdateProduct";
 import CreateProductMaterials from "./Components/CreateProductMaterials";
+import UpdateMaterial from "./pages/Material/UpdateMaterial";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
@@ -59,6 +60,7 @@ const router = createBrowserRouter(
         <Route index element={<MaterialView />} />
         <Route path="CreateBatch" element={<CreateBatch />} />
         <Route path="AddMaterial" element={<AddNewMaterial />} />
+        <Route path="UpdateMaterial" element={<UpdateMaterial />} />
       </Route>
       <Route path="products">
         <Route index element={<ProductView />} />
