@@ -3,10 +3,9 @@ import { useState, useEffect } from 'react';
 import search from "../Icons/search-navbar.svg";
 import cross from "../Icons/cross.svg";
 import { Popover } from 'react-tiny-popover'
-function Location({children}) {
+function Location({children,Options}) {
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
- 
 
   const [isAnyCheckboxSelected, setIsAnyCheckboxSelected] = useState(false);
 
@@ -83,26 +82,18 @@ function Location({children}) {
      </div>
 
      <ul className="bg-white box-text text-black">
-       <div className="flex flex-row items-center dropHover">
-         <input
-           type="checkbox"
-           className=" pl-1"
-           onChange={handleCheckboxChange}
-         />
-         <li className=" pl-2 mb-0.5">Indore</li>
-       </div>
-       <div className="flex flex-row items-center dropHover">
-         <input type="checkbox" onChange={handleCheckboxChange} />
-         <li className=" pl-2 mb-0.5">Pune</li>
-       </div>{" "}
-       <div className="flex flex-row items-center dropHover">
-         <input type="checkbox" onChange={handleCheckboxChange} />
-         <li className=" pl-2 mb-0.5">Mumbai</li>
-       </div>
-       <div className="flex flex-row items-center dropHover">
-         <input type="checkbox" onChange={handleCheckboxChange} />
-         <li className=" pl-2 mb-0.5">Bangalore</li>
-       </div>
+        {Options.map((ele)=>(
+          <div className="flex flex-row items-center dropHover">
+          <input
+            type="checkbox"
+            className=" pl-1"
+            onChange={handleCheckboxChange}
+          />
+          <li className=" pl-2 mb-0.5">{ele.value}</li>
+          </div>
+        ))
+      }
+        
      </ul>
      <div className="flex justify-end pt-1">
      <button

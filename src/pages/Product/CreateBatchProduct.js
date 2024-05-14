@@ -30,6 +30,8 @@ export default function CreateBatch() {
   });
   const [showAddThisProduct, setShowAddThisProduct] = useState(false);
   const [productsTableData, setProductTableData] = useState([]);
+  const [isFormComplete, setIsFormComplete] = useState(false);
+
 
   const handleInputChange = (e) => {
     console.log(e);
@@ -60,6 +62,44 @@ export default function CreateBatch() {
       console.error("Error fetching data:", error);
     }
   };
+  const checkFormCompletion = () => {
+    const formEntries = Object.entries(formData);
+
+    console.log(formEntries);
+
+    const allFieldsFilled = formEntries.every((formEntriesData) => {
+      const [name, value] = formEntriesData;
+
+      if (typeof value === "object" && value !== null) {
+        // For objects, check each value inside the object
+        const isValidData = Object.values(value).every(
+          (val) =>
+            (typeof val === "string" || "number") && String(val).trim() !== ""
+        );
+        if (!isValidData) {
+          console.log(name);
+        }
+        return isValidData;
+      } else {
+        // For non-objects, directly check the value
+        const isValidData =
+          typeof (value === "string" || "number") &&
+          String(value).trim() !== "";
+        if (!isValidData) {
+          console.log(name);
+        }
+        return isValidData;
+      }
+    });
+
+    console.log(allFieldsFilled);
+    console.log("filled forms", allFieldsFilled);
+    setIsFormComplete(allFieldsFilled);
+  };
+
+  useEffect(() => {
+    checkFormCompletion();
+  }, [formData]);
 
   useEffect(() => {
     getProductsTableData();
@@ -175,7 +215,9 @@ export default function CreateBatch() {
             <Link to="/products">
               <Button
                 btnTitle="Save"
-                className=" pt-0 pb-0 text-style"
+                className=" pt-0 pb-0 text-sty"
+                style={{ backgroundColor: isFormComplete ? "#2CAE66 " : "#B3B3B3 ",cursor: isFormComplete ? "pointer" : "not-allowed"}}
+                disabled={!isFormComplete}
                 type="submit"
                 onClickfunction={() => {
                   toast.success("Batch Successfully Added");

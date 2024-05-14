@@ -337,14 +337,14 @@ function Material({ setSelected, selected, materialsTableData, data }) {
               onClick={handleImageClick1}
               style={{ cursor: "pointer" }}
             />
-            <Link to="/materials/UpdateMaterial">
+            {/* <Link to="/materials/UpdateMaterial"> */}
             <img
               src={edit}
               alt="icon"
               onClick={handleImageClick2}
               style={{ cursor: "pointer" }}
             />
-            </Link>
+            {/* </Link> */}
           </div>
         ),
       },

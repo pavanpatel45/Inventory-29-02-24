@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "./Button";
 import search from "../Icons/search.png";
@@ -12,6 +12,8 @@ import locationIcon from "../Icons/location.svg";
 import "../CSS/NavbarMaterials.css";
 import Location from "./Location";
 import Export from "./Export";
+import { api_url } from "../Data/Constants";
+import axios from "axios";
 
 export default function NavbarMaterials({
   className,
@@ -20,6 +22,7 @@ export default function NavbarMaterials({
   handleDelete,
 }) {
   const [exportOption, setExportOption] = useState("");
+  const [locations,setLocations] = useState([]);
   const [isSearchClicked, setIsSearchClicked] = useState(false);
   const handleChange = (e) => {
     setExportOption(e.target.value);
@@ -27,11 +30,26 @@ export default function NavbarMaterials({
   const handleSearch = () => {
     setIsSearchClicked(true);
   };
-
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const togglePopoverOpen = () => {
     setIsPopoverOpen(!isPopoverOpen);
   };
+  const getLocations = async () =>{
+    try {
+      const url = `${api_url}/productCategory/getAllLocations`;
+      const response = await axios.get(url, {
+          headers: { 'ngrok-skip-browser-warning': '69420' }
+      });
+      console.log('Response at newOrderRequest', response.data);
+      setLocations(response.data);
+    }
+    catch (error) {
+        console.log("Error :", error);
+    }
+  }
+  useEffect(()=>{
+    getLocations();
+  },[])
   return (
     <div className="flex flex-row justify-between items-center  ml-4 mt-3 bg-white">
       <div className="flex flex-row gap-2 ">
@@ -68,7 +86,7 @@ export default function NavbarMaterials({
         )}
         {!select && (
           <div className="mr-4">
-            <Location>
+            <Location Options={locations}>
               <div
                 className="border flex flex-row items-center justify-between cursor-pointer"
                 style={{

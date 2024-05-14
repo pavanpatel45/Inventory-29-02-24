@@ -21,7 +21,18 @@ const initialState = {
     "description": "A high-quality widget for various applications."
   }
 };
-const postData = async (Data) => {
+const postBatchData = async (Data) => {
+  try {
+    const url = `${api_url}/materialBatch/`;
+    console.log("data : ", Data);
+    const resp = await axios.post(url, Data);
+    console.log('Response', resp);
+  }
+  catch (error) {
+    console.log("Error :", error);
+  }
+}
+const postMaterialData = async (Data) => {
   try {
     const url = `${api_url}/material/`;
     console.log("data : ", Data);
@@ -43,8 +54,7 @@ export const materialSlice = createSlice({
         console.log("Payload Data:", action.payload);
         // Modify state here if needed
         const payload = action.payload;
-        state.material = {
-          ...state.material,
+        const Data = {
           materialName: String(payload.materialName),
           shortName: String(payload.shortName),
           category: String(payload.category),
@@ -56,8 +66,9 @@ export const materialSlice = createSlice({
           description: String(payload.description),
           refrigeration: Boolean(payload.refrigeration)
         };
-
+        postMaterialData(Data);
       }
+
     },
     addBatch: (state, action) => {
       if (action.payload) {
@@ -65,25 +76,16 @@ export const materialSlice = createSlice({
         console.log("Payload Data:", action.payload);
         // Modify state here if needed
         const payload = action.payload;
-        state.material = {
-          "materialName": payload.materialName,
+        const Data = {
+          "batchMaterialName": payload.materialName,
           "storageLocation": String(payload.storageLocation),
           "batchId": String(payload.batchId),
           "purchaseOrder": String(payload.makeOrder),
           "expiryDate": String(payload.expiryDate),
           "quantity": parseInt(payload.quantity, 10),
           "price": parseFloat(payload.price),
-          "shortName": '',
-          "category": payload.category,
-          "subCategory": '',
-          "upc": payload.upc,
-          "barcode": '',
-          "refrigeration": false,
-          "minimumQuantity": '',
-          "measurementType": '',
-          "description": ''
         };
-        postData(state.material);
+        postBatchData(Data);
       }
     }
   }

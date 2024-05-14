@@ -14,13 +14,9 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function CreateProductMaterials() {
-  const [Data,setData] = useState([{
-    materialName:'',
-    materialCode:'',
-    quantity:'',
-    unit:'',
-    category:''
-  }])
+  const [Data,setData] = useState([])
+  const [isFormComplete, setIsFormComplete] = useState(false);
+
   const dispatch = useDispatch();
 const navigate= useNavigate();
   const [formData, setFormData] = useState({
@@ -28,11 +24,51 @@ const navigate= useNavigate();
     requiredQuantity: "",
     unit: "",
   });
+  const checkFormCompletion = () => {
+    const formEntries= Object.entries(formData);
+
+    console.log(formEntries)
+
+    const allFieldsFilled = formEntries.every((formEntriesData) => {
+      const [name, value] = formEntriesData
+    
+      
+      
+      if (typeof value === "object" && value !== null) {
+        // For objects, check each value inside the object
+        const isValidData = Object.values(value).every(
+          (val) => (typeof val === "string"||"number") && String(val).trim() !== ""
+        );
+        if(!isValidData){
+          console.log(name)
+        }
+        return isValidData
+      } else {
+        // For non-objects, directly check the value
+        const isValidData = typeof (value === "string" || "number") && String(value).trim() !== ""
+        if(!isValidData){
+          console.log(name)
+        }
+        return isValidData
+      }
+    });
+
+
+    console.log(allFieldsFilled)
+    console.log("filled forms",allFieldsFilled);
+    setIsFormComplete(allFieldsFilled);
+  };
+
+  useEffect(() => {
+    checkFormCompletion();
+  }, [formData]);
+
   const handleSubmit = (e)=>{
     e.preventDefault();
     console.log("form Data at createProductMaterials :",formData);
-    dispatch(addProductMaterial(formData));
+    // dispatch(addProductMaterial(formData));
     toast.success("New Product Successfully Added");
+    addData();
     navigate('/products/CreateBatchProduct')
   }
   const addData = ()=>{
@@ -58,6 +94,8 @@ const navigate= useNavigate();
           <Navbar
             title="Create Product"
             className="NavbarForm"
+            btnStyle={{ backgroundColor: isFormComplete ? "#2CAE66" : "#B3B3B3",cursor: isFormComplete ? "pointer" : "not-allowed"}}
+            disabled={!isFormComplete}
             btnTitle="Save"
             handleClick={handleSubmit}
             backLink="/products/createProduct/"

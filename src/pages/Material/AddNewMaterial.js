@@ -41,7 +41,7 @@ const navigate= useNavigate();
   };
   const getCategoryData = async () =>{
     try {
-      const url = `${api_url}/getAllMaterialCategory`;
+      const url = `${api_url}/materialCategory/getAllMaterialCategory`;
       const response = await axios.get(url, {
           headers: { 'ngrok-skip-browser-warning': '69420' }
       });
@@ -52,6 +52,42 @@ const navigate= useNavigate();
       console.log("Error :", error);
   }
   }
+  const [isFormComplete, setIsFormComplete] = useState(false);
+
+  const checkFormCompletion = () => {
+    const formEntries = Object.entries(formData);
+
+    console.log(formEntries);
+
+    const allFieldsFilled = formEntries.every((formEntriesData) => {
+      const [name, value] = formEntriesData;
+
+      if (typeof value === "object" && value !== null) {
+        // For objects, check each value inside the object
+        const isValidData = Object.values(value).every(
+          (val) =>
+            (typeof val === "string" || "number") && String(val).trim() !== ""
+        );
+        if (!isValidData) {
+          console.log(name);
+        }
+        return isValidData;
+      } else {
+        // For non-objects, directly check the value
+        const isValidData =
+          typeof (value === "string" || "number") &&
+          String(value).trim() !== "";
+        if (!isValidData) {
+          console.log(name);
+        }
+        return isValidData;
+      }
+    });
+
+    console.log(allFieldsFilled);
+    console.log("filled forms", allFieldsFilled);
+    setIsFormComplete(allFieldsFilled);
+  };
   const getSubCategoryData = async (value) =>{
     const obj = categoryData.find((obj)=>{
         if(obj.value.trim() ==  value.trim()){
@@ -61,7 +97,7 @@ const navigate= useNavigate();
      const id = obj?.id;
     console.log("id at getsubcategoryData",id);
     try {
-      const url = `${api_url}/getAllMaterialSubCategory/${id}`;
+      const url = `${api_url}/materialCategory/getAllMaterialSubCategory/${id}`;
       const response = await axios.get(url, {
           headers: { 'ngrok-skip-browser-warning': '69420' }
       });
@@ -85,6 +121,11 @@ const navigate= useNavigate();
       console.log("Error :", error);
   }
   }
+
+  useEffect(() => {
+    checkFormCompletion();
+  }, [formData]);
+
 
   useEffect(()=>{
       getSubCategoryData(formData.category);
@@ -118,11 +159,14 @@ const navigate= useNavigate();
         <Navbar
           title="Add Material"
           btnTitle="Next"
+          btnStyle={{ backgroundColor: isFormComplete ? "#2CAE66" : "#B3B3B3",cursor: isFormComplete ? "pointer" : "not-allowed"}}
+         
           className="NavbarForm"
           btnType="submit"
           handleClick={handleSubmit}
           nextLink="/materials/CreateBatch"
           backLink="/materials/CreateBatch"
+          disabled={!isFormComplete}
          
         />
 

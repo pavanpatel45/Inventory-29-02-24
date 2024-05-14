@@ -18,7 +18,7 @@ export default function CreateBatch() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [materialsTableData, setMaterialTableData] = useState([]);
-  const [materialData,setMaterialData] = useState();
+  const [materialData, setMaterialData] = useState();
   const [formData, setFormData] = useState({
     materialName: "",
     storageLocation: "",
@@ -29,6 +29,7 @@ export default function CreateBatch() {
     price: "",
   });
   const [showAddThisMaterial, setShowAddThisMaterial] = useState(false);
+  const [isFormComplete, setIsFormComplete] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -40,29 +41,61 @@ export default function CreateBatch() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Material Data :",materialData);
     const Data = {
-      "materialName": materialData.materialName,
-      "storageLocation": String(formData.storageLocation),
-      "batchId": String( formData.batchId),
-      "purchaseOrder":String(formData.makeOrder),
-      "expiryDate": String(formData.expiryDate),
-      "quantity":parseInt(formData.quantity, 10)  ,
-      "price": parseFloat(formData.price),
-      "shortName":'',
-      "category":materialData.category      ,
-      "subCategory": '',
-      "upc": materialData.upc,
-      "barcode": '',
-      "refrigeration": false,
-      "minimumQuantity": '',
-      "measurementType": '',
-      "description": ''
-    }
+      materialName: String(formData.materialName),
+      storageLocation: String(formData.storageLocation),
+      batchId: String(formData.batchId),
+      purchaseOrder: String(formData.makeOrder),
+      expiryDate: String(formData.expiryDate),
+      quantity: parseInt(formData.quantity, 10),
+      price: parseFloat(formData.price),
+      category: materialData.category,
+      upc: materialData.upc,
+      refrigeration: false,
+    };
     dispatch(addBatch(Data));
     toast.success("Batch Successfully Added");
     navigate("/materials");
   };
+
+  const checkFormCompletion = () => {
+    const formEntries = Object.entries(formData);
+
+    console.log(formEntries);
+
+    const allFieldsFilled = formEntries.every((formEntriesData) => {
+      const [name, value] = formEntriesData;
+
+      if (typeof value === "object" && value !== null) {
+        // For objects, check each value inside the object
+        const isValidData = Object.values(value).every(
+          (val) =>
+            (typeof val === "string" || "number") && String(val).trim() !== ""
+        );
+        if (!isValidData) {
+          console.log(name);
+        }
+        return isValidData;
+      } else {
+        // For non-objects, directly check the value
+        const isValidData =
+          typeof (value === "string" || "number") &&
+          String(value).trim() !== "";
+        if (!isValidData) {
+          console.log(name);
+        }
+        return isValidData;
+      }
+    });
+
+    console.log(allFieldsFilled);
+    console.log("filled forms", allFieldsFilled);
+    setIsFormComplete(allFieldsFilled);
+  };
+
+  useEffect(() => {
+    checkFormCompletion();
+  }, [formData]);
 
   const getMaterialsTableData = async () => {
     const url = `${api_url}/material`;
@@ -87,7 +120,11 @@ export default function CreateBatch() {
   useEffect(() => {
     console.log("on formData.materialName change");
     for (const d of materialsTableData) {
-      console.log("Inside material table Data", d.materialName.trim(), formData.materialName.trim());
+      console.log(
+        "Inside material table Data",
+        d.materialName.trim(),
+        formData.materialName.trim()
+      );
       if (d.materialName.trim() !== formData.materialName.trim()) {
         console.log("add this");
         setShowAddThisMaterial(true);
@@ -98,38 +135,55 @@ export default function CreateBatch() {
         break; // Break out of the loop
       }
     }
-    
   }, [formData.materialName]);
 
   return (
     <form onSubmit={handleSubmit}>
       <div className="p-8 bg-white">
-        <Navbar title="Create Batch" btnTitle="Add Material" backLink="/materials" />
+        <Navbar
+          title="Create Batch"
+          btnTitle="Add Material"
+          backLink="/materials"
+          
+        />
         <div className="grid gap-y-4 pt-8">
           <div className="grid gap-2">
             <div className="grid  grid-cols-1 md:grid-cols-3 grid-flow-row gap-x-8 gap-y-8">
               <div>
-              <InputBox
-                type="text"
-                title="Material Name/Code*"
-                name="materialName"
-                onChange={handleInputChange}
-                labelCss={formData.materialName.length > 0 ? "label-up" : "label-down"}
-              />
-              {showAddThisMaterial && <AddThisMaterial title="material" link="/materials/AddMaterial" />}
+                <InputBox
+                  type="text"
+                  title="Material Name/Code*"
+                  name="materialName"
+                  onChange={handleInputChange}
+                  labelCss={
+                    formData.materialName.length > 0 ? "label-up" : "label-down"
+                  }
+                />
+                {showAddThisMaterial && (
+                  <AddThisMaterial
+                    title="material"
+                    link="/materials/AddMaterial"
+                  />
+                )}
               </div>
               <DropDown
                 title="Storage Location*"
                 name="storageLocation"
                 onChange={handleInputChange}
-                labelCss={formData.storageLocation.length > 0 ? "label-up" : "label-down"}
+                labelCss={
+                  formData.storageLocation.length > 0
+                    ? "label-up"
+                    : "label-down"
+                }
               />
               <InputBox
                 type="text"
                 title="Batch ID*"
                 name="batchId"
                 onChange={handleInputChange}
-                labelCss={formData.batchId.length > 0 ? "label-up" : "label-down"}
+                labelCss={
+                  formData.batchId.length > 0 ? "label-up" : "label-down"
+                }
               />
             </div>
           </div>
@@ -140,14 +194,18 @@ export default function CreateBatch() {
                 title="Purchase Order#*"
                 name="makeOrder"
                 onChange={handleInputChange}
-                labelCss={formData.makeOrder.length > 0 ? "label-up" : "label-down"}
+                labelCss={
+                  formData.makeOrder.length > 0 ? "label-up" : "label-down"
+                }
               />
               <InputBox
                 type="date"
                 title="Expiry Date*"
                 name="expiryDate"
                 onChange={handleInputChange}
-                labelCss={formData.expiryDate.length > 0 ? "label-up" : "label-down"}
+                labelCss={
+                  formData.expiryDate.length > 0 ? "label-up" : "label-down"
+                }
               />
               <InputBox
                 type="number"
@@ -171,7 +229,14 @@ export default function CreateBatch() {
           </div>
           <div className="flex flex-row justify-end">
             <Link to="/materials">
-              <Button btnTitle="Save" className="pt-0 pb-0 text-style" type="submit" onClickfunction={handleSubmit} />
+              <Button
+                btnTitle="Save"
+                className="pt-0 pb-0 text-sty"
+                style={{ backgroundColor: isFormComplete ? "#2CAE66 " : "#B3B3B3 ",cursor: isFormComplete ? "pointer" : "not-allowed"}}
+                disabled={!isFormComplete}
+                type="submit"
+                onClickfunction={handleSubmit}
+              />
             </Link>
           </div>
         </div>

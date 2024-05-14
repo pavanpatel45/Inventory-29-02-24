@@ -16,7 +16,7 @@ const MaterialView = () => {
   
 
   const materialsTableData = async () => {
-    const url = `${api_url}/material`;
+    const url = `${api_url}/materialBatch`;
     try {
       const response = await axios.get(url, {
         headers: { "ngrok-skip-browser-warning": "69420" },

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addProduct } from "../../features/Product/productSlice";
 import InputBox from "../../Components/InputBox";
@@ -32,12 +32,53 @@ export default function CreateProduct() {
       [name]: value
     }));
   };
+  const [isFormComplete, setIsFormComplete] = useState(false);
+
   const handleSubmit = (e)=>{
      e.preventDefault();
      console.log("form Data at createProduct :",formData);
      dispatch(addProduct(formData));
      navigate('/products/CreateProduct/CreateProductMaterials')
   }
+  const checkFormCompletion = () => {
+    const formEntries = Object.entries(formData);
+
+    console.log(formEntries);
+
+    const allFieldsFilled = formEntries.every((formEntriesData) => {
+      const [name, value] = formEntriesData;
+
+      if (typeof value === "object" && value !== null) {
+        // For objects, check each value inside the object
+        const isValidData = Object.values(value).every(
+          (val) =>
+            (typeof val === "string" || "number") && String(val).trim() !== ""
+        );
+        if (!isValidData) {
+          console.log(name);
+        }
+        return isValidData;
+      } else {
+        // For non-objects, directly check the value
+        const isValidData =
+          typeof (value === "string" || "number") &&
+          String(value).trim() !== "";
+        if (!isValidData) {
+          console.log(name);
+        }
+        return isValidData;
+      }
+    });
+
+    console.log(allFieldsFilled);
+    console.log("filled forms", allFieldsFilled);
+    setIsFormComplete(allFieldsFilled);
+  };
+  useEffect(() => {
+    checkFormCompletion();
+  }, [formData]);
+
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="p-8 bg-white">
@@ -46,6 +87,8 @@ export default function CreateProduct() {
           btnTitle="Next"
           className="NavbarForm"
           btnType="submit"
+          btnStyle={{ backgroundColor: isFormComplete ? "#2CAE66" : "#B3B3B3",cursor: isFormComplete ? "pointer" : "not-allowed"}}
+          disabled={!isFormComplete}
           handleClick={handleSubmit}
           backLink="/products/CreateBatchProduct"
           // nextLink="createProductMaterials"
