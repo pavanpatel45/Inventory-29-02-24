@@ -69,7 +69,7 @@ const navigate= useNavigate();
     // dispatch(addProductMaterial(formData));
     toast.success("New Product Successfully Added");
     addData();
-    navigate('/products')
+    navigate('/products/CreateBatchProduct')
   }
   const addData = ()=>{
     setData((prevData)=>
@@ -236,7 +236,7 @@ const navigate= useNavigate();
           </div>
         </div>
       </form>
-      {Data && <AddedMaterialsTable Data={Data} />}
+      {/* {Data && <AddedMaterialsTable Data={Data} />} */}
     </div>
   );
 }

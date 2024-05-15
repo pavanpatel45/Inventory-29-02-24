@@ -16,13 +16,110 @@ import { useState } from "react";
 
 import "../CSS/OrderDropdown.css";
 import TableDropdown from "./TableDropdown";
-function Products({ selected, setSelected, productsTableData, data }) {
+function Products({ selected, setSelected, productsTableData, data, category, setCategory, expiryDate, setExpirtyDate, availability, setAvailability }) {
+  const [option1, setOption1] = React.useState([]);
+  const [option2, setOption2] = React.useState([]);
+  const [option3, setOption3] = React.useState([]);
+  const [options, setOptions] = React.useState([
+    {
+      value: "In Stock",
+      id: "1"
+    },
+    {
+      value: "Out of Stock",
+      id: "3"
+    },
+    {
+      value: "Few Left",
+      id: "2"
+    }
+  ])
   const handleImageClick1 = () => {
     console.log("edit icon was clicked");
   };
   const handleImageClick2 = (row) => {
     console.log("shopping-bag icon was clicked", row);
   };
+  const getCategory = async () => {
+    const url = `${api_url}/materialCategory/getAllMaterialCategory`;
+    try {
+      const response = await axios.get(url, {
+        headers: { "ngrok-skip-browser-warning": "69420" },
+      });
+      console.log("at api-data Category DAta: ", response);
+
+      if (response?.status === 200) {
+        console.log("API Data: Category DAta", response?.data);
+        const option = response?.data;
+        setOption1([]);
+        option.map((ele) => {
+          setOption1((prev) => {
+            return [
+              ...prev,
+              {
+                value: ele.value,
+                label: ele.value,
+              },
+            ];
+          });
+        });
+      } else {
+        console.error("Received unexpected response:", response);
+      }
+    } catch (error) {
+      return null;
+    }
+  };
+  const getExpiryDate = async () => {
+    const url = `${api_url}/getExpiryDates`;
+    try {
+      const response = await axios.get(url, {
+        headers: { "ngrok-skip-browser-warning": "69420" },
+      });
+      // console.log("at api-data Category DAta: ", response);
+
+      if (response?.status === 200) {
+        console.log("API Data: Category DAta", response?.data);
+        const option = response?.data;
+        console.log("Expiry Date values:", option);
+        setOption2([]);
+        option.map((ele) => {
+          setOption2((prev) => {
+            return [
+              ...prev,
+              {
+                value: ele.value,
+                label: ele.value,
+              },
+            ];
+          });
+        });
+      } else {
+        console.error("Received unexpected response:", response);
+      }
+    } catch (error) {
+      return null;
+    }
+  };
+  React.useEffect(() => {
+    getCategory();
+    getExpiryDate();
+
+    setOption3([]);
+    options.map((ele) => {
+      console.log("ele at setOption3 : ", ele);
+      setOption3((prev) => {
+        return [
+          ...prev,
+          {
+            value: ele.value,
+            label: ele.value,
+          },
+        ];
+      });
+    });
+    console.log("all data at starting :",option1,option2,option3);
+  }, []);
   const handleCheck = (id) => {
     console.log("at handleCheck :", id);
     if (selected.includes(id)) {
@@ -33,44 +130,9 @@ function Products({ selected, setSelected, productsTableData, data }) {
       return false;
     }
   };
-  const options = [
-    {
-      value: "inStock",
-      label: "In Stock",
-    },
-    {
-      value: "fewLeft",
-      label: "Few Left",
-    },
-    {
-      value: "outOfStock",
-      label: "Out of Stock",
-    },
-  ];
-
-  const options1 = [
-    {
-      value: "fillersBinders",
-      label: "Fillers and Binders",
-    },
-    {
-      value: "solvents",
-      label: "Solvents",
-    },
-    {
-      value: "stabilizersLubricants",
-      label: "Stabilizers and Lubricants",
-    },
-    {
-      value: "preservatives",
-      label: "Preservatives",
-    },
-    {
-      value: "modifiersAdditives",
-      label: "Modifiers and Additives",
-    },
-  ];
-
+  React.useEffect(()=>{
+    console.log("category Data :",option1);
+  },[option1]);
   const columns = React.useMemo(
     () => [
       {
@@ -147,8 +209,8 @@ function Products({ selected, setSelected, productsTableData, data }) {
                 overflow: "hidden",
               }}
 
-              // labelStyle={{ marginLeft: 5, userSelect: "none" }}
-              // label="Have you started using it?"
+            // labelStyle={{ marginLeft: 5, userSelect: "none" }}
+            // label="Have you started using it?"
             />
             <a
               href="https://www.google.com" //href={`#/${value}`}
@@ -169,7 +231,7 @@ function Products({ selected, setSelected, productsTableData, data }) {
       },
       {
         Header: "Code",
-        accessor: "upc",
+        accessor: "code",
         width: "120px",
         height: "52px",
       },
@@ -179,18 +241,11 @@ function Products({ selected, setSelected, productsTableData, data }) {
         width: "120px",
         height: "52px",
       },
-    
+
       {
         Header: (
           <>
-            <select style={{ backgroundColor: "#E9E9E9" }}>
-              <option default className="hidden">
-                Expiry Date
-              </option>
-              <option value="Option 1">Option 1</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 3">Option 3</option>
-            </select>
+            <TableDropdown title="Expiry Date" options={option2} selectedOption={expiryDate} setSelectedOption={setExpirtyDate} />
           </>
         ),
         accessor: "expiryDate",
@@ -200,7 +255,7 @@ function Products({ selected, setSelected, productsTableData, data }) {
       {
         Header: (
           <>
-            <TableDropdown title="Category" options={options1} className="z-50 "/>
+            <TableDropdown title="Category" options={option1} selectedOption={category} setSelectedOption={setCategory} className="z-50" />
           </>
         ),
         accessor: "category",
@@ -222,9 +277,9 @@ function Products({ selected, setSelected, productsTableData, data }) {
       },
       {
         Header: (
-          <>
-            <TableDropdown title="Availability" options={options} />
-          </>
+          <div className="z-50">
+            <TableDropdown title="Availability" options={option3} selectedOption={availability} setSelectedOption={setAvailability} />
+          </div>
         ),
         accessor: "availability",
         Cell: ({ row }) => {
@@ -249,7 +304,7 @@ function Products({ selected, setSelected, productsTableData, data }) {
         Header: "Action",
         accessor: "action",
         width: "125px",
-        height:"40px",
+        height: "40px",
         Cell: ({ cell, row }) => (
           <div className="flex flex-row justify-center">
             <img
@@ -273,7 +328,7 @@ function Products({ selected, setSelected, productsTableData, data }) {
         ),
       },
     ],
-    [selected]
+    [selected,option1,option2,option3]
   );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =

@@ -132,6 +132,7 @@ borderRadius:"8px"
 
 function TableDropdown({title,options,selectedOption,setSelectedOption,className}) {
   // const [selectedOption, setSelectedOption] = useState(null);
+  console.log("options at TableDropdown : ",options);
   useEffect(()=>{
       console.log("Selected Option :",selectedOption);
   },[selectedOption]);
