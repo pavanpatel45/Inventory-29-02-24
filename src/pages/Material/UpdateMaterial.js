@@ -74,6 +74,7 @@ const navigate= useNavigate();
   useEffect(() => {
     checkFormCompletion();
   }, [formData]);
+  
   const getStorageLocation = async () => {
     const url = `${api_url}/productCategory/getAllLocations`;
     try {

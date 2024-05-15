@@ -63,13 +63,13 @@ const navigate= useNavigate();
     checkFormCompletion();
   }, [formData]);
 
-  const handleSubmit = (e)=>{
+  const handleSubmit = (e)=>{ 
     e.preventDefault();
     console.log("form Data at createProductMaterials :",formData);
     // dispatch(addProductMaterial(formData));
     toast.success("New Product Successfully Added");
     addData();
-    navigate('/products')
+    navigate('/products/CreateBatchProduct')
   }
   const addData = ()=>{
     setData((prevData)=>
@@ -114,7 +114,7 @@ const navigate= useNavigate();
             btnTitle="Save"
             handleClick={handleSubmit}
             backLink="/products/createProduct/"
-           // nextLink="/products/CreateBatchProduct"
+          // nextLink="/products"
           />
             <div className="flex flex-row mt-7 ">
           <div className="flex flex-col items-center">
@@ -236,7 +236,7 @@ const navigate= useNavigate();
           </div>
         </div>
       </form>
-      {Data && <AddedMaterialsTable Data={Data} />}
+      {/* {Data && <AddedMaterialsTable Data={Data} />} */}
     </div>
   );
 }
