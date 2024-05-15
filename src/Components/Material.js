@@ -17,6 +17,18 @@ import { Link } from "react-router-dom";
 
 function Material({ setSelected, selected, data }) {
   const [option1, setOption1] = React.useState([]);
+  const [option2, setOption2] = React.useState([]);
+  const [option3, setOption3] = React.useState([]);
+  const [options,setOptions] = React.useState([
+      {
+        value: "In Stock",
+        id: "1"
+      },
+      {
+        value: "Out of Stock",
+        id: "3"
+      },
+  ])
   const handleImageClick1 = () => {
     console.log("edit icon was clicked");
   };

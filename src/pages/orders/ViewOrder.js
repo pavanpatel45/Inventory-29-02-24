@@ -22,7 +22,7 @@ export default function ViewOrder(props) {
   const order = location.state;
   const updateStatus = async () => {
     try {
-      const url = `${api_url}/createOrder/${order.orderId}/1`;
+      const url = `${api_url}/createOrder/${order.orderId}/6`;
       const resp = await axios.put(url);
       console.log("Response at createOrder", resp);
     } catch (error) {
@@ -246,7 +246,7 @@ export default function ViewOrder(props) {
                 Billing Address
               </div>
               <div className="text-sm" style={{ color: "#2D2D2D" }}>
-                {data.paymentAddress}{" "}
+                {data.paymentAddress}
               </div>
             </div>
             <div className="col-span-4">
@@ -346,170 +346,7 @@ export default function ViewOrder(props) {
           </div>
         </div>
       </div>
-      <div>
-        <div
-          className="flex flex-row p-1 items-center gap-2"
-          style={{ backgroundColor: "#EBEBEB" }}
-        >
-          <div className="h-4 w-4 flex items-center">
-            <img src={paymentIcon} height="16px" width="16px" />
-          </div>
-          <div style={{ color: "#2D2D2D" }} className="text-base">
-            Payment Details
-          </div>
-        </div>
-        <div className="grid grid-cols-4 gap-2 pt-1 pb-1">
-          <div>
-            <div className="text-sm" style={{ color: "#6F6F6F" }}>
-              Payment Method
-            </div>
-            <div className="text-sm" style={{ color: "#2D2D2D" }}>
-              April 06 2024
-            </div>
-          </div>
-          <div>
-            <div className="text-sm" style={{ color: "#6F6F6F" }}>
-              Card No.
-            </div>
-            <div className="text-sm" style={{ color: "#2D2D2D" }}>
-              April 06 2024
-            </div>
-          </div>
-          <div>
-            <div className="text-sm" style={{ color: "#6F6F6F" }}>
-              Card Holder Name
-            </div>
-            <div className="text-sm" style={{ color: "#2D2D2D" }}>
-              April 06 2024
-            </div>
-          </div>
-          <div>
-            <div className="text-sm" style={{ color: "#6F6F6F" }}>
-              Payment Status
-            </div>
-            <div className="text-sm" style={{ color: "#2D2D2D" }}></div>
-          </div>
-          <div>
-            <div className="text-sm" style={{ color: "#6F6F6F" }}>
-              Payment Date
-            </div>
-            <div className="text-sm" style={{ color: "#2D2D2D" }}></div>
-          </div>
-          <div>
-            <div className="text-sm" style={{ color: "#6F6F6F" }}>
-              Amount
-            </div>
-            <div className="text-sm" style={{ color: "#2D2D2D" }}></div>
-          </div>
-          <div className="col-span-2">
-            <div className="text-sm" style={{ color: "#6F6F6F" }}>
-              Billing Address
-            </div>
-            <div className="text-sm" style={{ color: "#2D2D2D" }}>
-              Azura Pharma Pvt Ltd 1234 Elm Street Anytown, Springfield,
-              Illinois USA Zip - 62701{" "}
-            </div>
-          </div>
-          <div className="col-span-4">
-            <div className="text-sm" style={{ color: "#6F6F6F" }}>
-              Payment Note
-            </div>
-            <div className="text-sm" style={{ color: "#2D2D2D" }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget
-              sapien nec nulla ultricies blandit. Pellentesque vestibulum libero
-              quis justo mattis luctus.
-            </div>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div
-          className="flex flex-row p-1 items-center gap-2"
-          style={{ backgroundColor: "#EBEBEB" }}
-        >
-          <div className="h-4 w-4 flex items-center">
-            <img src={shippingIcon} height="16px" width="16px" />
-          </div>
-          <div style={{ color: "#2D2D2D" }} className="text-base">
-            Shipping Details
-          </div>
-        </div>
-        <div className="grid grid-cols-4 gap-2 pt-1 pb-1">
-          <div>
-            <div className="text-sm" style={{ color: "#6F6F6F" }}>
-              Delivery Date
-            </div>
-            <div className="text-sm" style={{ color: "#2D2D2D" }}>
-              April 06 2024
-            </div>
-          </div>
-          <div>
-            <div className="text-sm" style={{ color: "#6F6F6F" }}>
-              Shipping Partner
-            </div>
-            <div className="text-sm" style={{ color: "#2D2D2D" }}>
-              April 06 2024
-            </div>
-          </div>
-          <div className="col-span-2">
-            <div className="text-sm" style={{ color: "#6F6F6F" }}>
-              Delivery Address
-            </div>
-            <div className="text-sm" style={{ color: "#2D2D2D" }}>
-              Azura Pharma Pvt Ltd 1234 Elm Street Anytown, Springfield,
-              Illinois USA Zip - 62701{" "}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div
-          className="flex flex-row p-1 items-center gap-2"
-          style={{ backgroundColor: "#EBEBEB" }}
-        >
-          <div className="h-4 w-4 flex items-center">
-            <img src={userIcon} height="16px" width="16px" />
-          </div>
-          <div style={{ color: "#2D2D2D" }} className="text-base">
-            Customer Details
-          </div>
-        </div>
-        <div className="grid grid-cols-4 gap-2 pt-1 pb-1">
-          <div>
-            <div className="text-sm" style={{ color: "#6F6F6F" }}>
-              Name
-            </div>
-            <div className="text-sm" style={{ color: "#2D2D2D" }}>
-              April 06 2024
-            </div>
-          </div>
-          <div>
-            <div className="text-sm" style={{ color: "#6F6F6F" }}>
-              Email
-            </div>
-            <div className="text-sm" style={{ color: "#2D2D2D" }}>
-              April 06 2024
-            </div>
-          </div>
-          <div>
-            <div className="text-sm" style={{ color: "#6F6F6F" }}>
-              Phone
-            </div>
-            <div className="text-sm" style={{ color: "#2D2D2D" }}>
-              April 06 2024
-            </div>
-          </div>
-          <div className="col-span-3">
-            <div className="text-sm" style={{ color: "#6F6F6F" }}>
-              Address
-            </div>
-            <div className="text-sm" style={{ color: "#2D2D2D" }}>
-              Azura Pharma Pvt Ltd 1234 Elm Street Anytown, Springfield,
-              Illinois USA Zip - 62701{" "}
-            </div>
-          </div>
-        </div>
-      </div>
+      
     </div>
   );
 }

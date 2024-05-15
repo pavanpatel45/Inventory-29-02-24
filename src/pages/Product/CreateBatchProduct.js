@@ -31,6 +31,7 @@ export default function CreateBatch() {
   const [showAddThisProduct, setShowAddThisProduct] = useState(false);
   const [productsTableData, setProductTableData] = useState([]);
   const [isFormComplete, setIsFormComplete] = useState(false);
+  const [storageLocation,setStorageLocation] = useState([]);
 
 
   const handleInputChange = (e) => {
@@ -46,6 +47,7 @@ export default function CreateBatch() {
     e.preventDefault();
     console.log("form data at createbatchproduct :", formData);
     dispatch(addProductBatch(formData));
+    toast.success("Batch Successfully Added");
   };
   const getProductsTableData = async () => {
     const url = `${api_url}/product`;
@@ -55,6 +57,22 @@ export default function CreateBatch() {
       });
       if (response?.status === 200) {
         setProductTableData(response?.data);
+      } else {
+        console.error("Received unexpected response:", response);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+    
+  };
+  const getStorageLocation = async () => {
+    const url = `${api_url}/productCategory/getAllLocations`;
+    try {
+      const response = await axios.get(url, {
+        headers: { "ngrok-skip-browser-warning": "69420" },
+      });
+      if (response?.status === 200) {
+        setStorageLocation(response?.data);
       } else {
         console.error("Received unexpected response:", response);
       }
@@ -103,6 +121,7 @@ export default function CreateBatch() {
 
   useEffect(() => {
     getProductsTableData();
+    getStorageLocation();
   }, []);
 
   useEffect(() => {
@@ -123,7 +142,7 @@ export default function CreateBatch() {
 
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form >
       <div className="p-8 bg-white">
         <Navbar
           title="Create Batch"
@@ -149,6 +168,7 @@ export default function CreateBatch() {
               <DropDown
                 title="Storage Location*"
                 name="storageLocation"
+                options={storageLocation}
                 onChange={handleInputChange}
                 labelCss={
                   formData.storageLocation.length > 0
@@ -219,9 +239,7 @@ export default function CreateBatch() {
                 style={{ backgroundColor: isFormComplete ? "#2CAE66 " : "#B3B3B3 ",cursor: isFormComplete ? "pointer" : "not-allowed"}}
                 disabled={!isFormComplete}
                 type="submit"
-                onClickfunction={() => {
-                  toast.success("Batch Successfully Added");
-                }}
+                onClickfunction={handleSubmit}
               />
             </Link>
           </div>

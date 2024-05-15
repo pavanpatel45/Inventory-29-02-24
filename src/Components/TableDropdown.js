@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import down from "../Icons/arrow-down.svg";
 
@@ -130,9 +130,11 @@ borderRadius:"8px"
 
 };
 
-function TableDropdown({title,options}) {
-  const [selectedOption, setSelectedOption] = useState(null);
-
+function TableDropdown({title,options,selectedOption,setSelectedOption}) {
+  // const [selectedOption, setSelectedOption] = useState(null);
+  useEffect(()=>{
+      console.log("Selected Option :",selectedOption);
+  },[selectedOption]);
   const handleChange = (selectedOption) => {
     setSelectedOption(selectedOption);
   };

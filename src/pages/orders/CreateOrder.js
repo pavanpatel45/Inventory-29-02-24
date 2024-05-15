@@ -35,6 +35,7 @@ export default function CreateOrder() {
   const [cityDataPayment,setCityDataPayment] =  useState([]);
   const [cityDataShipment,setCityDataShipment] =  useState([]);
   const [locations,setLocations] = useState([]);
+  const [products,setProducts] = useState([]);
   const [formData, setFormData] = useState({
     status: 1,
     // id: "",
@@ -245,6 +246,19 @@ export default function CreateOrder() {
         console.log("Error :", error);
     }
   }
+  const getProducts= async()=>{
+    try {
+      const url = `${api_url}/productCategory/getAllPaymentStatus`;
+      const response = await axios.get(url, {
+          headers: { 'ngrok-skip-browser-warning': '69420' }
+      });
+      console.log('Response at newOrderRequest', response.data);
+      setProducts(response.data);
+    }
+    catch (error) {
+        console.log("Error :", error);
+    }
+  }
   const getCity= async(callBy,id)=>{
     try {
       console.log("at getState :",callBy," : ",id,":");
@@ -363,6 +377,7 @@ export default function CreateOrder() {
        getPaymentStatus();
        getCountry();
        getLocations();
+       getProducts();
   },[])
   return (
     <form>
@@ -458,6 +473,7 @@ export default function CreateOrder() {
                 title="Name*"
                 name="productDetails.Name"
                 value={formData.productDetails.Name}
+                options={products}
                 onChange={(e) =>
                   setFormData((prevData) => ({
                     ...prevData,
