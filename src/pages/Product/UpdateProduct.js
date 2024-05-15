@@ -16,6 +16,9 @@ export default function UpdateProduct() {
   const [storageLocation,setStorageLocation] = useState([]);
   const [isFormComplete, setIsFormComplete] = useState(false);
 
+  const navigate = useNavigate();
+
+
   console.log("data at update product",data);
   const [formData, setFormData] = useState({
     productName: '',
@@ -26,7 +29,16 @@ export default function UpdateProduct() {
     quantity: '',
     price: '',
   })
-  const navigate = useNavigate();
+
+  const handleInputChange = (e) => {
+    console.log(e);
+    const { name, value } = e.target;
+    console.log("Input value changed:", name, ":", value);
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
 
   const checkFormCompletion = () => {
     const formEntries = Object.entries(formData);
@@ -77,6 +89,43 @@ export default function UpdateProduct() {
       console.error("Error fetching data:", error);
     }
   };
+
+  useEffect(()=>{
+    if(data){
+     setFormData((prevData) => ({
+       ...prevData, // Spread previous state
+       productName: data.productName ,
+       batchId: data.batchId ,
+     }));
+    }
+    getStorageLocation();
+  },[])
+
+  const updateBatchData = async (Data,id) => {
+    try {
+      const url = `${api_url}/productBatch/batchId/${id}`;
+      console.log("Data : ", Data);
+      const resp = await axios.put(url, Data);
+      console.log('Response', resp);
+    }
+    catch (error) {
+      console.log("Error :", error);
+    }
+  }
+
+  const postProductData = async (Data) => {
+    try {
+      const url = `${api_url}/product/`;
+      console.log("data : ", Data);
+      const resp = await axios.post(url, Data);
+      console.log('Response', resp);
+    }
+    catch (error) {
+      console.log("Error :", error);
+    }
+  }
+  
+
   useEffect(() => {
     getStorageLocation();
   }, []);
@@ -100,49 +149,11 @@ export default function UpdateProduct() {
     updateBatchData(Data,data.id)
 navigate("/products");
 }
-const updateBatchData = async (Data,id) => {
-  try {
-    const url = `${api_url}/productBatch/${id}`;
-    console.log("Data : ", Data);
-    const resp = await axios.put(url, Data);
-    console.log('Response', resp);
-  }
-  catch (error) {
-    console.log("Error :", error);
-  }
-}
-const postProductData = async (Data) => {
-  try {
-    const url = `${api_url}/product/`;
-    console.log("data : ", Data);
-    const resp = await axios.post(url, Data);
-    console.log('Response', resp);
-  }
-  catch (error) {
-    console.log("Error :", error);
-  }
-}
 
-useEffect(()=>{
-  if(data){
-   setFormData((prevData) => ({
-     ...prevData, // Spread previous state
-     productName: data.productName ,
-     batchId: data.batchId ,
-   }));
-  }
-  getStorageLocation();
-},[])
 
-  const handleInputChange = (e) => {
-    console.log(e);
-    const { name, value } = e.target;
-    console.log("Input value changed:", name, ":", value);
-    setFormData(prevData => ({
-      ...prevData,
-      [name]: value
-    }));
-  };
+
+
+
   return (
 
     <form >
@@ -158,7 +169,8 @@ useEffect(()=>{
                 type="text"
                 title="Product Name/Code*"
                 name="productName"
-                onChange={handleInputChange}
+                value={formData.productName}
+                  onChange={handleInputChange}
                 labelCss={
                   formData.productName.length > 0 ? 'label-up' : 'label-down'}
               />
@@ -176,6 +188,7 @@ useEffect(()=>{
                 type="text"
                 title="Batch ID*"
                 name="batchId"
+                value={formData.batchId}
                 onChange={handleInputChange}
                 labelCss={
                   formData.batchId.length > 0 ? 'label-up' : 'label-down'}

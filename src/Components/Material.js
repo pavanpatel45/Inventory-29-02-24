@@ -133,35 +133,7 @@ function Material({ setSelected, selected, data, category, setCategory, expiryDa
     });
     }, []);
 
-    // const data1 = React.useMemo(() => data, [selected]);
-
-    // const options1 = [
-    //   {
-    //     value: "fillersBinders",
-    //     label: "Fillers and Binders",
-
-    //   },
-    //   {
-    //     value: "solvents",
-    //     label: "Solvents",
-
-    //   },
-    //   {
-    //     value: "stabilizersLubricants",
-    //     label: "Stabilizers and Lubricants",
-
-    //   },
-    //   {
-    //     value: "preservatives",
-    //     label: "Preservatives",
-
-    //   },
-    //   {
-    //     value: "modifiersAdditives",
-    //     label: "Modifiers and Additives",
-
-    //   },
-    // ];
+   
 
     const columns = React.useMemo(
       () => [

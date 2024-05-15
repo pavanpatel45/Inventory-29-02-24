@@ -63,7 +63,7 @@ const navigate= useNavigate();
     checkFormCompletion();
   }, [formData]);
 
-  const handleSubmit = (e)=>{
+  const handleSubmit = (e)=>{ 
     e.preventDefault();
     console.log("form Data at createProductMaterials :",formData);
     // dispatch(addProductMaterial(formData));
@@ -114,7 +114,7 @@ const navigate= useNavigate();
             btnTitle="Save"
             handleClick={handleSubmit}
             backLink="/products/createProduct/"
-           // nextLink="/products/CreateBatchProduct"
+          // nextLink="/products"
           />
             <div className="flex flex-row mt-7 ">
           <div className="flex flex-col items-center">

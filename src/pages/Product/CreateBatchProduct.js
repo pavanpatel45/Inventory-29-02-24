@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
-
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { addProductBatch } from "../../features/Product/productSlice";
 import InputBox from "../../Components/InputBox";
@@ -33,7 +33,7 @@ export default function CreateBatch() {
   const [isFormComplete, setIsFormComplete] = useState(false);
   const [storageLocation,setStorageLocation] = useState([]);
 
-
+const navigate= useNavigate();
   const handleInputChange = (e) => {
     console.log(e);
     const { name, value } = e.target;
@@ -48,6 +48,7 @@ export default function CreateBatch() {
     console.log("form data at createbatchproduct :", formData);
     dispatch(addProductBatch(formData));
     toast.success("Batch Successfully Added");
+    navigate("/products")
   };
   const getProductsTableData = async () => {
     const url = `${api_url}/product`;

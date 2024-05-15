@@ -15,7 +15,7 @@ import Export from "./Export";
 import { api_url } from "../Data/Constants";
 import axios from "axios";
 
-export default function NavbarMaterials({
+export default function NavbarProducts({
   className,
   select = true,
   count,
