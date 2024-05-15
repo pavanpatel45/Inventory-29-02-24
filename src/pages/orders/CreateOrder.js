@@ -36,6 +36,7 @@ export default function CreateOrder() {
   const [cityDataShipment,setCityDataShipment] =  useState([]);
   const [locations,setLocations] = useState([]);
   const [products,setProducts] = useState([]);
+  const [productTableData,setProductTableData] = useState([]);
   const [formData, setFormData] = useState({
     status: 1,
     // id: "",
@@ -309,6 +310,39 @@ export default function CreateOrder() {
         console.log("Error :", error);
     }
   }
+  const getProductsTableData = async () => {
+    const url = `${api_url}/product`;
+    try {
+      const response = await axios.get(url, {
+        headers: { "ngrok-skip-browser-warning": "69420" },
+      });
+      if (response?.status === 200) {
+        setProductTableData(response?.data);
+        const Data = response?.data;
+        setProductTableData([]);
+        Data.map((ele) => {
+          setProductTableData((prev) => {
+            return [
+              ...prev,
+              {
+                value: ele.productName,
+                label: ele.productName,
+              },
+            ];
+          });
+        });
+        console.log("product table data at create Order :",Data);
+      } else {
+        console.error("Received unexpected response:", response);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+    
+  };
+  useEffect(()=>{
+      console.log("Product Table Data :",productTableData);
+  },[productTableData])
   useEffect(()=>{
     const obj = countryData.find((obj)=>{
       if(obj.value.trim() ==  formData.customerDetails.Country.trim()){
@@ -378,6 +412,7 @@ export default function CreateOrder() {
        getCountry();
        getLocations();
        getProducts();
+       getProductsTableData()
   },[])
   return (
     <form>
@@ -473,7 +508,7 @@ export default function CreateOrder() {
                 title="Name*"
                 name="productDetails.Name"
                 value={formData.productDetails.Name}
-                options={products}
+                options={productTableData}
                 onChange={(e) =>
                   setFormData((prevData) => ({
                     ...prevData,

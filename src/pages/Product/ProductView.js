@@ -89,7 +89,7 @@ useEffect(() => {
        <Products selected={selected} setSelected={setSelected} productsTableData={productsTableData} data={data}/>
        </div>
        <div>
-       <FooterPagination/>
+       {/* <FooterPagination/> */}
        </div>
        {isDeleteDialogOpen && (
          <div className="fixed inset-0 flex justify-center items-center z-30">

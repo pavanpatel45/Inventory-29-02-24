@@ -28,6 +28,10 @@ function Material({ setSelected, selected, data, category, setCategory, expiryDa
         value: "Out of Stock",
         id: "3"
       },
+      {
+        value:"Few Left",
+        id:"2"
+      }
   ])
   const handleImageClick1 = () => {
     console.log("edit icon was clicked");
