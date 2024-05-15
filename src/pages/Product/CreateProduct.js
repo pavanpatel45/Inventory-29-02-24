@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addProduct } from "../../features/Product/productSlice";
 import InputBox from "../../Components/InputBox";
@@ -149,10 +149,10 @@ export default function CreateProduct() {
         <Navbar
           title="Create Product"
           btnTitle="Next"
-          className="NavbarForm"
-          btnType="submit"
           btnStyle={{ backgroundColor: isFormComplete ? "#2CAE66" : "#B3B3B3",cursor: isFormComplete ? "pointer" : "not-allowed"}}
           disabled={!isFormComplete}
+          className="NavbarForm"
+          btnType="submit"
           handleClick={handleSubmit}
           backLink="/products/CreateBatchProduct"
           // nextLink="createProductMaterials"

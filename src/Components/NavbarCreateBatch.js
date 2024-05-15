@@ -12,7 +12,8 @@ export default function NavbarCreateBatch({title,btnTitle,backLink}) {
            <div style={{color:"black", fontFamily:"Roboto",fontWeight:"500", fontSize:"16px", lineHeight:"20px"}}>{title}</div>
        </div>
        <div className='flex flex-box'>
-           <Link to="/materials/AddMaterial"><Button btnTitle={btnTitle}  icon={plus} className="text-style2 "/></Link>
+           <Link to="/materials/AddMaterial">
+            {btnTitle && <Button btnTitle={btnTitle}  icon={plus} className="text-style2 "/>}</Link>
        </div>
     </div>
   )

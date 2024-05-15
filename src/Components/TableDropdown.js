@@ -130,7 +130,7 @@ borderRadius:"8px"
 
 };
 
-function TableDropdown({title,options,selectedOption,setSelectedOption}) {
+function TableDropdown({title,options,selectedOption,setSelectedOption,className}) {
   // const [selectedOption, setSelectedOption] = useState(null);
   useEffect(()=>{
       console.log("Selected Option :",selectedOption);
@@ -164,7 +164,7 @@ function TableDropdown({title,options,selectedOption,setSelectedOption}) {
 );
 
   return (
-    <div className="App">
+    <div className={className}>
       <Select
         styles={colorStyles}
         className="custom-select"

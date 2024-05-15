@@ -301,7 +301,7 @@ function Material({ setSelected, selected, data, category, setCategory, expiryDa
         {
           Header: (
             <>
-              <TableDropdown title="Category" options={option1} selectedOption={category} setSelectedOption={setCategory} />
+              <TableDropdown title="Category" options={option1} selectedOption={category} setSelectedOption={setCategory} className="z-50" />
             </>
           ),
           accessor: "category",
@@ -402,7 +402,7 @@ function Material({ setSelected, selected, data, category, setCategory, expiryDa
 
     return (
       <div>
-        <div className=" overflow-auto ml-4 pt-3 border-solid border-red-500 ">
+        <div className="  ml-4 pt-3 border-solid border-red-500 ">
           <table {...getTableProps()} className="table-auto border-collapse ">
             <thead>
               {headerGroups.map((headerGroup) => (

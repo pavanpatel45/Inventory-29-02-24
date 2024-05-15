@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import InputBox from "../../Components/InputBox";
 import DropDown from "../../Components/Dropdown";
 import Navbar from "../../Components/NavbarCreateBatch";
@@ -12,6 +13,10 @@ export default function UpdateMaterial() {
   const location = useLocation();
   const [data,setData] = useState(location?.state)
   const [storageLocation,setStorageLocation] = useState([]);
+  const [isFormComplete, setIsFormComplete] = useState(false);
+
+const navigate= useNavigate();
+
   console.log("data at update material",data);
   const [formData, setFormData] = useState({
     materialName: ''  ,
@@ -31,6 +36,44 @@ export default function UpdateMaterial() {
       [name]: value
     }));
   };
+  const checkFormCompletion = () => {
+    const formEntries = Object.entries(formData);
+
+    console.log(formEntries);
+
+    const allFieldsFilled = formEntries.every((formEntriesData) => {
+      const [name, value] = formEntriesData;
+
+      if (typeof value === "object" && value !== null) {
+        // For objects, check each value inside the object
+        const isValidData = Object.values(value).every(
+          (val) =>
+            (typeof val === "string" || "number") && String(val).trim() !== ""
+        );
+        if (!isValidData) {
+          console.log(name);
+        }
+        return isValidData;
+      } else {
+        // For non-objects, directly check the value
+        const isValidData =
+          typeof (value === "string" || "number") &&
+          String(value).trim() !== "";
+        if (!isValidData) {
+          console.log(name);
+        }
+        return isValidData;
+      }
+    });
+
+    console.log(allFieldsFilled);
+    console.log("filled forms", allFieldsFilled);
+    setIsFormComplete(allFieldsFilled);
+  };
+
+  useEffect(() => {
+    checkFormCompletion();
+  }, [formData]);
   const getStorageLocation = async () => {
     const url = `${api_url}/productCategory/getAllLocations`;
     try {
@@ -91,7 +134,7 @@ export default function UpdateMaterial() {
         price: parseFloat(formData.price),
       };
       updateBatchData(Data,data.id)
-
+navigate("/materials");
   }
   return (
 
@@ -100,6 +143,7 @@ export default function UpdateMaterial() {
         <Navbar
           title="Edit Batch"
           backLink="/materials"
+          
         />
         <div className="grid gap-y-4 pt-8">
           <div className="grid gap-2">
@@ -185,12 +229,15 @@ export default function UpdateMaterial() {
           </div>
           <div className="flex flex-row justify-end">
 
+<Link to="/materials">
             <Button
               btnTitle="Save"
-              className=" pt-0 pb-0 text-style"
+              className=" pt-0 pb-0 text-sty"
               onClickfunction={handleSubmit}
+              style={{ backgroundColor: isFormComplete ? "#2CAE66 " : "#B3B3B3 ",cursor: isFormComplete ? "pointer" : "not-allowed"}}
+              disabled={!isFormComplete}
             />
-
+</Link>
           </div>
         </div>
       </div>
