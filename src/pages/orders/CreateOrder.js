@@ -378,14 +378,7 @@ export default function CreateOrder() {
           disabled={!isFormComplete}
         />
 
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            checkFormCompletion();
-          }}
-        >
-          Test
-        </button>
+        
 
         <div className="grid gap-y-4">
           {/* Order Details Block Start */}

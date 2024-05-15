@@ -83,7 +83,7 @@ function Location({children,Options}) {
 
      <ul className="bg-white box-text text-black">
         {Options.map((ele)=>(
-          <div className="flex flex-row items-center dropHover">
+          <div className="flex flex-row items-center dropHover" key={ele.id}>
           <input
             type="checkbox"
             className=" pl-1"
