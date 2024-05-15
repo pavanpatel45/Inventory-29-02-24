@@ -200,7 +200,7 @@ function Products({ selected, setSelected, productsTableData, data }) {
       {
         Header: (
           <>
-            <TableDropdown title="Category" options={options1} />
+            <TableDropdown title="Category" options={options1} className="z-50 "/>
           </>
         ),
         accessor: "category",
@@ -281,7 +281,7 @@ function Products({ selected, setSelected, productsTableData, data }) {
 
   return (
     <div>
-      <div className=" overflow-auto ml-4 pt-3 border-solid border-red-500 ">
+      <div className="  ml-4 pt-3 border-solid border-red-500 ">
         <table className="table-auto border-collapse ">
           <thead>
             {headerGroups.map((headerGroup) => (

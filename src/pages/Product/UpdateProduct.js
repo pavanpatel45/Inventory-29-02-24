@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import InputBox from "../../Components/InputBox";
 import DropDown from "../../Components/Dropdown";
 import Navbar from "../../Components/NavbarCreateBatchProduct";
 import Button from "../../Components/Button";
 import "../../CSS/CreateBatch.css"
 import { Link,useLocation} from "react-router-dom";
+import { api_url } from "../../Data/Constants";
+import axios from "axios";
+
 
 export default function UpdateProduct() {
   const location = useLocation();
-  const data = location?.state;
+  const [data,setData] = useState(location?.state)
+  const [storageLocation,setStorageLocation] = useState([]);
+  const [isFormComplete, setIsFormComplete] = useState(false);
+
   console.log("data at update product",data);
   const [formData, setFormData] = useState({
     productName: '',
@@ -19,6 +26,114 @@ export default function UpdateProduct() {
     quantity: '',
     price: '',
   })
+  const navigate = useNavigate();
+
+  const checkFormCompletion = () => {
+    const formEntries = Object.entries(formData);
+
+    console.log(formEntries);
+    const allFieldsFilled = formEntries.every((formEntriesData) => {
+      const [name, value] = formEntriesData;
+
+      if (typeof value === "object" && value !== null) {
+        // For objects, check each value inside the object
+        const isValidData = Object.values(value).every(
+          (val) =>
+            (typeof val === "string" || "number") && String(val).trim() !== ""
+        );
+        if (!isValidData) {
+          console.log(name);
+        }
+        return isValidData;
+      } else {
+        // For non-objects, directly check the value
+        const isValidData =
+          typeof (value === "string" || "number") &&
+          String(value).trim() !== "";
+        if (!isValidData) {
+          console.log(name);
+        }
+        return isValidData;
+      }
+    });
+
+    console.log(allFieldsFilled);
+    console.log("filled forms", allFieldsFilled);
+    setIsFormComplete(allFieldsFilled);
+  };
+
+  const getStorageLocation = async () => {
+    const url = `${api_url}/productCategory/getAllLocations`;
+    try {
+      const response = await axios.get(url, {
+        headers: { "ngrok-skip-browser-warning": "69420" },
+      });
+      if (response?.status === 200) {
+        setStorageLocation(response?.data);
+      } else {
+        console.error("Received unexpected response:", response);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  useEffect(() => {
+    getStorageLocation();
+  }, []);
+
+  useEffect(() => {
+    checkFormCompletion();
+  }, [formData]);
+
+  const handleSubmit = (e)=>{
+    e.preventDefault();
+    console.log("formData at submit :",formData);
+    const Data = {
+      productName: String(formData.materialName),
+      storageLocation: String(formData.storageLocation),
+      batchId: String(formData.batchId),
+      makeOrder: String(formData.makeOrder),
+      expiryDate: String(formData.expiryDate),
+      quantity: parseInt(formData.quantity, 10),
+      price: parseFloat(formData.price),
+    };
+    updateBatchData(Data,data.id)
+navigate("/products");
+}
+const updateBatchData = async (Data,id) => {
+  try {
+    const url = `${api_url}/productBatch/${id}`;
+    console.log("Data : ", Data);
+    const resp = await axios.put(url, Data);
+    console.log('Response', resp);
+  }
+  catch (error) {
+    console.log("Error :", error);
+  }
+}
+const postProductData = async (Data) => {
+  try {
+    const url = `${api_url}/product/`;
+    console.log("data : ", Data);
+    const resp = await axios.post(url, Data);
+    console.log('Response', resp);
+  }
+  catch (error) {
+    console.log("Error :", error);
+  }
+}
+
+useEffect(()=>{
+  if(data){
+   setFormData((prevData) => ({
+     ...prevData, // Spread previous state
+     productName: data.productName ,
+     batchId: data.batchId ,
+   }));
+  }
+  getStorageLocation();
+},[])
+
   const handleInputChange = (e) => {
     console.log(e);
     const { name, value } = e.target;
@@ -52,6 +167,7 @@ export default function UpdateProduct() {
                 title="Storage Location*"
                 name="storageLocation"
                 onChange={handleInputChange}
+                options={storageLocation}
                 labelCss={
                   formData.storageLocation.length > 0 ? 'label-up' : 'label-down'}
               />
@@ -115,7 +231,10 @@ export default function UpdateProduct() {
 
             <Button
               btnTitle="Save"
-              className=" pt-0 pb-0 text-style"
+              className=" pt-0 pb-0 text-sty"
+              onClickfunction={handleSubmit}
+              style={{ backgroundColor: isFormComplete ? "#2CAE66 " : "#B3B3B3 ",cursor: isFormComplete ? "pointer" : "not-allowed"}}
+              disabled={!isFormComplete}
             />
 
           </div>
