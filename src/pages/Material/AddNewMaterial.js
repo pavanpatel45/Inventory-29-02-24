@@ -28,7 +28,12 @@ const navigate= useNavigate();
   })
   const [categoryData,setCategoryData] = useState([]);
   const [subCategoryData,setSubCategoryData] = useState([]);
-  const [mearsumentData,setMearsumentData] = useState([]);
+  const [mearsumentData,setMearsumentData] = useState([
+    {
+      id:"1",
+      value:"Kg"
+    }
+  ]);
   const handleInputChange = (e) => {
     console.log('at handle input change:',e);
     const { name, value,key} = e.target;
@@ -101,7 +106,7 @@ const navigate= useNavigate();
       const response = await axios.get(url, {
           headers: { 'ngrok-skip-browser-warning': '69420' }
       });
-      console.log('Response at newOrderRequest', response.data);
+      console.log('Response at get Subcategory', response.data);
       setSubCategoryData(response.data);
   }
   catch (error) {
@@ -128,6 +133,7 @@ const navigate= useNavigate();
 
 
   useEffect(()=>{
+    console.log("subcategory is recieved",)
       getSubCategoryData(formData.category);
       setFormData((prevData) =>({
         ...prevData,

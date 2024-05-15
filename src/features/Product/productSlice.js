@@ -34,6 +34,17 @@ const postData = async (Data) => {
         console.log("Error :", error);
     }
 }
+const postBatchData = async (Data) => {
+    try {
+        const url = `${api_url}/productBatch/`;
+        console.log("data : ", Data);
+        const resp = await axios.post(url, Data);
+        console.log('Response', resp);
+    }
+    catch (error) {
+        console.log("Error :", error);
+    }
+}
 
 export const productSlice = createSlice({
     name: "products",
@@ -45,8 +56,7 @@ export const productSlice = createSlice({
                 console.log("Payload Data:", action.payload);
                 // Modify state here if needed
                 const payload = action.payload;
-                state.product = {
-                    ...state.product,
+                const Data = {
                     productName: String(payload.productName),
                     category: String(payload.category),
                     subCategory: String(payload.subCategory),
@@ -57,6 +67,7 @@ export const productSlice = createSlice({
                     description: String(payload.Description ),
                     refrigeration: Boolean(payload.refrigeration)
                 };
+                postData(Data);
             }
         },
         addProductBatch: (state, action) => {
@@ -65,9 +76,8 @@ export const productSlice = createSlice({
                 console.log("Payload Data:", action.payload);
                 // Modify state here if needed
                 const payload = action.payload;
-                state.product = {
-                    ...state.product,
-                    productName: String(payload.productName),
+                const Data = {
+                    batchProductName: String(payload.productName),
                     storageLocation: String(payload.storageLocation),
                     batchId: String(payload.batchId),
                     makeOrder: String(payload.makeOrder),
@@ -75,6 +85,7 @@ export const productSlice = createSlice({
                     quantity: parseInt(payload.quantity, 10),
                     price: parseFloat(payload.price),
                 };
+                postBatchData(Data);
 
             }
         },

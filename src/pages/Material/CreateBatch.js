@@ -29,7 +29,7 @@ export default function CreateBatch() {
     price: "",
   });
   const [showAddThisMaterial, setShowAddThisMaterial] = useState(false);
-  const [storageLocation,setStorageLocation] = useState([]);
+  const [storageLocation,setStorageLocation] = useState();
   const [isFormComplete, setIsFormComplete] = useState(false);
 
   const handleInputChange = (e) => {
@@ -114,7 +114,7 @@ export default function CreateBatch() {
     }
   };
   const getStorageLocation = async () => {
-    const url = `${api_url}/materialCategory/getAllLocations`;
+    const url = `${api_url}/productCategory/getAllLocations`;
     try {
       const response = await axios.get(url, {
         headers: { "ngrok-skip-browser-warning": "69420" },

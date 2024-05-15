@@ -7,6 +7,8 @@ import Navbar from "../../Components/NavbarForm";
 import ImageUpload from "../../Components/ImageUpload";
 import CheckBox from "../../Components/CheckBox";
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import { api_url } from "../../Data/Constants";
 
 
 export default function CreateProduct() {
@@ -22,6 +24,7 @@ export default function CreateProduct() {
     minimumQuantity:'',
     measurementType:'',
     Description:'',
+    refrigeration:true
   });
   const handleInputChange = (e) => {
     console.log(e);
@@ -33,12 +36,63 @@ export default function CreateProduct() {
     }));
   };
   const [isFormComplete, setIsFormComplete] = useState(false);
-
+  const [categoryData,setCategoryData] = useState([]);
+  const [subCategoryData,setSubCategoryData] = useState([]);
+  const [mearsumentData,setMearsumentData] = useState([{
+    id:"1",
+    value:"Kg"
+  }]);
   const handleSubmit = (e)=>{
      e.preventDefault();
      console.log("form Data at createProduct :",formData);
      dispatch(addProduct(formData));
      navigate('/products/CreateProduct/CreateProductMaterials')
+  }
+  const getCategoryData = async () =>{
+    try {
+      const url = `${api_url}/materialCategory/getAllMaterialCategory`;
+      const response = await axios.get(url, {
+          headers: { 'ngrok-skip-browser-warning': '69420' }
+      });
+      console.log('Response at newOrderRequest', response.data);
+      setCategoryData(response.data);
+  }
+  catch (error) {
+      console.log("Error :", error);
+  }
+  }
+  const getSubCategoryData = async (value) =>{
+    const obj = categoryData.find((obj)=>{
+        if(obj.value.trim() ==  value.trim()){
+            return obj;
+        }
+    });
+     const id = obj?.id;
+    console.log("id at getsubcategoryData",id);
+    try {
+      const url = `${api_url}/materialCategory/getAllMaterialSubCategory/${id}`;
+      const response = await axios.get(url, {
+          headers: { 'ngrok-skip-browser-warning': '69420' }
+      });
+      console.log('Response at newOrderRequest', response.data);
+      setSubCategoryData(response.data);
+  }
+  catch (error) {
+      console.log("Error :", error);
+  }
+  }
+  const getMearsurmentData = async () =>{
+    try {
+      const url = `${api_url}/productCategory//getAllMeasurement`;
+      const response = await axios.get(url, {
+          headers: { 'ngrok-skip-browser-warning': '69420' }
+      });
+      console.log('Response at newOrderRequest', response.data);
+      setMearsumentData(response.data);
+  }
+  catch (error) {
+      console.log("Error :", error);
+  }
   }
   const checkFormCompletion = () => {
     const formEntries = Object.entries(formData);
@@ -74,11 +128,21 @@ export default function CreateProduct() {
     console.log("filled forms", allFieldsFilled);
     setIsFormComplete(allFieldsFilled);
   };
+  useEffect(()=>{
+    getSubCategoryData(formData.category);
+    setFormData((prevData) =>({
+      ...prevData,
+      subCategory:''
+    }))
+},[formData.category]);
+
   useEffect(() => {
     checkFormCompletion();
   }, [formData]);
-
-
+  useEffect(()=>{
+    getCategoryData();
+    getMearsurmentData();
+  },[])
   return (
     <form onSubmit={handleSubmit}>
       <div className="p-8 bg-white">
@@ -180,6 +244,7 @@ export default function CreateProduct() {
               title="Category*"
               name="category"
               onChange={handleInputChange}
+              options={categoryData}
                 labelCss={
                   formData.category.length > 0 ? 'label-up' : 'label-down'}
             />
@@ -188,6 +253,7 @@ export default function CreateProduct() {
               title="Sub Category*"
               name="subCategory"
               onChange={handleInputChange}
+              options={subCategoryData}
                 labelCss={
                   formData.subCategory.length > 0 ? 'label-up' : 'label-down'}
             />
@@ -239,6 +305,7 @@ export default function CreateProduct() {
             <DropDown
               title="Measurement Type*"
               name="measurementType"
+              options={mearsumentData}
               onChange={handleInputChange}
                 labelCss={
                   formData.measurementType.length > 0 ? 'label-up' : 'label-down'}

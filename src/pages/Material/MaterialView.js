@@ -16,7 +16,7 @@ const MaterialView = () => {
   const [category,setCategory] = useState([]);
   const [location,setLocation] = useState([]);
   const [expiryDate,setExpirtyDate] = useState([]);
-
+  const [availability,setAvailability] = useState([]);
   const materialsTableData = async () => {
     const url = `${api_url}/materialBatch`;
     try {
@@ -36,7 +36,7 @@ const MaterialView = () => {
   };
 
   const deleteMaterials = async (id) => {
-    const apiUrl = `${api_url}/material/${id}`;
+    const apiUrl = `${api_url}/materialBatch/${id}`;
     try {
       const response = await axios.delete(apiUrl);
       if (response) {
@@ -50,7 +50,7 @@ const MaterialView = () => {
   const handleDelete = () => {
     console.log("Delete button clicked");
     setIsDeleteDialogOpen(true);
-    setConfirm(true);
+    // setConfirm(true);
   };
 
   const confirmDelete = () => {
@@ -67,48 +67,69 @@ const MaterialView = () => {
     setConfirm(false);
   };
 
-  // useEffect(() => {
-  //   if (confirm) {
-  //     // If confirm state is true, execute the deletion logic
-  //     confirmDelete();
-  //   }
-  // }, [confirm]);
-  // const filterDataByCategory = async () => {
-  //   const url = `${api_url}/materialBatch/category/${category}`;
-  //   try {
-  //     const response = await axios.get(url, {
-  //       headers: { "ngrok-skip-browser-warning": "69420" },
-  //     });
+  useEffect(() => {
+    if (confirm) {
+      // If confirm state is true, execute the deletion logic
+      confirmDelete();
+    }
+  }, [confirm]);
+  const filterDataByCategory = async () => {
+    const url = `${api_url}/materialBatch/category/${category.value}`;
+    console.log("inside filterDataByCategory",category.value);
+    try {
+      const response = await axios.get(url, {
+        headers: { "ngrok-skip-browser-warning": "69420" },
+      });
+      
+      if (response?.status === 200) {
+        setData(response?.data);
+        console.log(response?.data);
 
-  //     if (response?.status === 200) {
-  //       setData(response?.data);
-  //       console.log(response?.data);
+      } else {
+        console.error("Received unexpected response:", response);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+  const filterDataByDate = async () => {
+    const url = `${api_url}/materialBatch/expiryDate/${expiryDate.value}`;
+    console.log("inside filterDataByExpiryDate",expiryDate.value);
+    try {
+      const response = await axios.get(url, {
+        headers: { "ngrok-skip-browser-warning": "69420" },
+      });
 
-  //     } else {
-  //       console.error("Received unexpected response:", response);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-  // }
-  // const filterDataByDate = async () => {
-  //   const url = `${api_url}/materialBatch/location/${location}`;
-  //   try {
-  //     const response = await axios.get(url, {
-  //       headers: { "ngrok-skip-browser-warning": "69420" },
-  //     });
-
-  //     if (response?.status === 200) {
-  //       setData(response?.data);
-  //       console.log(response?.data);
+      if (response?.status === 200) {
+        setData(response?.data);
+        console.log(response?.data);
         
-  //     } else {
-  //       console.error("Received unexpected response:", response);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-  // }
+      } else {
+        console.error("Received unexpected response:", response);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+  const filterDataByAvailability = async () => {
+    const url = `${api_url}/materialBatch/availability/${availability.value}`;
+    console.log("inside filterDataByAvailability",availability.value);
+    try {
+      const response = await axios.get(url, {
+        headers: { "ngrok-skip-browser-warning": "69420" },
+      });
+
+      if (response?.status === 200) {
+        setData(response?.data);
+        console.log(response?.data);
+        
+      } else {
+        console.error("Received unexpected response:", response);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
   // const filterDataByLocation = async () => {
   //   const url = `${api_url}/materialBatch/expiryDate/${expiryDate}`;
   //   try {
@@ -132,16 +153,25 @@ const MaterialView = () => {
   //      filterDataByLocation();
   //    }
   // },[location])
-  // useEffect(()=>{
-  //   if(expiryDate){
-  //     filterDataByDate();
-  //   }
-  // },[expiryDate])
-  // useEffect(()=>{
-  //   if(category){
-  //     filterDataByCategory();
-  //   }
-  // },[category])
+  useEffect(()=>{
+    console.log("Expiry Date is changed",expiryDate);
+    if(expiryDate){
+      filterDataByDate();
+    }
+  },[expiryDate])
+  useEffect(()=>{
+    console.log("Availability is changed",availability);
+    if(availability){
+      filterDataByAvailability();
+    }
+  },[availability])
+  useEffect(()=>{
+    console.log("Category is changed",category);
+    if(category){
+      console.log("Category is changed",category);
+      filterDataByCategory();
+    }
+  },[category])
   useEffect(() => {
     materialsTableData();
   }, []);
@@ -168,12 +198,19 @@ const MaterialView = () => {
           materialsTableData={materialsTableData}
           locations ={location}
           setLocations={setLocation}
+         
         />
         <Material
           selected={selected}
           setSelected={setSelected}
           materialsTableData={materialsTableData}
+          category={category}
+          setCategory={setCategory}
           data={data}
+          expiryDate={expiryDate}
+          setExpirtyDate={setExpirtyDate}
+          availability={availability}
+          setAvailability={setAvailability}
         />
       </div>
       <div>

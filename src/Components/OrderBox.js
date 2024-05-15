@@ -17,7 +17,7 @@ export default function OrderBox({ order, key,updateStatus }) {
     }
   }
   const handleCancelledOrder = () =>{
-    updateStatus(order.orderId,3);
+    updateStatus(order.orderId,1);
   }
   return (
     <div

@@ -1,19 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputBox from "../../Components/InputBox";
 import DropDown from "../../Components/Dropdown";
 import Navbar from "../../Components/NavbarCreateBatch";
 import Button from "../../Components/Button";
 import "../../CSS/CreateBatch.css"
 import { Link,useLocation} from "react-router-dom";
+import { api_url } from "../../Data/Constants";
+import axios from "axios";
 
 export default function UpdateMaterial() {
   const location = useLocation();
-  const data = location?.state;
+  const [data,setData] = useState(location?.state)
+  const [storageLocation,setStorageLocation] = useState([]);
   console.log("data at update material",data);
   const [formData, setFormData] = useState({
-    materialName: '',
+    materialName: ''  ,
     storageLocation: '',
-    batchId: '',
+    batchId: ''    ,
     makeOrder: '',
     expiryDate: '',
     quantity: '',
@@ -28,6 +31,68 @@ export default function UpdateMaterial() {
       [name]: value
     }));
   };
+  const getStorageLocation = async () => {
+    const url = `${api_url}/productCategory/getAllLocations`;
+    try {
+      const response = await axios.get(url, {
+        headers: { "ngrok-skip-browser-warning": "69420" },
+      });
+      if (response?.status === 200) {
+        setStorageLocation(response?.data);
+      } else {
+        console.error("Received unexpected response:", response);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  useEffect(()=>{
+     if(data){
+      setFormData((prevData) => ({
+        ...prevData, // Spread previous state
+        materialName: data.materialName ,
+        batchId: data.batchId ,
+      }));
+     }
+     getStorageLocation();
+  },[])
+  const updateBatchData = async (Data,id) => {
+    try {
+      const url = `${api_url}/materialBatch/${id}`;
+      console.log("Data : ", Data);
+      const resp = await axios.put(url, Data);
+      console.log('Response', resp);
+    }
+    catch (error) {
+      console.log("Error :", error);
+    }
+  }
+  const postMaterialData = async (Data) => {
+    try {
+      const url = `${api_url}/material/`;
+      console.log("data : ", Data);
+      const resp = await axios.post(url, Data);
+      console.log('Response', resp);
+    }
+    catch (error) {
+      console.log("Error :", error);
+    }
+  }
+  const handleSubmit = (e)=>{
+      e.preventDefault();
+      console.log("formData at submit :",formData);
+      const Data = {
+        materialName: String(formData.materialName),
+        storageLocation: String(formData.storageLocation),
+        batchId: String(formData.batchId),
+        purchaseOrder: String(formData.makeOrder),
+        expiryDate: String(formData.expiryDate),
+        quantity: parseInt(formData.quantity, 10),
+        price: parseFloat(formData.price),
+      };
+      updateBatchData(Data,data.id)
+
+  }
   return (
 
     <form >
@@ -43,6 +108,7 @@ export default function UpdateMaterial() {
                 type="text"
                 title="Material Name/Code*"
                 name="materialName"
+                value={formData.materialName}
                 onChange={handleInputChange}
                 labelCss={
                   formData.materialName.length > 0 ? 'label-up' : 'label-down'}
@@ -52,6 +118,7 @@ export default function UpdateMaterial() {
                 title="Storage Location*"
                 name="storageLocation"
                 onChange={handleInputChange}
+                options={storageLocation}
                 labelCss={
                   formData.storageLocation.length > 0 ? 'label-up' : 'label-down'}
               />
@@ -60,6 +127,7 @@ export default function UpdateMaterial() {
                 type="text"
                 title="Batch ID*"
                 name="batchId"
+                value={formData.batchId}
                 onChange={handleInputChange}
                 labelCss={
                   formData.batchId.length > 0 ? 'label-up' : 'label-down'}
@@ -74,6 +142,7 @@ export default function UpdateMaterial() {
                 type="text"
                 title="Make Order#*"
                 name="makeOrder"
+                value={formData.makeOrder}
                 onChange={handleInputChange}
                 labelCss={
                   formData.makeOrder.length > 0 ? 'label-up' : 'label-down'}
@@ -83,6 +152,7 @@ export default function UpdateMaterial() {
                 type="date"
                 title="Expiry Date*"
                 name="expiryDate"
+                value={formData.expiryDate}
                 onChange={handleInputChange}
                 labelCss={
                   formData.expiryDate.length > 0 ? 'label-up' : 'label-down'}
@@ -91,6 +161,7 @@ export default function UpdateMaterial() {
                 type="number"
                 title="Quantity(Units)*"
                 name="quantity"
+                value={formData.quantity}
                 onChange={handleInputChange}
                 labelCss={
                   formData.quantity  ? 'label-up' : 'label-down'}
@@ -105,6 +176,7 @@ export default function UpdateMaterial() {
                 type="number"
                 title="Price($)*"
                 name="price"
+                value={formData.price}
                 onChange={handleInputChange}
                 labelCss={
                   formData.price  ? 'label-up' : 'label-down'}
@@ -116,6 +188,7 @@ export default function UpdateMaterial() {
             <Button
               btnTitle="Save"
               className=" pt-0 pb-0 text-style"
+              onClickfunction={handleSubmit}
             />
 
           </div>

@@ -30,7 +30,7 @@ export default function CancelledOrder() {
     { 
      allOrders.map((order) => {
           console.log("order status at cancelled order :",order.orderStatus)
-         if(order.orderStatus === 'cancelled order'){
+         if(order.orderStatus === 'Cancelled'){
              return(  <OrderBoxMedium order={order} key={order.orderId} />)
          }
          else{

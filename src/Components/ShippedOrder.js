@@ -56,14 +56,14 @@ export default function ShippedOrder() {
         // console.log("at CancelOrder",id);
         setIsOpen(false);
         setIsOpenCancelOrder(true);
-        updateStatus(id,3);
+        updateStatus(id,1);
         navigate("/sales/Cancelled");
     }
     const handleCancelOrderSubmit = ({ id }) => {
         // console.log("at CancelOrderSubmit",id);
         // console.log("Note : ",Note);
         setIsOpenCancelOrder(false);
-        dispactch(changeStatus({ id, status: 6 }))
+        dispactch(changeStatus({ id, status: 1 }))
 
     }
     return (
@@ -73,7 +73,7 @@ export default function ShippedOrder() {
             <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  p-3 gap-2'>
                 {
                     allOrders.map((order) => {
-                        if (order.orderStatus=== "shipped") {
+                        if (order.orderStatus=== "Shipped") {
                             return (<OrderBoxMedium order={order} key={order.orderId } handleChangeStatus={handleChangeStatus} />)
                         }
                         else {

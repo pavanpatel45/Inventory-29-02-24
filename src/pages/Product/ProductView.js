@@ -11,7 +11,7 @@ export default function ProductView() {
   const [data, setData] = React.useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [confirm, setConfirm] = useState(false);
-  const url = `${api_url}/product`
+  const url = `${api_url}/productBatch`
   useEffect(()=>{
     console.log("selected Data : ",selected);
 },[selected])
@@ -20,7 +20,7 @@ const productsTableData = async () => {
     const response = await axios.get(url, {
       headers: { 'ngrok-skip-browser-warning': '69420' }
     });
-    console.log("at api-data : ", response);
+    console.log("at product table data: ", response);
 
     if (response?.status === 200) {
       console.log("API Data:", response?.data);
