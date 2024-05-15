@@ -24,6 +24,7 @@ export default function CreateOrder() {
   const [deliveryAddressCheck, setDeliveryAddressCheck] = useState(false);
   const [isFormComplete, setIsFormComplete] = useState(false);
   const [customerAddress, setCustomerAddress] = useState({});
+<<<<<<< HEAD
   const [paymentMethod, setPaymentMethod] = useState([]);
   const [paymentStatus, setPaymentStatus] = useState([]);
   const [countryData, setCountryData] = useState([]);
@@ -35,6 +36,20 @@ export default function CreateOrder() {
   const [cityDataShipment, setCityDataShipment] = useState([]);
   const [locations, setLocations] = useState([]);
   const [products, setProducts] = useState([]);
+=======
+  const [paymentMethod,setPaymentMethod] = useState([]);
+  const [paymentStatus,setPaymentStatus] = useState([]);
+  const [countryData,setCountryData] = useState([]);
+  const [stateDataCustomer,setStateDataCustomer] =  useState([]);
+  const [stateDataPayment,setStateDataPayment] =  useState([]);
+  const [stateDataShipment,setStateDataShipment] =  useState([]);
+  const [cityDataCustomer,setCityDataCustomer] =  useState([]);
+  const [cityDataPayment,setCityDataPayment] =  useState([]);
+  const [cityDataShipment,setCityDataShipment] =  useState([]);
+  const [locations,setLocations] = useState([]);
+  const [products,setProducts] = useState([]);
+  const [productTableData,setProductTableData] = useState([]);
+>>>>>>> 94f3558edb533f829d1d1bb887f7185710678d35
   const [formData, setFormData] = useState({
     status: 1,
     // id: "",
@@ -290,11 +305,55 @@ export default function CreateOrder() {
     } catch (error) {
       console.log("Error :", error);
     }
+<<<<<<< HEAD
   };
   useEffect(() => {
     const obj = countryData.find((obj) => {
       if (obj.value.trim() == formData.customerDetails.Country.trim()) {
         return obj;
+=======
+    catch (error) {
+        console.log("Error :", error);
+    }
+  }
+  const getProductsTableData = async () => {
+    const url = `${api_url}/product`;
+    try {
+      const response = await axios.get(url, {
+        headers: { "ngrok-skip-browser-warning": "69420" },
+      });
+      if (response?.status === 200) {
+        setProductTableData(response?.data);
+        const Data = response?.data;
+        setProductTableData([]);
+        Data.map((ele) => {
+          setProductTableData((prev) => {
+            return [
+              ...prev,
+              {
+                value: ele.productName,
+                label: ele.productName,
+              },
+            ];
+          });
+        });
+        console.log("product table data at create Order :",Data);
+      } else {
+        console.error("Received unexpected response:", response);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+    
+  };
+  useEffect(()=>{
+      console.log("Product Table Data :",productTableData);
+  },[productTableData])
+  useEffect(()=>{
+    const obj = countryData.find((obj)=>{
+      if(obj.value.trim() ==  formData.customerDetails.Country.trim()){
+          return obj;
+>>>>>>> 94f3558edb533f829d1d1bb887f7185710678d35
       }
     });
     const id = obj?.id;
@@ -350,6 +409,7 @@ export default function CreateOrder() {
       if (obj.value.trim() == formData.customerDetails.Country.trim()) {
         return obj;
       }
+<<<<<<< HEAD
     });
     const id = obj?.id;
     getState(3, id);
@@ -361,6 +421,20 @@ export default function CreateOrder() {
     getLocations();
     getProducts();
   }, []);
+=======
+  });
+   const id = obj?.id;
+      getState(3,id)
+  },[formData.shipmentDetails.Country])
+  useEffect(()=>{
+       getPaymentMethod();
+       getPaymentStatus();
+       getCountry();
+       getLocations();
+       getProducts();
+       getProductsTableData()
+  },[])
+>>>>>>> 94f3558edb533f829d1d1bb887f7185710678d35
   return (
     <form>
       <div className="p-3 bg-white pb-4">
@@ -455,7 +529,7 @@ export default function CreateOrder() {
                 title="Name*"
                 name="productDetails.Name"
                 value={formData.productDetails.Name}
-                options={products}
+                options={productTableData}
                 onChange={(e) =>
                   setFormData((prevData) => ({
                     ...prevData,

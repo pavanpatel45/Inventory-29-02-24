@@ -20,10 +20,14 @@ export default function NavbarProducts({
   select = true,
   count,
   handleDelete,
+  selectedLocation,
+  setSelectedLocation
 }) {
   const [exportOption, setExportOption] = useState("");
   const [locations,setLocations] = useState([]);
   const [isSearchClicked, setIsSearchClicked] = useState(false);
+  const [isAnyCheckboxSelected, setIsAnyCheckboxSelected] = useState(false);
+  const [locationData,setLocationData] = useState([]);
   const handleChange = (e) => {
     setExportOption(e.target.value);
   };
@@ -32,6 +36,10 @@ export default function NavbarProducts({
   };
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const togglePopoverOpen = () => {
+    if(!isPopoverOpen){
+      setSelectedLocation([]);
+      setIsAnyCheckboxSelected(false);
+    }
     setIsPopoverOpen(!isPopoverOpen);
   };
   const getLocations = async () =>{
@@ -86,7 +94,7 @@ export default function NavbarProducts({
         )}
         {!select && (
           <div className="mr-4">
-            <Location Options={locations}>
+            <Location Options={locations} selectedLocation={selectedLocation} setSelectedLocation={setSelectedLocation} isPopoverOpen={isPopoverOpen} setIsPopoverOpen={setIsPopoverOpen} isAnyCheckboxSelected={isAnyCheckboxSelected} setIsAnyCheckboxSelected={setIsAnyCheckboxSelected}>
               <div
                 className="border flex flex-row items-center justify-between cursor-pointer"
                 style={{

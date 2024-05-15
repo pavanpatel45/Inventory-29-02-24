@@ -187,7 +187,7 @@ const MaterialView = () => {
       )}
     <div className="flex flex-col bg-white">
       <div
-        style={{ height: "calc(100vh - 8rem)" }}
+        style={{ height: "calc(100vh - 2rem)" }}
         className={`overflow-auto scrollbar  `}
       >
         <NavbarMaterials
@@ -217,7 +217,7 @@ const MaterialView = () => {
         />
       </div>
       <div>
-        <FooterPagination />
+        {/* <FooterPagination /> */}
       </div>
       {isDeleteDialogOpen && (
          <div className="fixed inset-0 flex justify-center items-center z-30">
