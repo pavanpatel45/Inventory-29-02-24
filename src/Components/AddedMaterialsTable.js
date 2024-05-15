@@ -9,7 +9,8 @@ function  AddedMaterialsTable(Data) {
   const handleImageClick1 = () => {
     console.log("edit icon was clicked");
   };
-  const data = React.useMemo(() => Array.isArray(Data) ? Data : [], [Data]);  const columns = React.useMemo(
+  // const data = React.useMemo(() => Array.isArray(Data) ? Data : [], [Data]);  
+  const columns = React.useMemo(
     () => [
       {
         Header: (
@@ -18,7 +19,7 @@ function  AddedMaterialsTable(Data) {
             <p>Material Code</p>
           </div>
         ),
-        accessor: "material_name",
+        accessor: "materialCode",
         width: "228px",
         Cell: ({ cell }) => (
           <div className="flex items-center">
@@ -35,7 +36,7 @@ function  AddedMaterialsTable(Data) {
       },
       {
         Header: "Materials Name",
-        accessor: "code",
+        accessor: "materialName",
         width: "102px",
       },
       
@@ -65,7 +66,7 @@ function  AddedMaterialsTable(Data) {
       },
       {
         Header: "Unit",
-        accessor: "price",
+        accessor: "unit",
         width: "102px",
         height: "40px",
       },
@@ -91,7 +92,7 @@ function  AddedMaterialsTable(Data) {
   );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data });
+    useTable({ columns, Data });
 
   return (
     <>

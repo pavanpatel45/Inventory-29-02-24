@@ -14,7 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function CreateProductMaterials() {
-  const [Data,setData] = useState([])
+  const [Data,setData] = useState()
   const [isFormComplete, setIsFormComplete] = useState(false);
 
   const dispatch = useDispatch();
@@ -72,7 +72,8 @@ const navigate= useNavigate();
     navigate('/products/CreateBatchProduct')
   }
   const addData = ()=>{
-    setData((prevData)=>(
+    setData((prevData)=>
+      (prevData)?(
       [prevData,{
           materialName:formData.materialNameCode,
           materialCode:'',
@@ -80,12 +81,26 @@ const navigate= useNavigate();
           unit:formData.unit,
           category:''
       }]
-   ))
+   ): (
+    [{
+      materialName:formData.materialNameCode,
+      materialCode:'',
+      quantity:formData.requiredQuantity,
+      unit:formData.unit,
+      category:''
+  }]
+   )
+  )
    setFormData({
     materialNameCode: "",
     requiredQuantity: "",
     unit: "",
    })
+  }
+  const handleAddMaterial = () =>{
+    console.log("at handleAddMaterial :",formData);
+    addData();
+    console.log("Table data at handleAddMaterial :",Data)
   }
   return (
     <div className="bg-white">
@@ -158,7 +173,7 @@ const navigate= useNavigate();
           >
             Materials
           </div>
-          <div className="flex flex-row cursor-pointer">
+          <div className="flex flex-row cursor-pointer" onClick={handleAddMaterial}>
             <img src={smallPlus} alt="icon" className="pr-2"/>
             <a style={{fontSize:"14px", color:"#2DA060", fontWeight:"500"}}>Add New Material</a>
           </div>
@@ -221,7 +236,7 @@ const navigate= useNavigate();
           </div>
         </div>
       </form>
-      <AddedMaterialsTable Data={Data} />
+      {Data && <AddedMaterialsTable Data={Data} />}
     </div>
   );
 }

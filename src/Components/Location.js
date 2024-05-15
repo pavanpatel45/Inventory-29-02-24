@@ -3,15 +3,15 @@ import { useState, useEffect } from 'react';
 import search from "../Icons/search-navbar.svg";
 import cross from "../Icons/cross.svg";
 import { Popover } from 'react-tiny-popover'
-function Location({children,Options}) {
-    const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+function Location({children,Options,selectedLocation,setSelectedLocation,isPopoverOpen,setIsPopoverOpen,isAnyCheckboxSelected,setIsAnyCheckboxSelected}) {
+    // const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
-
-  const [isAnyCheckboxSelected, setIsAnyCheckboxSelected] = useState(false);
+  // const [selectedLocation,setSelectedLocation] = useState([]);
+  
 
   const handleSave = () => {
     setIsPopoverOpen(false);
-    
+    console.log("selected Location at handleSave :",selectedLocation);
   };
 
   const handleClear = () => {
@@ -20,17 +20,23 @@ function Location({children,Options}) {
       checkbox.checked = false;
     });
     setIsAnyCheckboxSelected(false); 
+    setSelectedLocation([]);
   };
 
-  const handleCheckboxChange = (event) => {
+  const handleCheckboxChange = (event,value) => {
     const isChecked = event.target.checked;
+    const locationValue = value;
+    console.log("at handlecheckboxChange :",locationValue);
     if (isChecked) {
-      setIsAnyCheckboxSelected(true); // At least one checkbox is checked
+      setIsAnyCheckboxSelected(true); 
+      setSelectedLocation((prevSelected) => [...prevSelected, locationValue]);
     } else {
-      // Check if any checkbox is still checked
       const anyCheckboxSelected =
         document.querySelectorAll("input[type='checkbox']:checked").length > 0;
-      setIsAnyCheckboxSelected(anyCheckboxSelected); // Update state based on whether any checkbox is still checked
+      setIsAnyCheckboxSelected(anyCheckboxSelected); 
+      setSelectedLocation((prevSelected) =>
+        prevSelected.filter((item) => item !== locationValue)
+      );
     }
   };
 
@@ -87,7 +93,7 @@ function Location({children,Options}) {
           <input
             type="checkbox"
             className=" pl-1"
-            onChange={handleCheckboxChange}
+            onChange={(e) => handleCheckboxChange(e, ele.value)}
           />
           <li className=" pl-2 mb-0.5">{ele.value}</li>
           </div>

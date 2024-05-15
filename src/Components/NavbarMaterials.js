@@ -22,18 +22,24 @@ export default function NavbarMaterials({
   selected,
   setSelected,
   materialsTableData,
-  locations,
-  setLocations
+  selectedLocation,
+  setSelectedLocation
 }) {
   const [exportOption, setExportOption] = useState("");
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [isSearchClicked, setIsSearchClicked] = useState(false);
-  // const [locations,setLocations] = useState([]);
+  const [locationData,setLocationData] = useState([]);
+  const [isAnyCheckboxSelected, setIsAnyCheckboxSelected] = useState(false);
   const handleChange = (e) => {
     setExportOption(e.target.value);
   };
   const togglePopoverOpen = () => {
+    if(!isPopoverOpen){
+      setSelectedLocation([]);
+      setIsAnyCheckboxSelected(false);
+    }
     setIsPopoverOpen(!isPopoverOpen);
+    
   };
 
   const handleSearch = () => {
@@ -46,7 +52,7 @@ export default function NavbarMaterials({
           headers: { 'ngrok-skip-browser-warning': '69420' }
       });
       console.log('Response at newOrderRequest', response.data);
-      setLocations(response.data);
+      setLocationData(response.data);
     }
     catch (error) {
         console.log("Error :", error);
@@ -97,7 +103,7 @@ export default function NavbarMaterials({
         )}
         {!select && (
           <div className="mr-4">
-            <Location Options={locations}>
+            <Location Options={locationData} selectedLocation={selectedLocation} setSelectedLocation={setSelectedLocation} isPopoverOpen={isPopoverOpen} setIsPopoverOpen={setIsPopoverOpen} isAnyCheckboxSelected={isAnyCheckboxSelected} setIsAnyCheckboxSelected={setIsAnyCheckboxSelected}>
               <div
                 className="border flex flex-row items-center justify-between cursor-pointer"
                 style={{

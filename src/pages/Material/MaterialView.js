@@ -130,29 +130,30 @@ const MaterialView = () => {
       console.error("Error fetching data:", error);
     }
   }
-  // const filterDataByLocation = async () => {
-  //   const url = `${api_url}/materialBatch/expiryDate/${expiryDate}`;
-  //   try {
-  //     const response = await axios.get(url, {
-  //       headers: { "ngrok-skip-browser-warning": "69420" },
-  //     });
+  const filterDataByLocation = async () => {
+    const url = `${api_url}/materialBatch/location/${location}`;
+    try {
+      const response = await axios.get(url, {
+        headers: { "ngrok-skip-browser-warning": "69420" },
+      });
 
-  //     if (response?.status === 200) {
-  //       setData(response?.data);
-  //       console.log(response?.data);
+      if (response?.status === 200) {
+        setData(response?.data);
+        console.log(response?.data);
 
-  //     } else {
-  //       console.error("Received unexpected response:", response);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-  // }
-  // useEffect(()=>{
-  //    if(location){
-  //      filterDataByLocation();
-  //    }
-  // },[location])
+      } else {
+        console.error("Received unexpected response:", response);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+  useEffect(()=>{
+    console.log("location is changed :",location);
+     if(location){
+       filterDataByLocation();
+     }
+  },[location])
   useEffect(()=>{
     console.log("Expiry Date is changed",expiryDate);
     if(expiryDate){
@@ -196,8 +197,10 @@ const MaterialView = () => {
           selected={selected}
           setSelected={setSelected}
           materialsTableData={materialsTableData}
-          locations ={location}
-          setLocations={setLocation}
+          // locations ={location}
+          // setLocations={setLocation}
+          selectedLocation={location}
+          setSelectedLocation={setLocation}
          
         />
         <Material
