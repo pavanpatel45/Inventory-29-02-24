@@ -58,9 +58,10 @@ export default function NavbarSales({ title, handleCreateOrder }) {
         </div>
 
         <div className="cursor-pointer ">
-          <Location>
+          <Location setIsPopoverOpen={setIsPopoverOpen}>
             <div  onClick={togglePopoverOpen}>
           <img src={location}  alt="location" />
+          
           </div>  
           </Location>
         </div>

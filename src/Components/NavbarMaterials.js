@@ -8,7 +8,6 @@ import search from "../Icons/search.png";
 import plus from "../Icons/plus-outline.svg";
 import dlt from "../Icons/Delete.svg";
 import cancel from "../Icons/x.svg";
-
 import "../CSS/NavbarMaterials.css";
 import Location from "./Location";
 import { api_url } from "../Data/Constants";
@@ -28,39 +27,42 @@ export default function NavbarMaterials({
   const [exportOption, setExportOption] = useState("");
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [isSearchClicked, setIsSearchClicked] = useState(false);
-  const [locationData,setLocationData] = useState([]);
+  const [locationData, setLocationData] = useState([]);
   const [isAnyCheckboxSelected, setIsAnyCheckboxSelected] = useState(false);
-  const handleChange = (e) => {
-    setExportOption(e.target.value);
-  };
-  const togglePopoverOpen = () => {
-    if(!isPopoverOpen){
-      setSelectedLocation([]);
-      setIsAnyCheckboxSelected(false);
-    }
-    setIsPopoverOpen(!isPopoverOpen);
-    
-  };
 
   const handleSearch = () => {
     setIsSearchClicked(true);
   };
-  const getLocations = async () =>{
+
+  const getLocations = async () => {
     try {
       const url = `${api_url}/productCategory/getAllLocations`;
       const response = await axios.get(url, {
-          headers: { 'ngrok-skip-browser-warning': '69420' }
+        headers: { 'ngrok-skip-browser-warning': '69420' }
       });
       console.log('Response at newOrderRequest', response.data);
       setLocationData(response.data);
     }
     catch (error) {
-        console.log("Error :", error);
+      console.log("Error :", error);
     }
-  }
-  useEffect(()=>{
+  };
+
+  useEffect(() => {
     getLocations();
-  },[])
+  }, []);
+
+  const togglePopoverOpen = () => {
+    setIsPopoverOpen(!isPopoverOpen);
+  };
+
+  const clearFilter = () => {
+    setSelectedLocation([]);
+    materialsTableData()
+  };
+
+ 
+
   return (
     <div className="flex flex-row justify-between items-center  ml-4 mt-3 bg-white">
       <div className="flex flex-row gap-2 ">
@@ -103,7 +105,16 @@ export default function NavbarMaterials({
         )}
         {!select && (
           <div className="mr-4">
-            <Location Options={locationData} selectedLocation={selectedLocation} setSelectedLocation={setSelectedLocation} isPopoverOpen={isPopoverOpen} setIsPopoverOpen={setIsPopoverOpen} isAnyCheckboxSelected={isAnyCheckboxSelected} setIsAnyCheckboxSelected={setIsAnyCheckboxSelected}>
+            <Location
+              Options={locationData}
+              selectedLocation={selectedLocation}
+              setSelectedLocation={setSelectedLocation}
+              isPopoverOpen={isPopoverOpen}
+              setIsPopoverOpen={setIsPopoverOpen}
+              isAnyCheckboxSelected={isAnyCheckboxSelected}
+              setIsAnyCheckboxSelected={setIsAnyCheckboxSelected}
+              clearFilter={clearFilter}
+            >
               <div
                 className="border flex flex-row items-center justify-between cursor-pointer"
                 style={{
