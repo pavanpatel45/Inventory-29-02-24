@@ -24,19 +24,21 @@ export default function CreateOrder() {
   const [deliveryAddressCheck, setDeliveryAddressCheck] = useState(false);
   const [isFormComplete, setIsFormComplete] = useState(false);
   const [customerAddress, setCustomerAddress] = useState({});
-<<<<<<< HEAD
-  const [paymentMethod, setPaymentMethod] = useState([]);
-  const [paymentStatus, setPaymentStatus] = useState([]);
-  const [countryData, setCountryData] = useState([]);
-  const [stateDataCustomer, setStateDataCustomer] = useState([]);
-  const [stateDataPayment, setStateDataPayment] = useState([]);
-  const [stateDataShipment, setStateDataShipment] = useState([]);
-  const [cityDataCustomer, setCityDataCustomer] = useState([]);
-  const [cityDataPayment, setCityDataPayment] = useState([]);
-  const [cityDataShipment, setCityDataShipment] = useState([]);
-  const [locations, setLocations] = useState([]);
-  const [products, setProducts] = useState([]);
+
+//   const [paymentMethod, setPaymentMethod] = useState([]);
+//   const [paymentStatus, setPaymentStatus] = useState([]);
+//   const [countryData, setCountryData] = useState([]);
+//   const [stateDataCustomer, setStateDataCustomer] = useState([]);
+//   const [stateDataPayment, setStateDataPayment] = useState([]);
+//   const [stateDataShipment, setStateDataShipment] = useState([]);
+//   const [cityDataCustomer, setCityDataCustomer] = useState([]);
+//   const [cityDataPayment, setCityDataPayment] = useState([]);
+//   const [cityDataShipment, setCityDataShipment] = useState([]);
+//   const [locations, setLocations] = useState([]);
+//   const [products, setProducts] = useState([]);
+// =======
 =======
+>>>>>>> eba6af9e016ffa796dafb914017e0d6be87e1a26
   const [paymentMethod,setPaymentMethod] = useState([]);
   const [paymentStatus,setPaymentStatus] = useState([]);
   const [countryData,setCountryData] = useState([]);
@@ -49,7 +51,10 @@ export default function CreateOrder() {
   const [locations,setLocations] = useState([]);
   const [products,setProducts] = useState([]);
   const [productTableData,setProductTableData] = useState([]);
+<<<<<<< HEAD
 >>>>>>> 94f3558edb533f829d1d1bb887f7185710678d35
+=======
+>>>>>>> eba6af9e016ffa796dafb914017e0d6be87e1a26
   const [formData, setFormData] = useState({
     status: 1,
     // id: "",
@@ -302,9 +307,8 @@ export default function CreateOrder() {
       } else if (callBy == 3) {
         setStateDataShipment(response.data);
       }
-    } catch (error) {
-      console.log("Error :", error);
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
   };
   useEffect(() => {
@@ -312,6 +316,8 @@ export default function CreateOrder() {
       if (obj.value.trim() == formData.customerDetails.Country.trim()) {
         return obj;
 =======
+=======
+>>>>>>> eba6af9e016ffa796dafb914017e0d6be87e1a26
     catch (error) {
         console.log("Error :", error);
     }
@@ -353,7 +359,10 @@ export default function CreateOrder() {
     const obj = countryData.find((obj)=>{
       if(obj.value.trim() ==  formData.customerDetails.Country.trim()){
           return obj;
+<<<<<<< HEAD
 >>>>>>> 94f3558edb533f829d1d1bb887f7185710678d35
+=======
+>>>>>>> eba6af9e016ffa796dafb914017e0d6be87e1a26
       }
     });
     const id = obj?.id;
@@ -410,6 +419,7 @@ export default function CreateOrder() {
         return obj;
       }
 <<<<<<< HEAD
+<<<<<<< HEAD
     });
     const id = obj?.id;
     getState(3, id);
@@ -422,6 +432,8 @@ export default function CreateOrder() {
     getProducts();
   }, []);
 =======
+=======
+>>>>>>> eba6af9e016ffa796dafb914017e0d6be87e1a26
   });
    const id = obj?.id;
       getState(3,id)
@@ -434,7 +446,10 @@ export default function CreateOrder() {
        getProducts();
        getProductsTableData()
   },[])
+<<<<<<< HEAD
 >>>>>>> 94f3558edb533f829d1d1bb887f7185710678d35
+=======
+>>>>>>> eba6af9e016ffa796dafb914017e0d6be87e1a26
   return (
     <form>
       <div className="p-3 bg-white pb-4">
