@@ -231,7 +231,14 @@ const navigate= useNavigate();
           </div>
           <div>
             <div className="flex justify-end mt-4">
-              <Button btnTitle="Add" className="NavbarForm" icon={plus}/>
+            <Button
+                btnTitle="Add +"
+                className="pt-0 pb-0 text-sty"
+                style={{ backgroundColor: isFormComplete ? "#2CAE66 " : "#B3B3B3 ",cursor: isFormComplete ? "pointer" : "not-allowed"}}
+                disabled={!isFormComplete}
+                type="submit"
+                onClickfunction={handleSubmit}
+              />
             </div>
           </div>
         </div>
