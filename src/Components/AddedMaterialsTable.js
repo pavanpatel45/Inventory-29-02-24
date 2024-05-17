@@ -2,7 +2,7 @@ import React from "react";
 import { useTable } from "react-table";
 import edit from "../Icons/edit.png";
 
-function AddedMaterialsTable({ data }) {
+function AddedMaterialsTable({ data = [] }) {
   const handleImageClick1 = () => {
     console.log("edit icon was clicked");
   };

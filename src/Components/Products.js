@@ -339,8 +339,8 @@ function Products({ selected, setSelected, productsTableData, data, category, se
 
   return (
     <div>
-      <div className="  ml-4 pt-3 border-solid border-red-500 ">
-        <table className="table-auto border-collapse ">
+      <div className="  ml-4 pt-3 ">
+        <table className="table-auto ">
           <thead>
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
@@ -350,8 +350,7 @@ function Products({ selected, setSelected, productsTableData, data, category, se
                     className="  px-4 py-2"
                     style={{
                       backgroundColor: "#E9E9E9",
-                      borderColor: "#BDBDBD",
-                      // width: column.width,
+                    
                       whiteSpace: "nowrap",
                       height: column.height,
                       width: column.width,
@@ -359,9 +358,24 @@ function Products({ selected, setSelected, productsTableData, data, category, se
                       fontWeight: "600",
                       fontFamily: "Roboto",
                       lineHeight: "22px",
+                       borderTopLeftRadius: column.id === "productName" ? "28px" : "0", 
+                     borderTopRightRadius: column.id === "action" ? "28px" : "0", 
+                     position: "relative"
                     }}
                   >
                     {column.render("Header")}
+                    <div
+                       className="absolute top-0 left-0 w-full h-full"
+                       style={{
+                         borderRight: "1px solid #BDBDBD", 
+                         borderBottom: "1px solid #BDBDBD", 
+                         borderTop: "1px solid #BDBDBD", 
+                         borderLeft: "1px solid #BDBDBD", 
+                         borderTopRightRadius: column.id === "action" ? "28px" : "0",
+                        borderTopLeftRadius: column.id === "productName" ? "28px" : "0",
+                    
+                       }}
+                     />
                   </th>
                 ))}
               </tr>
