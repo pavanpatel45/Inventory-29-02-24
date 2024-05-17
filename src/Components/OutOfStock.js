@@ -3,7 +3,7 @@ import React from "react";
 function OutOfStock() {
   return (
     <div
-      className="flex justify-center items-center"
+      className="flex justify-center items-center ml-4"
       style={{
         backgroundColor: "#FFEBEB",
         borderRadius: "50px",

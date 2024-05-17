@@ -224,7 +224,7 @@ function Products({ selected, setSelected, productsTableData, data, category, se
                 textDecoration: "underline",
               }}
             >
-              <p className="truncate max-w-36">{cell.value} </p>
+              <p className="truncate max-w-24">{cell.value} </p>
             </a>
           </div>
         ),
@@ -241,17 +241,6 @@ function Products({ selected, setSelected, productsTableData, data, category, se
         width: "120px",
         height: "52px",
       },
-
-      {
-        Header: (
-          <>
-            <TableDropdown title="Expiry Date" options={option2} selectedOption={expiryDate} setSelectedOption={setExpirtyDate} />
-          </>
-        ),
-        accessor: "expiryDate",
-        width: "131px",
-        height: "52px",
-      },
       {
         Header: (
           <>
@@ -263,6 +252,18 @@ function Products({ selected, setSelected, productsTableData, data, category, se
         width: "120px",
         height: "40px",
       },
+
+      {
+        Header: (
+          <>
+            <TableDropdown title="Expiry Date" options={option2} selectedOption={expiryDate} setSelectedOption={setExpirtyDate} />
+          </>
+        ),
+        accessor: "expiryDate",
+        width: "131px",
+        height: "52px",
+      },
+      
       {
         Header: "Quantity",
         accessor: "quantity",
@@ -293,6 +294,8 @@ function Products({ selected, setSelected, productsTableData, data, category, se
         },
         width: "154px",
         height: "52px",
+        justifyContent: "center",
+        alignItems: "center",
       },
       {
         Header: "Committed",
@@ -344,7 +347,7 @@ function Products({ selected, setSelected, productsTableData, data, category, se
                 {headerGroup.headers.map((column) => (
                   <th
                     {...column.getHeaderProps()}
-                    className="border border-1  px-4 py-2"
+                    className="  px-4 py-2"
                     style={{
                       backgroundColor: "#E9E9E9",
                       borderColor: "#BDBDBD",

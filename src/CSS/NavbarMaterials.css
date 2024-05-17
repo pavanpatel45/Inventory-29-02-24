@@ -67,10 +67,9 @@
     cursor: not-allowed;
   }
 
-  .table-container {
-   
+  /* .table-container {
     border-radius: 20px;
-  }
+  } */
   
   /* .table-auto {
     border-collapse: separate;
@@ -82,8 +81,6 @@
   
   .table-auto th:first-child{
     border-top-left-radius: 20px;
-    
-
   }
   
   .table-auto th:last-child{

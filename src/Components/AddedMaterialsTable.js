@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useTable } from "react-table";
-import dummy from "./dummy.json";
 import edit from '../Icons/edit.png'
 
 
@@ -20,7 +19,8 @@ function  AddedMaterialsTable(Data) {
           </div>
         ),
         accessor: "materialCode",
-        width: "228px",
+        width: "212px",
+        height:"40px",
         Cell: ({ cell }) => (
           <div className="flex items-center">
             <input
@@ -35,9 +35,10 @@ function  AddedMaterialsTable(Data) {
         ),
       },
       {
-        Header: "Materials Name",
+        Header: (<span>Materials Name</span>),
         accessor: "materialName",
-        width: "102px",
+        width: "260px",
+        height:"22px",
       },
       
       {
@@ -54,26 +55,28 @@ function  AddedMaterialsTable(Data) {
           </>
         ),
         accessor: "category",
-        width: "144px",
+        width: "200px",
         height: "40px",
       },
       
       {
         Header: "Quantity",
         accessor: "quantity",
-        width: "102px",
+        width: "200px",
         height: "40px",
       },
       {
         Header: "Unit",
         accessor: "unit",
-        width: "102px",
+        width: "200px",
         height: "40px",
       },
       
       {
         Header: "Action",
         accessor: "action",
+        width: "200px",
+        height:"40px",
         Cell: ({ cell }) => (
           <div className="flex flex-row justify-center">
             <img
@@ -92,7 +95,7 @@ function  AddedMaterialsTable(Data) {
   );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, Data });
+  useTable({ columns, data: Array.isArray(Data) ? Data : [] });
 
   return (
     <>
@@ -107,7 +110,7 @@ function  AddedMaterialsTable(Data) {
                 {headerGroup.headers.map((column) => (
                   <th
                     {...column.getHeaderProps()}
-                    className="border border-1 border-dotted px-4 py-2"
+                    className=" border-dotted px-4 py-2"
                     style={{
                       backgroundColor: "#E9E9E9",
                       borderColor: "#BDBDBD",
@@ -140,6 +143,8 @@ function  AddedMaterialsTable(Data) {
                         fontWeight: "400",
                         lineHeight: "22px",
                         fontFamily: "Roboto",
+                        width: cell.column.width,
+                        height: cell.column.height,
                       }}
                     >
                       {cell.render("Cell")}

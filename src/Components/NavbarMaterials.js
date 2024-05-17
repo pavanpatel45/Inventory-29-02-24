@@ -137,7 +137,7 @@ export default function NavbarMaterials({
                   className="pr-2"
                   style={{ fontSize: "16px", fontWeight: "500" }}
                 >
-                  All Locations
+               {selectedLocation.length === 0 ? "All Locations" : selectedLocation}
                 </div>
                 <div className="pr-5">
                   <img src={down} alt="icon" />

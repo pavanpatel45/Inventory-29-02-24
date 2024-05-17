@@ -236,7 +236,7 @@ const navigate= useNavigate();
           </div>
         </div>
       </form>
-      {/* {Data && <AddedMaterialsTable Data={Data} />} */}
+      {Data && <AddedMaterialsTable Data={Data} />}
     </div>
   );
 }

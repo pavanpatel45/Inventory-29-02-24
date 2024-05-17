@@ -17,6 +17,7 @@ const MaterialView = () => {
   const [location,setLocation] = useState([]);
   const [expiryDate,setExpirtyDate] = useState([]);
   const [availability,setAvailability] = useState([]);
+  
   const materialsTableData = async () => {
     const url = `${api_url}/materialBatch`;
     try {

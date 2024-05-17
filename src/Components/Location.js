@@ -3,9 +3,10 @@ import search from "../Icons/search-navbar.svg";
 import cross from "../Icons/cross.svg";
 import { Popover } from 'react-tiny-popover';
 
-function Location({ children, Options, selectedLocation, setSelectedLocation, isPopoverOpen, setIsPopoverOpen, isAnyCheckboxSelected, setIsAnyCheckboxSelected, clearFilter }) {
+function Location({ children, Options, selectedLocation="All Locations", setSelectedLocation, isPopoverOpen, setIsPopoverOpen, isAnyCheckboxSelected, setIsAnyCheckboxSelected, clearFilter }) {
   const [isOpen, setIsOpen] = useState(true);
   const [tempSelectedLocation, setTempSelectedLocation] = useState([]);
+  const [searchInput, setSearchInput] = useState('');
 
   const handleSave = () => {
     setIsPopoverOpen(false);
@@ -16,6 +17,14 @@ function Location({ children, Options, selectedLocation, setSelectedLocation, is
   const handleClear = () => {
     setIsAnyCheckboxSelected(false);
     setTempSelectedLocation([]);
+    
+    clearFilter();
+  };
+
+  const handleCross = () => {
+    setIsAnyCheckboxSelected(false);
+    setTempSelectedLocation([]);
+    setIsPopoverOpen(false);
     clearFilter();
   };
 
@@ -44,6 +53,11 @@ function Location({ children, Options, selectedLocation, setSelectedLocation, is
     }
   }, [isOpen]);
 
+  const filteredOptions = searchInput ? Options.filter(option =>
+    option.value.toLowerCase().includes(searchInput.toLowerCase())
+  ) : Options;
+
+  
   return (
     <div>
       <Popover
@@ -68,18 +82,26 @@ function Location({ children, Options, selectedLocation, setSelectedLocation, is
                   placeholder="Search..."
                   className="w-24 pl-2"
                   style={{ fontSize: "12px" }}
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
                 />
               </div>
               <img
                 src={cross}
                 alt="icon"
                 className="pl-6 cursor-pointer"
-                onClick={handleSave}
+                onClick={handleCross}
               />
             </div>
+            {filteredOptions.length === 0 && searchInput !== '' && (
+              <div style={{fontSize:"14px", color:"red", fontWeight:"500"}} className='flex justify-center'>
+                No results found
+              </div>
+            )}
+            {/* {filteredOptions.length>0 && ( */}
             <ul className="bg-white box-text text-black">
               {Options.map((ele) => (
-                <div className="flex flex-row items-center dropHover" key={ele.id}>
+                ele?.value.toLowerCase()?.includes(searchInput?.toLowerCase()) && <div className="flex flex-row items-center dropHover" key={ele.id}>
                   <input
                     type="checkbox"
                     className="pl-1"
@@ -90,6 +112,7 @@ function Location({ children, Options, selectedLocation, setSelectedLocation, is
                 </div>
               ))}
             </ul>
+            {/* )} */}
             <div className="flex justify-end pt-1">
               <button
                 style={{

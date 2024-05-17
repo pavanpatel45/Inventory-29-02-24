@@ -167,7 +167,8 @@ function Material({ setSelected, selected, data, category, setCategory, expiryDa
             </div>
           ),
           accessor: "materialName",
-          //width: "200px",
+          width: "240px",
+          height: "52px",
 
           Cell: ({ cell, row }) => (
             <div
@@ -266,13 +267,14 @@ function Material({ setSelected, selected, data, category, setCategory, expiryDa
         {
           Header: "Code",
           accessor: "code",
-          width: "102px",
+          width: "120px",
+          height: "52px",
         },
         {
           Header: "Batch ID",
           accessor: "batchId",
-          width: "122px",
-          // height: "40px",
+          width: "120px",
+          height: "52px",
         },
         {
           Header: (
@@ -282,8 +284,8 @@ function Material({ setSelected, selected, data, category, setCategory, expiryDa
           ),
           accessor: "category",
           className: "truncate max-w-24",
-          width: "144px",
-          // height: "40px",
+          width: "120px",
+          height: "40px",
         },
         {
           Header: (
@@ -292,20 +294,20 @@ function Material({ setSelected, selected, data, category, setCategory, expiryDa
             </>
           ),
           accessor: "expiryDate",
-          width: "122px",
-          // height: "40px",
+          width: "131px",
+          height: "52px",
         },
         {
           Header: "Quantity",
           accessor: "quantity",
-          width: "102px",
-          // height: "40px",
+          width: "90px",
+          height: "40px",
         },
         {
           Header: "Price($)",
           accessor: "price",
-          width: "102px",
-          // height: "40px",
+          width: "90px",
+          height: "52px",
         },
         {
           Header: (
@@ -326,6 +328,7 @@ function Material({ setSelected, selected, data, category, setCategory, expiryDa
             }
           },
           width: "154px",
+          height: "52px",
           justifyContent: "center",
           alignItems: "center",
         },
@@ -333,13 +336,14 @@ function Material({ setSelected, selected, data, category, setCategory, expiryDa
         {
           Header: "Committed",
           accessor: "committed",
-          width: "102px",
-          // height: "40px",
+          width: "90px",
+        height: "40px",
         },
         {
           Header: "Action",
           accessor: "action",
-          width: "102px",
+          width: "125px",
+          height: "40px",
           Cell: ({ cell,row }) => {
             // console.log("row data :",row);
             // const data = {
@@ -378,21 +382,21 @@ function Material({ setSelected, selected, data, category, setCategory, expiryDa
 
     return (
       <div>
-        <div className="  ml-4 pt-3 border-solid border-red-500 ">
-          <table {...getTableProps()} className="table-auto border-collapse ">
+        <div className="  ml-4 pt-3 ">
+          <table {...getTableProps()} className="table-auto ">
             <thead>
               {headerGroups.map((headerGroup) => (
                 <tr {...headerGroup.getHeaderGroupProps()}>
                   {headerGroup.headers.map((column) => (
                     <th
                       {...column.getHeaderProps()}
-                      className="border border-1  px-4 py-2"
+                      className="  px-4 py-2"
                       style={{
                         backgroundColor: "#E9E9E9",
                         borderColor: "#BDBDBD",
-                        // width: column.width,
-                        whiteSpace: "nowrap",
                         height: column.height,
+                      width: column.width,
+                        whiteSpace: "nowrap",
                         fontSize: "14px",
                         fontWeight: "600",
                         fontFamily: "Roboto",
@@ -422,6 +426,8 @@ function Material({ setSelected, selected, data, category, setCategory, expiryDa
                           lineHeight: "22px",
                           fontFamily: "Roboto",
                           width: cell.column.width,
+                          height: cell.column.height,
+                          
                         }}
                       >
                         {cell.render("Cell")}

@@ -289,9 +289,10 @@ export default function CreateProduct() {
                   formData.glNumber.length > 0 ? 'label-up' : 'label-down'}
             />
 
-            <div className="row-span-2 flex items-center">
-              <CheckBox formData={formData} setFormData={setFormData} />
+<div className="row-span-2 flex items-center">
+              <CheckBox formData={formData} setFormData={setFormData}/>
             </div>
+
 
             <InputBox
               type="number"

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { changeStatus } from "../../features/orders/ordersSlice";
 import NavbarView from "../../Components/NavbarView";
 import productImg from "../../Icons/product.png";
+import { useNavigate } from "react-router-dom";
 import orderIcon from "../../Icons/Order.svg";
 import userIcon from "../../Icons/user.png";
 import shippingIcon from "../../Icons/Union.png";
@@ -18,6 +19,7 @@ export default function ViewOrder(props) {
   const [data, setData] = useState([]);
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate=useNavigate();
   // console.log("location",location.state.id);
   const order = location.state;
   const updateStatus = async () => {
@@ -50,6 +52,7 @@ export default function ViewOrder(props) {
     //  dispatch(changeStatus({id:order.id,status}))
     updateStatus();
     toast.success("Order Confirmed!");
+    navigate("/sales/InProgress")
   };
   const handleCancelOrder = () => {
     // console.log("at handleConfirmOrder :{id}",order.id);
