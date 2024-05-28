@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addProduct } from "../../features/Product/productSlice";
 import InputBox from "../../Components/InputBox";
 import DropDown from "../../Components/Dropdown";
@@ -10,152 +10,200 @@ import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { api_url } from "../../Data/Constants";
 
-
 export default function CreateProduct() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [formData,setFormData] = useState({
-    productName:'',
-    productNameCode:'',
-    category:'',
-    subCategory:'',
-    upc:'',
-    glNumber:'',
-    minimumQuantity:'',
-    measurementType:'',
-    Description:'',
-    refrigeration:true
+  const [formData, setFormData] = useState({
+    productName: '',
+    productNameCode: '',
+    category: '',
+    subCategory: '',
+    upc: '',
+    glNumber: '',
+    minimumQuantity: '',
+    measurementType: '',
+    Description: '',
+    refrigeration: true,
+    image: { id: null }
   });
+  const [image, setImage] = useState(null);
+  const [productsTableData, setProductTableData] = useState([]);
+  const [showAddThisProduct, setShowAddThisProduct] = useState(false);
+
+  const [isFormComplete, setIsFormComplete] = useState(false);
+  const [categoryData, setCategoryData] = useState([]);
+  const [subCategoryData, setSubCategoryData] = useState([]);
+  const [measurementData, setMeasurementData] = useState([{ id: "1", value: "Kg" }]);
+
   const handleInputChange = (e) => {
-    console.log(e);
     const { name, value } = e.target;
-    console.log("Input value changed:", name, ":", value);
     setFormData(prevData => ({
       ...prevData,
       [name]: value
     }));
   };
-  const [isFormComplete, setIsFormComplete] = useState(false);
-  const [categoryData,setCategoryData] = useState([]);
-  const [subCategoryData,setSubCategoryData] = useState([]);
-  const [mearsumentData,setMearsumentData] = useState([{
-    id:"1",
-    value:"Kg"
-  }]);
-  const handleSubmit = (e)=>{
-     e.preventDefault();
-     console.log("form Data at createProduct :",formData);
-     dispatch(addProduct(formData));
-     navigate('/products/CreateProduct/CreateProductMaterials')
-  }
-  const getCategoryData = async () =>{
-    try {
-      const url = `${api_url}/materialCategory/getAllMaterialCategory`;
-      const response = await axios.get(url, {
-          headers: { 'ngrok-skip-browser-warning': '69420' }
-      });
-      console.log('Response at newOrderRequest', response.data);
-      setCategoryData(response.data);
-  }
-  catch (error) {
-      console.log("Error :", error);
-  }
-  }
-  const getSubCategoryData = async (value) =>{
-    const obj = categoryData.find((obj)=>{
-        if(obj.value.trim() ==  value.trim()){
-            return obj;
-        }
-    });
-     const id = obj?.id;
-    console.log("id at getsubcategoryData",id);
-    try {
-      const url = `${api_url}/materialCategory/getAllMaterialSubCategory/${id}`;
-      const response = await axios.get(url, {
-          headers: { 'ngrok-skip-browser-warning': '69420' }
-      });
-      console.log('Response at newOrderRequest', response.data);
-      setSubCategoryData(response.data);
-  }
-  catch (error) {
-      console.log("Error :", error);
-  }
-  }
-  const getMearsurmentData = async () =>{
-    try {
-      const url = `${api_url}/productCategory//getAllMeasurement`;
-      const response = await axios.get(url, {
-          headers: { 'ngrok-skip-browser-warning': '69420' }
-      });
-      console.log('Response at newOrderRequest', response.data);
-      setMearsumentData(response.data);
-  }
-  catch (error) {
-      console.log("Error :", error);
-  }
-  }
-  const checkFormCompletion = () => {
-    const formEntries = Object.entries(formData);
 
-    console.log(formEntries);
+  const handleImageChange = (e) => {
 
-    const allFieldsFilled = formEntries.every((formEntriesData) => {
-      const [name, value] = formEntriesData;
+    if( e.target.files?.length){
+      const file = e.target.files[0];
+      const localURL= URL.createObjectURL(file)
+      setImage({
+        file: file,
+        localURL:localURL
+      });
+    }
+  };
 
-      if (typeof value === "object" && value !== null) {
-        // For objects, check each value inside the object
-        const isValidData = Object.values(value).every(
-          (val) =>
-            (typeof val === "string" || "number") && String(val).trim() !== ""
-        );
-        if (!isValidData) {
-          console.log(name);
-        }
-        return isValidData;
+  const getProductsTableData = async () => {
+    const url = `${api_url}/product`;
+    try {
+      const response = await axios.get(url, {
+        headers: { "ngrok-skip-browser-warning": "69420" },
+      });
+      if (response?.status === 200) {
+        setProductTableData(response?.data);
       } else {
-        // For non-objects, directly check the value
-        const isValidData =
-          typeof (value === "string" || "number") &&
-          String(value).trim() !== "";
-        if (!isValidData) {
-          console.log(name);
+        console.error("Received unexpected response:", response);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const uploadImage = async () => {
+    if (!image) return null;
+    const formData = new FormData();
+    formData.append("imageFile", image?.file);
+  
+    try {
+      const response = await axios.post(`${api_url}/images/upload`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
         }
-        return isValidData;
+      });
+  
+      // console.log("uploadImage ----- ",  response.data);
+  
+      // Extract imageId from the response data string and create a JSON object
+      const imageData = response.data.split(': ');
+      const imageId = imageData[1].trim();
+      const jsonResponse = { imageId };
+      return jsonResponse?.imageId;
+    } catch (error) {
+      console.error("Image upload failed:", error);
+      return null;
+    }
+  };
+  
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const id = await uploadImage();
+   // console.log("THis is ID",id)
+    if (id) {
+      console.log("NAVIGATE CALLED")
+      const productData = {
+        ...formData,
+        image: { id: id }
+      };
+      dispatch(addProduct(productData));
+      navigate('/products/CreateProduct/CreateProductMaterials');
+    } else {
+      console.error("Failed to upload image.");
+    }
+  };
+
+  const getCategoryData = async () => {
+    try {
+      const response = await axios.get(`${api_url}/productCategory/getAllProductCategory`, {
+        headers: { 'ngrok-skip-browser-warning': '69420' }
+      });
+      setCategoryData(response.data);
+    } catch (error) {
+      console.log("Error fetching category data:", error);
+    }
+  };
+
+  const getSubCategoryData = async (value) => {
+    const obj = categoryData.find(obj => obj.value.trim() === value.trim());
+    const id = obj?.id;
+    if (id) {
+      try {
+        const response = await axios.get(`${api_url}/productCategory/getAllProductSubCategory/${id}`, {
+          headers: { 'ngrok-skip-browser-warning': '69420' }
+        });
+        setSubCategoryData(response.data);
+      } catch (error) {
+        console.log("Error fetching subcategory data:", error);
+      }
+    }
+  };
+
+  const getMeasurementData = async () => {
+    try {
+      const response = await axios.get(`${api_url}/materialCategory/getAllMeasurement`, {
+        headers: { 'ngrok-skip-browser-warning': '69420' }
+      });
+      setMeasurementData(response.data);
+    } catch (error) {
+      console.log("Error fetching measurement data:", error);
+    }
+  };
+
+  const checkFormCompletion = () => {
+    const allFieldsFilled = Object.values(formData).every(value => {
+      if (typeof value === "object" && value !== null) {
+        return Object.values(value).every(val => String(val).trim() !== "");
+      } else {
+        return String(value).trim() !== "";
       }
     });
-
-    console.log(allFieldsFilled);
-    console.log("filled forms", allFieldsFilled);
-    setIsFormComplete(allFieldsFilled);
+    const isImageUploaded = !!image; // Check if an image is uploaded
+  setIsFormComplete(allFieldsFilled && isImageUploaded);
   };
-  useEffect(()=>{
+
+  useEffect(() => {
     getSubCategoryData(formData.category);
-    setFormData((prevData) =>({
-      ...prevData,
-      subCategory:''
-    }))
-},[formData.category]);
+    setFormData(prevData => ({ ...prevData, subCategory: '' }));
+  }, [formData.category]);
 
   useEffect(() => {
     checkFormCompletion();
   }, [formData]);
-  useEffect(()=>{
+
+  useEffect(() => {
     getCategoryData();
-    getMearsurmentData();
-  },[])
+        getProductsTableData();
+    getMeasurementData();
+  }, []);
+
+  useEffect(() => {
+    if (formData.productName.trim().length > 0) {
+      const productExists = productsTableData.some(
+        (d) => d.productName.trim() === formData.productName.trim()
+      );
+      setShowAddThisProduct(!productExists);
+    } else {
+      setShowAddThisProduct(false);
+    }
+  }, [formData.productName, productsTableData]);
+
+  const isSaveButtonEnabled = isFormComplete && showAddThisProduct;
+//console.log("Hii",isSaveButtonEnabled);
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="p-8 bg-white">
         <Navbar
           title="Create Product"
           btnTitle="Next"
-          btnStyle={{ backgroundColor: isFormComplete ? "#2CAE66" : "#B3B3B3",cursor: isFormComplete ? "pointer" : "not-allowed"}}
-          disabled={!isFormComplete}
+          btnStyle={{ backgroundColor: isSaveButtonEnabled ? "#2CAE66" : "#B3B3B3", cursor: isSaveButtonEnabled? "pointer" : "not-allowed" }}
+          disabled={!isSaveButtonEnabled}
           className="NavbarForm"
           btnType="submit"
           handleClick={handleSubmit}
           backLink="/products/CreateBatchProduct"
-          // nextLink="createProductMaterials"
         />
 
         <div className="flex flex-row mt-7 ">
@@ -219,43 +267,39 @@ export default function CreateProduct() {
             <ImageUpload
               type="file"
               title="Drag or Upload a Product Image*"
-              name="productName1"
+              name="productImage"
               className="row-span-2"
+              accept="image/*"
+              value={image?.localURL}
+              onChange={handleImageChange}
             />
             <InputBox
               type="text"
               title="Product Name*"
               name="productName"
               onChange={handleInputChange}
-                labelCss={
-                  formData.productName.length > 0 ? 'label-up' : 'label-down'}
+              labelCss={formData.productName.length > 0 ? 'label-up' : 'label-down'}
             />
-
             <InputBox
               type="text"
               title="Product Name/Code*"
               name="productNameCode"
               onChange={handleInputChange}
-                labelCss={
-                  formData.productNameCode.length > 0 ? 'label-up' : 'label-down'}
+              labelCss={formData.productNameCode.length > 0 ? 'label-up' : 'label-down'}
             />
-
             <DropDown
               title="Category*"
               name="category"
               onChange={handleInputChange}
               options={categoryData}
-                labelCss={
-                  formData.category.length > 0 ? 'label-up' : 'label-down'}
+              labelCss={formData.category.length > 0 ? 'label-up' : 'label-down'}
             />
-
             <DropDown
               title="Sub Category*"
               name="subCategory"
               onChange={handleInputChange}
               options={subCategoryData}
-                labelCss={
-                  formData.subCategory.length > 0 ? 'label-up' : 'label-down'}
+              labelCss={formData.subCategory.length > 0 ? 'label-up' : 'label-down'}
             />
           </div>
         </div>
@@ -277,50 +321,37 @@ export default function CreateProduct() {
               title="UPC*"
               name="upc"
               onChange={handleInputChange}
-                labelCss={
-                  formData.upc  ? 'label-up' : 'label-down'}
+              labelCss={formData.upc ? 'label-up' : 'label-down'}
             />
             <InputBox
               type="text"
               title="GL Number*"
               name="glNumber"
               onChange={handleInputChange}
-                labelCss={
-                  formData.glNumber.length > 0 ? 'label-up' : 'label-down'}
+              labelCss={formData.glNumber ? 'label-up' : 'label-down'}
             />
-
-<div className="row-span-2 flex items-center">
-              <CheckBox formData={formData} setFormData={setFormData}/>
-            </div>
-
-
             <InputBox
               type="number"
               title="Minimum Quantity*"
               name="minimumQuantity"
               onChange={handleInputChange}
-                labelCss={
-                  formData.minimumQuantity  ? 'label-up' : 'label-down'}
+              labelCss={formData.minimumQuantity ? 'label-up' : 'label-down'}
             />
-
             <DropDown
               title="Measurement Type*"
               name="measurementType"
-              options={mearsumentData}
               onChange={handleInputChange}
-                labelCss={
-                  formData.measurementType.length > 0 ? 'label-up' : 'label-down'}
+              options={measurementData}
+              labelCss={formData.measurementType ? 'label-up' : 'label-down'}
             />
-
             <InputBox
               type="text"
-              title="Description (150 Words)"
-              className="col-span-3"
+              title="Description*"
               name="Description"
               onChange={handleInputChange}
-                labelCss={
-                  formData.Description.length > 0 ? 'label-up' : 'label-down'}
+              labelCss={formData.Description ? 'label-up' : 'label-down'}
             />
+           <CheckBox formData={formData} setFormData={setFormData}/>
           </div>
         </div>
       </div>

@@ -7,7 +7,7 @@ const initialState = {
 };
 const postData = async (Data) => {
   try {
-    const url = `${api_url}/createOrder/`;
+    const url = `${api_url}/order/`;
     console.log("data : ", Data);
     const resp = await axios.post(url, Data);
     console.log('Response at createOrder', resp);
@@ -60,7 +60,7 @@ export const ordersSlice = createSlice({
           "shipmentState": String(action.payload.shipmentDetails.State),
           "shipmentCountry": String(action.payload.shipmentDetails.Country)
         }
-        console.log("Data at addOrder :", data);
+        console.log("Data at addOrder is--- :", data);
         postData(data)
         // console.log("all orders", state.orders);
       } else {

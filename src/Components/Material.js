@@ -9,9 +9,9 @@ import bag from "../Icons/shopping-bag.png";
 import hover from "../Icons/Group 35195.svg";
 import * as Icon from "react-icons/fi";
 import Checkbox from "react-custom-checkbox";
-// import "../CSS/OrderDropdown.css";
+import "../CSS/OrderDropdown.css";
 import { api_url } from "../Data/Constants";
-// import "../CSS/OrderDropdown.css";
+import "../CSS/OrderDropdown.css";
 import TableDropdown from "./TableDropdown";
 import { Link } from "react-router-dom";
 
@@ -176,7 +176,7 @@ function Material({ setSelected, selected, data, category, setCategory, expiryDa
               onMouseEnter={() => {
                 const img = document.getElementById(`image-${row.original.id}`);
                 if (img) {
-                  img.style.display = "block";
+                  img.style.display = "none";
                 }
               }}
               onMouseLeave={() => {
@@ -267,13 +267,13 @@ function Material({ setSelected, selected, data, category, setCategory, expiryDa
         {
           Header: "Code",
           accessor: "code",
-          width: "120px",
+          width: "102px",
           height: "52px",
         },
         {
           Header: "Batch ID",
           accessor: "batchId",
-          width: "120px",
+          width: "122px",
           height: "52px",
         },
         {
@@ -336,14 +336,14 @@ function Material({ setSelected, selected, data, category, setCategory, expiryDa
         {
           Header: "Committed",
           accessor: "committed",
-          width: "90px",
-        height: "40px",
+          width: "102px",
+          height: "40px",
         },
         {
           Header: "Action",
           accessor: "action",
-          width: "125px",
-          height: "40px",
+          width: "102px",
+          height:"40px",
           Cell: ({ cell,row }) => {
             // console.log("row data :",row);
             // const data = {
@@ -383,33 +383,32 @@ function Material({ setSelected, selected, data, category, setCategory, expiryDa
     return (
       <div>
         <div className="  ml-4 pt-3 ">
-          <table {...getTableProps()} className="table-auto  " >
+          <table {...getTableProps()} className="table-auto ">
             <thead>
               {headerGroups.map((headerGroup) => (
                 <tr {...headerGroup.getHeaderGroupProps()}>
                   {headerGroup.headers.map((column) => (
-                   <th
-                   {...column.getHeaderProps()}
-                   className="px-4 py-2"
-                   style={{
-                     backgroundColor: "#E9E9E9",
-                   
-                     height: column.height,
-                     width: column.width,
-                     whiteSpace: "nowrap",
-                     fontSize: "14px",
-                     fontWeight: "600",
-                     fontFamily: "Roboto",
-                     lineHeight: "22px",
-                     borderTopLeftRadius: column.id === "materialName" ? "28px" : "0", 
-                     borderTopRightRadius: column.id === "action" ? "28px" : "0",
-                    
-                     position: "relative", // Set position to relative
-                   }}
-                 >
-                   {column.render("Header")}
-                   {/* {column.id === "materialName" && ( */}
-                     <div
+                    <th
+                      {...column.getHeaderProps()}
+                      className=" px-4 py-2"
+                      style={{
+                        backgroundColor: "#E9E9E9",
+                        borderColor: "#BDBDBD",
+                        height: column.height,
+                        width: column.width,
+                        whiteSpace: "nowrap",
+                        
+                        fontSize: "14px",
+                        fontWeight: "600",
+                        fontFamily: "Roboto",
+                        lineHeight: "22px",
+                        borderTopLeftRadius: column.id === "materialName" ? "28px" : "0", 
+                        borderTopRightRadius: column.id === "action" ? "28px" : "0",
+                        position: "relative", 
+                      }}
+                    >
+                      {column.render("Header")}
+                      <div
                        className="absolute top-0 left-0 w-full h-full"
                        style={{
                          borderRight: "1px solid #BDBDBD", 
@@ -421,8 +420,7 @@ function Material({ setSelected, selected, data, category, setCategory, expiryDa
                        
                        }}
                      />
-                  
-                 </th>
+                    </th>
                   ))}
                 </tr>
               ))}
@@ -444,8 +442,6 @@ function Material({ setSelected, selected, data, category, setCategory, expiryDa
                           lineHeight: "22px",
                           fontFamily: "Roboto",
                           width: cell.column.width,
-                          height: cell.column.height,
-                          
                         }}
                       >
                         {cell.render("Cell")}

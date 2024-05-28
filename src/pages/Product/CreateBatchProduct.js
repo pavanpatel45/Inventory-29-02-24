@@ -33,22 +33,22 @@ export default function CreateBatch() {
   const [storageLocation, setStorageLocation] = useState([]);
 
   const navigate = useNavigate();
+
   const handleInputChange = (e) => {
-    console.log(e);
     const { name, value } = e.target;
-    console.log("Input value changed:", name, ":", value);
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("form data at createbatchproduct :", formData);
     dispatch(addProductBatch(formData));
     toast.success("Batch Successfully Added");
     navigate("/products");
   };
+
   const getProductsTableData = async () => {
     const url = `${api_url}/product`;
     try {
@@ -64,6 +64,7 @@ export default function CreateBatch() {
       console.error("Error fetching data:", error);
     }
   };
+
   const getStorageLocation = async () => {
     const url = `${api_url}/productCategory/getAllLocations`;
     try {
@@ -79,38 +80,20 @@ export default function CreateBatch() {
       console.error("Error fetching data:", error);
     }
   };
+
   const checkFormCompletion = () => {
     const formEntries = Object.entries(formData);
 
-    console.log(formEntries);
-
-    const allFieldsFilled = formEntries.every((formEntriesData) => {
-      const [name, value] = formEntriesData;
-
+    const allFieldsFilled = formEntries.every(([name, value]) => {
       if (typeof value === "object" && value !== null) {
-        // For objects, check each value inside the object
-        const isValidData = Object.values(value).every(
-          (val) =>
-            (typeof val === "string" || "number") && String(val).trim() !== ""
+        return Object.values(value).every(
+          (val) => (typeof val === "string" || "number") && String(val).trim() !== ""
         );
-        if (!isValidData) {
-          console.log(name);
-        }
-        return isValidData;
       } else {
-        // For non-objects, directly check the value
-        const isValidData =
-          typeof (value === "string" || "number") &&
-          String(value).trim() !== "";
-        if (!isValidData) {
-          console.log(name);
-        }
-        return isValidData;
+        return typeof (value === "string" || "number") && String(value).trim() !== "";
       }
     });
 
-    console.log(allFieldsFilled);
-    console.log("filled forms", allFieldsFilled);
     setIsFormComplete(allFieldsFilled);
   };
 
@@ -124,23 +107,17 @@ export default function CreateBatch() {
   }, []);
 
   useEffect(() => {
-    console.log("on formData.productName change");
-    for (const d of productsTableData) {
-      console.log(
-        "Inside material table Data",
-        d.productName.trim(),
-        formData.productName.trim()
+    if (formData.productName.trim().length > 0) {
+      const productExists = productsTableData.some(
+        (d) => d.productName.trim() === formData.productName.trim()
       );
-      if (d.productName.trim() !== formData.productName.trim()) {
-        console.log("add this");
-        setShowAddThisProduct(true);
-      } else {
-        console.log("material present");
-        setShowAddThisProduct(false);
-        break; // Break out of the loop
-      }
+      setShowAddThisProduct(!productExists);
+    } else {
+      setShowAddThisProduct(false);
     }
-  }, [formData.productName]);
+  }, [formData.productName, productsTableData]);
+
+  const isSaveButtonEnabled = isFormComplete && !showAddThisProduct;
 
   return (
     <form>
@@ -152,7 +129,7 @@ export default function CreateBatch() {
         />
         <div className="grid gap-y-4 pt-8">
           <div className="grid gap-2">
-            <div className="grid  grid-cols-1 md:grid-cols-3 grid-flow-row gap-x-8 gap-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 grid-flow-row gap-x-8 gap-y-8">
               <div>
                 <InputBox
                   type="text"
@@ -162,7 +139,7 @@ export default function CreateBatch() {
                   labelCss={
                     formData.productName.length > 0 ? "label-up" : "label-down"
                   }
-                />{" "}
+                />
                 {showAddThisProduct && (
                   <AddThisMaterial
                     title="product"
@@ -241,14 +218,14 @@ export default function CreateBatch() {
             <Link to="/products">
               <Button
                 btnTitle="Save"
-                className=" pt-0 pb-0 text-sty"
+                className="pt-0 pb-0 text-sty"
                 style={{
-                  backgroundColor: isFormComplete ? "#2CAE66 " : "#B3B3B3 ",
-                  cursor: isFormComplete ? "pointer" : "not-allowed",
+                  backgroundColor: isSaveButtonEnabled ? "#2CAE66" : "#B3B3B3",
+                  cursor: isSaveButtonEnabled ? "pointer" : "not-allowed",
                 }}
-                disabled={!isFormComplete}
+                disabled={!isSaveButtonEnabled}
                 type="submit"
-                onClickfunction={handleSubmit}
+                onClick={handleSubmit}
               />
             </Link>
           </div>

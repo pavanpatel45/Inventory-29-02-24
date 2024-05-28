@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { api_url } from "../../Data/Constants";
 import axios from "axios";
+
 const initialState = {
     product: {
         "productName": "Product ABC",
@@ -23,6 +24,7 @@ const initialState = {
         "materialUnit": "kg"
     }
 };
+
 const postData = async (Data) => {
     try {
         const url = `${api_url}/product/`;
@@ -33,7 +35,8 @@ const postData = async (Data) => {
     catch (error) {
         console.log("Error :", error);
     }
-}
+};
+
 const postBatchData = async (Data) => {
     try {
         const url = `${api_url}/productBatch/`;
@@ -44,7 +47,7 @@ const postBatchData = async (Data) => {
     catch (error) {
         console.log("Error :", error);
     }
-}
+};
 
 export const productSlice = createSlice({
     name: "products",
@@ -53,19 +56,21 @@ export const productSlice = createSlice({
         addProduct: (state, action) => {
             if (action.payload) {
                 console.log("Initial State:", state?.product);
-                console.log("Payload Data:", action.payload);
-                // Modify state here if needed
+                console.log("Payload Data1:", action.payload);
+
                 const payload = action.payload;
                 const Data = {
                     productName: String(payload.productName),
+                    productNameCode: String(payload.productNameCode),
                     category: String(payload.category),
                     subCategory: String(payload.subCategory),
                     upc: String(payload.upc),
                     glNumber: String(payload.glNumber),
                     minimumQuantity: parseInt(payload.minimumQuantity, 10),
                     measurementType: String(payload.measurementType),
-                    description: String(payload.Description ),
-                    refrigeration: Boolean(payload.refrigeration)
+                    description: String(payload.description),
+                    refrigeration: Boolean(payload.refrigeration),
+                    image: payload.image
                 };
                 postData(Data);
             }
@@ -73,11 +78,11 @@ export const productSlice = createSlice({
         addProductBatch: (state, action) => {
             if (action.payload) {
                 console.log("Initial State:", state?.product);
-                console.log("Payload Data:", action.payload);
-                // Modify state here if needed
+                console.log("Payload Data2:", action.payload);
+
                 const payload = action.payload;
                 const Data = {
-                    batchProductName: String(payload.productName),
+                    productName: String(payload.productName),
                     storageLocation: String(payload.storageLocation),
                     batchId: String(payload.batchId),
                     makeOrder: String(payload.makeOrder),
@@ -86,33 +91,26 @@ export const productSlice = createSlice({
                     price: parseFloat(payload.price),
                 };
                 postBatchData(Data);
-
             }
         },
         addProductMaterial: (state, action) => {
             if (action.payload) {
                 console.log("Initial State:", state?.product);
-                console.log("Payload Data:", action.payload);
-                // Modify state here if needed
+                console.log("Payload Data3:", action.payload);
+
                 const payload = action.payload;
-                state.product = {
+                const Data = {
                     ...state.product,
                     materialName: String(payload.materialNameCode),
                     materialRequiredQuantity: parseInt(payload.requiredQuantity, 10),
                     materialUnit: String(payload.unit),
                 };
-                postData(state.product);
+                postData(Data);
             }
         }
     }
 });
 
-export const {  addProduct, addProductBatch,addProductMaterial} = productSlice.actions;
+export const { addProduct, addProductBatch, addProductMaterial } = productSlice.actions;
 
 export default productSlice.reducer;
-
-
-
-/* -------------------------------------------------*/
-
-

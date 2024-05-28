@@ -224,7 +224,7 @@ function Products({ selected, setSelected, productsTableData, data, category, se
                 textDecoration: "underline",
               }}
             >
-              <p className="truncate max-w-24">{cell.value} </p>
+              <p className="truncate max-w-36">{cell.value} </p>
             </a>
           </div>
         ),
@@ -241,17 +241,6 @@ function Products({ selected, setSelected, productsTableData, data, category, se
         width: "120px",
         height: "52px",
       },
-      {
-        Header: (
-          <>
-            <TableDropdown title="Category" options={option1} selectedOption={category} setSelectedOption={setCategory} className="z-50" />
-          </>
-        ),
-        accessor: "category",
-        className: "truncate max-w-24",
-        width: "120px",
-        height: "40px",
-      },
 
       {
         Header: (
@@ -263,7 +252,17 @@ function Products({ selected, setSelected, productsTableData, data, category, se
         width: "131px",
         height: "52px",
       },
-      
+      {
+        Header: (
+          <>
+            <TableDropdown title="Category" options={option1} selectedOption={category} setSelectedOption={setCategory} className="z-50" />
+          </>
+        ),
+        accessor: "category",
+        className: "truncate max-w-24",
+        width: "120px",
+        height: "40px",
+      },
       {
         Header: "Quantity",
         accessor: "quantity",
@@ -294,8 +293,6 @@ function Products({ selected, setSelected, productsTableData, data, category, se
         },
         width: "154px",
         height: "52px",
-        justifyContent: "center",
-        alignItems: "center",
       },
       {
         Header: "Committed",
@@ -339,18 +336,19 @@ function Products({ selected, setSelected, productsTableData, data, category, se
 
   return (
     <div>
-      <div className="  ml-4 pt-3 ">
-        <table className="table-auto ">
+      <div className="  ml-4 pt-3 border-solid border-red-500 ">
+        <table className="table-auto border-collapse ">
           <thead>
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
                   <th
                     {...column.getHeaderProps()}
-                    className="  px-4 py-2"
+                    className="border border-1  px-4 py-2"
                     style={{
                       backgroundColor: "#E9E9E9",
-                    
+                      borderColor: "#BDBDBD",
+                      // width: column.width,
                       whiteSpace: "nowrap",
                       height: column.height,
                       width: column.width,
@@ -358,24 +356,9 @@ function Products({ selected, setSelected, productsTableData, data, category, se
                       fontWeight: "600",
                       fontFamily: "Roboto",
                       lineHeight: "22px",
-                       borderTopLeftRadius: column.id === "productName" ? "28px" : "0", 
-                     borderTopRightRadius: column.id === "action" ? "28px" : "0", 
-                     position: "relative"
                     }}
                   >
                     {column.render("Header")}
-                    <div
-                       className="absolute top-0 left-0 w-full h-full"
-                       style={{
-                         borderRight: "1px solid #BDBDBD", 
-                         borderBottom: "1px solid #BDBDBD", 
-                         borderTop: "1px solid #BDBDBD", 
-                         borderLeft: "1px solid #BDBDBD", 
-                         borderTopRightRadius: column.id === "action" ? "28px" : "0",
-                        borderTopLeftRadius: column.id === "productName" ? "28px" : "0",
-                    
-                       }}
-                     />
                   </th>
                 ))}
               </tr>
