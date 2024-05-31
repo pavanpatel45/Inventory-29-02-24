@@ -13,7 +13,7 @@ export default function ShippedOrder() {
     const [allOrders, setAllOrders] = useState([])
     const getData = async () => {
         try {
-            const url = `${api_url}/createOrder`;
+            const url = `${api_url}/order/`;
             const response = await axios.get(url, {
                 headers: { 'ngrok-skip-browser-warning': '69420' }
             });
@@ -26,7 +26,7 @@ export default function ShippedOrder() {
     }
     const updateStatus = async(orderId,status)=>{
         try {
-           const url = `${api_url}/createOrder/${orderId}/${status}`;
+           const url = `${api_url}/order/${orderId}/${status}`;
            const resp = await axios.put(url);
            console.log('Response at createOrder', resp);
          }

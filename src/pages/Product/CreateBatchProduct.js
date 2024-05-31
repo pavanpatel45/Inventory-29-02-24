@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { addProductBatch } from "../../features/Product/productSlice";
 import InputBox from "../../Components/InputBox";
@@ -13,6 +13,7 @@ import "../../CSS/CreateBatch.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AddThisMaterial from "../../Components/AddThisMaterial";
+
 
 import { Link } from "react-router-dom";
 
@@ -30,25 +31,26 @@ export default function CreateBatch() {
   const [showAddThisProduct, setShowAddThisProduct] = useState(false);
   const [productsTableData, setProductTableData] = useState([]);
   const [isFormComplete, setIsFormComplete] = useState(false);
-  const [storageLocation, setStorageLocation] = useState([]);
+  const [storageLocation,setStorageLocation] = useState([]);
 
-  const navigate = useNavigate();
-
+const navigate= useNavigate();
   const handleInputChange = (e) => {
+    console.log(e);
     const { name, value } = e.target;
+    console.log("Input value changed:", name, ":", value);
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
-
   const handleSubmit = (e) => {
+    console.log("Hii I am rahul");
     e.preventDefault();
+    console.log("form data at createbatchproduct :", formData);
     dispatch(addProductBatch(formData));
     toast.success("Batch Successfully Added");
-    navigate("/products");
+    navigate("/products")
   };
-
   const getProductsTableData = async () => {
     const url = `${api_url}/product`;
     try {
@@ -63,8 +65,8 @@ export default function CreateBatch() {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
+    
   };
-
   const getStorageLocation = async () => {
     const url = `${api_url}/productCategory/getAllLocations`;
     try {
@@ -80,20 +82,38 @@ export default function CreateBatch() {
       console.error("Error fetching data:", error);
     }
   };
-
   const checkFormCompletion = () => {
     const formEntries = Object.entries(formData);
 
-    const allFieldsFilled = formEntries.every(([name, value]) => {
+    console.log(formEntries);
+
+    const allFieldsFilled = formEntries.every((formEntriesData) => {
+      const [name, value] = formEntriesData;
+
       if (typeof value === "object" && value !== null) {
-        return Object.values(value).every(
-          (val) => (typeof val === "string" || "number") && String(val).trim() !== ""
+        // For objects, check each value inside the object
+        const isValidData = Object.values(value).every(
+          (val) =>
+            (typeof val === "string" || "number") && String(val).trim() !== ""
         );
+        if (!isValidData) {
+          console.log(name);
+        }
+        return isValidData;
       } else {
-        return typeof (value === "string" || "number") && String(value).trim() !== "";
+        // For non-objects, directly check the value
+        const isValidData =
+          typeof (value === "string" || "number") &&
+          String(value).trim() !== "";
+        if (!isValidData) {
+          console.log(name);
+        }
+        return isValidData;
       }
     });
 
+    console.log(allFieldsFilled);
+    console.log("filled forms", allFieldsFilled);
     setIsFormComplete(allFieldsFilled);
   };
 
@@ -107,20 +127,24 @@ export default function CreateBatch() {
   }, []);
 
   useEffect(() => {
-    if (formData.productName.trim().length > 0) {
-      const productExists = productsTableData.some(
-        (d) => d.productName.trim() === formData.productName.trim()
-      );
-      setShowAddThisProduct(!productExists);
-    } else {
-      setShowAddThisProduct(false);
+    console.log("on formData.productName change");
+    for (const d of productsTableData) {
+      console.log("Inside material table Data", d.productName.trim(), formData.productName.trim());
+      if (d.productName.trim() !== formData.productName.trim()) {
+        console.log("add this");
+        setShowAddThisProduct(true);
+      } else {
+        console.log("material present");
+        setShowAddThisProduct(false);
+        break; // Break out of the loop
+      }
     }
-  }, [formData.productName, productsTableData]);
-
+    
+  }, [formData.productName]);
   const isSaveButtonEnabled = isFormComplete && !showAddThisProduct;
 
   return (
-    <form>
+    <form >
       <div className="p-8 bg-white">
         <Navbar
           title="Create Batch"
@@ -129,24 +153,19 @@ export default function CreateBatch() {
         />
         <div className="grid gap-y-4 pt-8">
           <div className="grid gap-2">
-            <div className="grid grid-cols-1 md:grid-cols-3 grid-flow-row gap-x-8 gap-y-8">
-              <div>
-                <InputBox
-                  type="text"
-                  title="Product Name/Code*"
-                  name="productName"
-                  onChange={handleInputChange}
-                  labelCss={
-                    formData.productName.length > 0 ? "label-up" : "label-down"
-                  }
-                />
-                {showAddThisProduct && (
-                  <AddThisMaterial
-                    title="product"
-                    link="/products/createProduct"
-                  />
-                )}
-              </div>
+            <div className="grid  grid-cols-1 md:grid-cols-3 grid-flow-row gap-x-8 gap-y-8">
+             <div>
+              <InputBox
+                type="text"
+                title="Product Name/Code*"
+                name="productName"
+                onChange={handleInputChange}
+                labelCss={
+                  formData.productName.length > 0 ? "label-up" : "label-down"
+                }
+              />
+                            {showAddThisProduct && <AddThisMaterial title="product" link="/products/createProduct" />}
+</div>
 
               <DropDown
                 title="Storage Location*"
@@ -218,14 +237,11 @@ export default function CreateBatch() {
             <Link to="/products">
               <Button
                 btnTitle="Save"
-                className="pt-0 pb-0 text-sty"
-                style={{
-                  backgroundColor: isSaveButtonEnabled ? "#2CAE66" : "#B3B3B3",
-                  cursor: isSaveButtonEnabled ? "pointer" : "not-allowed",
-                }}
+                className=" pt-0 pb-0 text-sty"
+                style={{ backgroundColor: isSaveButtonEnabled ? "#2CAE66 " : "#B3B3B3 ",cursor: isSaveButtonEnabled ? "pointer" : "not-allowed"}}
                 disabled={!isSaveButtonEnabled}
                 type="submit"
-                onClick={handleSubmit}
+                onClickfunction={handleSubmit}
               />
             </Link>
           </div>

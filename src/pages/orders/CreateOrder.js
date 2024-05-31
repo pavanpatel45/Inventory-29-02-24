@@ -14,7 +14,7 @@ import axios from "axios";
 
 export default function CreateOrder() {
   const dispatch = useDispatch();
-  const allOrders = useSelector((state) => state.orders);
+  const allOrders = useSelector((state) => state.orders.orders);
   const alphabet =
     "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
   const idLength = 10;
@@ -293,6 +293,18 @@ export default function CreateOrder() {
         console.log("Error :", error);
     }
   }
+
+  const handleQuantityChange = (e) => {
+    const value = Math.max(0, e.target.value);
+    setFormData((prevData) => ({
+      ...prevData,
+      productDetails: {
+        ...prevData.productDetails,
+        quantity: value,
+      },
+    }));
+  };
+
   const getProductsTableData = async () => {
     const url = `${api_url}/product`;
     try {
@@ -355,7 +367,7 @@ export default function CreateOrder() {
   }, [formData.shipmentDetails.Country]);
   useEffect(() => {
     const obj = stateDataCustomer.find((obj) => {
-      if (obj.value.trim() == formData.customerDetails.State.trim()) {
+      if (obj.value.trim() === formData.customerDetails.State.trim()) {
         return obj;
       }
     });
@@ -364,7 +376,7 @@ export default function CreateOrder() {
   }, [formData.customerDetails.State]);
   useEffect(() => {
     const obj = stateDataPayment.find((obj) => {
-      if (obj.value.trim() == formData.paymentDetails.State.trim()) {
+      if (obj.value.trim() === formData.paymentDetails.State.trim()) {
         return obj;
       }
     });
@@ -532,16 +544,7 @@ export default function CreateOrder() {
                 title="Quantity*"
                 name="productDetails.quantity"
                 value={formData.productDetails.quantity}
-                onChange={(e) => {
-                  const value = Math.max(0, e.target.value);
-                  setFormData((prevData) => ({
-                    ...prevData,
-                    productDetails: {
-                      ...prevData.productDetails,
-                      quantity: value,
-                    },
-                  }));
-                }}
+                 onChange={handleQuantityChange}
                 labelCss={
                   formData.productDetails.quantity ? "label-up" : "label-down"
                 }

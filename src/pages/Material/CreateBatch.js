@@ -29,7 +29,7 @@ export default function CreateBatch() {
     price: "",
   });
   const [showAddThisMaterial, setShowAddThisMaterial] = useState(false);
-  const [storageLocation, setStorageLocation] = useState();
+  const [storageLocation,setStorageLocation] = useState();
   const [isFormComplete, setIsFormComplete] = useState(false);
 
   const handleInputChange = (e) => {
@@ -62,22 +62,35 @@ export default function CreateBatch() {
   const checkFormCompletion = () => {
     const formEntries = Object.entries(formData);
 
-    const allFieldsFilled = formEntries.every(([name, value]) => {
+    console.log(formEntries);
+
+    const allFieldsFilled = formEntries.every((formEntriesData) => {
+      const [name, value] = formEntriesData;
+
       if (typeof value === "object" && value !== null) {
         // For objects, check each value inside the object
-        return Object.values(value).every(
+        const isValidData = Object.values(value).every(
           (val) =>
             (typeof val === "string" || "number") && String(val).trim() !== ""
         );
+        if (!isValidData) {
+          console.log(name);
+        }
+        return isValidData;
       } else {
         // For non-objects, directly check the value
-        return (
-          (typeof value === "string" || typeof value === "number") &&
-          String(value).trim() !== ""
-        );
+        const isValidData =
+          typeof (value === "string" || "number") &&
+          String(value).trim() !== "";
+        if (!isValidData) {
+          console.log(name);
+        }
+        return isValidData;
       }
     });
 
+    console.log(allFieldsFilled);
+    console.log("filled forms", allFieldsFilled);
     setIsFormComplete(allFieldsFilled);
   };
 
@@ -100,7 +113,6 @@ export default function CreateBatch() {
       console.error("Error fetching data:", error);
     }
   };
-
   const getStorageLocation = async () => {
     const url = `${api_url}/productCategory/getAllLocations`;
     try {
@@ -122,22 +134,25 @@ export default function CreateBatch() {
     getStorageLocation();
   }, []);
 
-  // Updated logic to show AddThisMaterial component
   useEffect(() => {
-    if (formData.materialName.trim().length > 0) { // Check if materialName has input
-      const materialExists = materialsTableData.some(
-        (d) => d.materialName.trim() === formData.materialName.trim()
+    console.log("on formData.materialName change");
+    for (const d of materialsTableData) {
+      console.log(
+        "Inside material table Data",
+        d.materialName.trim(),
+        formData.materialName.trim()
       );
-      setShowAddThisMaterial(!materialExists);
-      if (!materialExists) {
-        setMaterialData(materialsTableData.find(
-          (d) => d.materialName.trim() === formData.materialName.trim()
-        ));
+      if (d.materialName.trim() !== formData.materialName.trim()) {
+        console.log("add this");
+        setShowAddThisMaterial(true);
+        setMaterialData(d);
+      } else {
+        console.log("material present");
+        setShowAddThisMaterial(false);
+        break; // Break out of the loop
       }
-    } else {
-      setShowAddThisMaterial(false);
     }
-  }, [formData.materialName, materialsTableData]); // Added materialsTableData as dependency
+  }, [formData.materialName]);
 
   const isSaveButtonEnabled = isFormComplete && !showAddThisMaterial;
 
@@ -148,10 +163,11 @@ export default function CreateBatch() {
           title="Create Batch"
           btnTitle="Add Material"
           backLink="/materials"
+          
         />
         <div className="grid gap-y-4 pt-8">
           <div className="grid gap-2">
-            <div className="grid grid-cols-1 md:grid-cols-3 grid-flow-row gap-x-8 gap-y-8">
+            <div className="grid  grid-cols-1 md:grid-cols-3 grid-flow-row gap-x-8 gap-y-8">
               <div>
                 <InputBox
                   type="text"
@@ -236,13 +252,10 @@ export default function CreateBatch() {
               <Button
                 btnTitle="Save"
                 className="pt-0 pb-0 text-sty"
-                style={{
-                  backgroundColor: isSaveButtonEnabled ? "#2CAE66" : "#B3B3B3",
-                  cursor: isSaveButtonEnabled ? "pointer" : "not-allowed",
-                }}
+                style={{ backgroundColor: isSaveButtonEnabled ? "#2CAE66 " : "#B3B3B3 ",cursor: isSaveButtonEnabled ? "pointer" : "not-allowed"}}
                 disabled={!isSaveButtonEnabled}
                 type="submit"
-                onClick={handleSubmit}
+                onClickfunction={handleSubmit}
               />
             </Link>
           </div>

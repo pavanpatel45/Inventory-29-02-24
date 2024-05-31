@@ -11,7 +11,7 @@ export default function CompletedOrder() {
   const [allOrders, setAllOrders] = useState([])
   const getData = async () => {
     try {
-      const url = `${api_url}/createOrder`;
+      const url = `${api_url}/order/`;
       const response = await axios.get(url, {
         headers: { 'ngrok-skip-browser-warning': '69420' }
       });

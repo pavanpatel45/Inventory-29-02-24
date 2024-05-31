@@ -22,9 +22,10 @@ export default function ViewOrder(props) {
   const navigate=useNavigate();
   // console.log("location",location.state.id);
   const order = location.state;
+  //console.log("data is",order);
   const updateStatus = async () => {
     try {
-      const url = `${api_url}/createOrder/${order.orderId}/6`;
+      const url = `${api_url}/order/${order.orderId}/6`;
       const resp = await axios.put(url);
       console.log("Response at createOrder", resp);
     } catch (error) {
@@ -33,7 +34,7 @@ export default function ViewOrder(props) {
   };
   const getData = async () => {
     try {
-      const url = `${api_url}/invoice/${order.orderId}`;
+      const url = `${api_url}/order/${order.orderId}`;
       const response = await axios.get(url, {
         headers: { "ngrok-skip-browser-warning": "69420" },
       });

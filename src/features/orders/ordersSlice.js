@@ -60,7 +60,7 @@ export const ordersSlice = createSlice({
           "shipmentState": String(action.payload.shipmentDetails.State),
           "shipmentCountry": String(action.payload.shipmentDetails.Country)
         }
-        console.log("Data at addOrder is--- :", data);
+        console.log("Data at addOrder :", data);
         postData(data)
         // console.log("all orders", state.orders);
       } else {

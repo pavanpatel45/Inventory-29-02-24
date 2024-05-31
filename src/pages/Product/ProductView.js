@@ -19,7 +19,6 @@ export default function ProductView() {
   useEffect(() => {
     console.log("selected Data : ", selected);
   }, [selected])
-
   const productsTableData = async () => {
     const url = `${api_url}/productBatch`
     try {
@@ -39,8 +38,8 @@ export default function ProductView() {
       // console.error('Error fetching data:', error);
       return null
     }
-  }
 
+  }
   const deleteProducts = async (id) => {
     console.log("id at deleteProducts : ", id)
     const apiUrl = `${api_url}/productBatch/${id}`
