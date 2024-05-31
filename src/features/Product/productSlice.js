@@ -4,7 +4,7 @@ import axios from "axios";
 
 const initialState = {
     product: {
-        "productName": "Product ABC",
+        "batchProductName": "Product ABC",
         "storageLocation": "Warehouse A",
         "batchId": "BATCH001",
         "makeOrder": "ORDER123",
@@ -82,7 +82,7 @@ export const productSlice = createSlice({
 
                 const payload = action.payload;
                 const Data = {
-                    productName: String(payload.productName),
+                    batchProductName: String(payload.batchProductName),
                     storageLocation: String(payload.storageLocation),
                     batchId: String(payload.batchId),
                     makeOrder: String(payload.makeOrder),

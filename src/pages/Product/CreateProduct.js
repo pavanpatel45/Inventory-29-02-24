@@ -22,7 +22,7 @@ export default function CreateProduct() {
     glNumber: '',
     minimumQuantity: '',
     measurementType: '',
-    Description: '',
+    description: '',
     refrigeration: true,
     image: { id: null }
   });
@@ -98,6 +98,7 @@ export default function CreateProduct() {
   
 
   const handleSubmit = async (e) => {
+    console.log("data at form data is",formData)
     e.preventDefault();
     const id = await uploadImage();
    // console.log("THis is ID",id)
@@ -142,7 +143,7 @@ export default function CreateProduct() {
 
   const getMeasurementData = async () => {
     try {
-      const response = await axios.get(`${api_url}/materialCategory/getAllMeasurement`, {
+      const response = await axios.get(`${api_url}/productCategory/getAllMeasurement`, {
         headers: { 'ngrok-skip-browser-warning': '69420' }
       });
       setMeasurementData(response.data);
@@ -347,9 +348,9 @@ export default function CreateProduct() {
             <InputBox
               type="text"
               title="Description*"
-              name="Description"
+              name="description"
               onChange={handleInputChange}
-              labelCss={formData.Description ? 'label-up' : 'label-down'}
+              labelCss={formData.description ? 'label-up' : 'label-down'}
             />
            <CheckBox formData={formData} setFormData={setFormData}/>
           </div>

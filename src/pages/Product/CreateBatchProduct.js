@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addProductBatch } from "../../features/Product/productSlice";
 import InputBox from "../../Components/InputBox";
@@ -14,13 +14,12 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AddThisMaterial from "../../Components/AddThisMaterial";
 
-
 import { Link } from "react-router-dom";
 
 export default function CreateBatch() {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
-    productName: "",
+    batchProductName: "",
     storageLocation: "",
     batchId: "",
     makeOrder: "",
@@ -31,9 +30,9 @@ export default function CreateBatch() {
   const [showAddThisProduct, setShowAddThisProduct] = useState(false);
   const [productsTableData, setProductTableData] = useState([]);
   const [isFormComplete, setIsFormComplete] = useState(false);
-  const [storageLocation,setStorageLocation] = useState([]);
+  const [storageLocation, setStorageLocation] = useState([]);
 
-const navigate= useNavigate();
+  const navigate = useNavigate();
   const handleInputChange = (e) => {
     console.log(e);
     const { name, value } = e.target;
@@ -49,7 +48,7 @@ const navigate= useNavigate();
     console.log("form data at createbatchproduct :", formData);
     dispatch(addProductBatch(formData));
     toast.success("Batch Successfully Added");
-    navigate("/products")
+    navigate("/products");
   };
   const getProductsTableData = async () => {
     const url = `${api_url}/product`;
@@ -65,7 +64,6 @@ const navigate= useNavigate();
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-    
   };
   const getStorageLocation = async () => {
     const url = `${api_url}/productCategory/getAllLocations`;
@@ -127,10 +125,14 @@ const navigate= useNavigate();
   }, []);
 
   useEffect(() => {
-    console.log("on formData.productName change");
+    console.log("on formData.batchProductName change");
     for (const d of productsTableData) {
-      console.log("Inside material table Data", d.productName.trim(), formData.productName.trim());
-      if (d.productName.trim() !== formData.productName.trim()) {
+      console.log(
+        "Inside material table Data",
+        d.productName.trim(),
+        formData.batchProductName.trim()
+      );
+      if (d.productName.trim() !== formData.batchProductName.trim()) {
         console.log("add this");
         setShowAddThisProduct(true);
       } else {
@@ -139,12 +141,11 @@ const navigate= useNavigate();
         break; // Break out of the loop
       }
     }
-    
-  }, [formData.productName]);
+  }, [formData.batchProductName]);
   const isSaveButtonEnabled = isFormComplete && !showAddThisProduct;
 
   return (
-    <form >
+    <form>
       <div className="p-8 bg-white">
         <Navbar
           title="Create Batch"
@@ -154,18 +155,23 @@ const navigate= useNavigate();
         <div className="grid gap-y-4 pt-8">
           <div className="grid gap-2">
             <div className="grid  grid-cols-1 md:grid-cols-3 grid-flow-row gap-x-8 gap-y-8">
-             <div>
-              <InputBox
-                type="text"
-                title="Product Name/Code*"
-                name="productName"
-                onChange={handleInputChange}
-                labelCss={
-                  formData.productName.length > 0 ? "label-up" : "label-down"
-                }
-              />
-                            {showAddThisProduct && <AddThisMaterial title="product" link="/products/createProduct" />}
-</div>
+              <div>
+                <InputBox
+                  type="text"
+                  title="Product Name/Code*"
+                  name="batchProductName"
+                  onChange={handleInputChange}
+                  labelCss={
+                    formData.batchProductName.length > 0 ? "label-up" : "label-down"
+                  }
+                />
+                {showAddThisProduct && (
+                  <AddThisMaterial
+                    title="product"
+                    link="/products/createProduct"
+                  />
+                )}
+              </div>
 
               <DropDown
                 title="Storage Location*"
@@ -238,7 +244,12 @@ const navigate= useNavigate();
               <Button
                 btnTitle="Save"
                 className=" pt-0 pb-0 text-sty"
-                style={{ backgroundColor: isSaveButtonEnabled ? "#2CAE66 " : "#B3B3B3 ",cursor: isSaveButtonEnabled ? "pointer" : "not-allowed"}}
+                style={{
+                  backgroundColor: isSaveButtonEnabled
+                    ? "#2CAE66 "
+                    : "#B3B3B3 ",
+                  cursor: isSaveButtonEnabled ? "pointer" : "not-allowed",
+                }}
                 disabled={!isSaveButtonEnabled}
                 type="submit"
                 onClickfunction={handleSubmit}

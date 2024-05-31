@@ -22,7 +22,7 @@ export default function UpdateMaterial() {
     materialName: "",
     storageLocation: "",
     batchId: "",
-    makeOrder: "",
+    purchaseOrder: "",
     expiryDate: "",
     quantity: "",
     price: "",
@@ -97,7 +97,7 @@ export default function UpdateMaterial() {
         materialName: data.materialName,
         batchId: data.batchId,
         storageLocation: data.storageLocation,
-        makeOrder: data.makeOrder,
+        purchaseOrder: data.purchaseOrder,
         expiryDate: data.expiryDate,
         quantity: data.quantity,
         price:data.price
@@ -132,7 +132,7 @@ export default function UpdateMaterial() {
       materialName: formData.materialName,
       storageLocation: formData.storageLocation,
       batchId: formData.batchId,
-      purchaseOrder: formData.makeOrder,
+      purchaseOrder: formData.purchaseOrder,
       expiryDate: formData.expiryDate,
       quantity: parseInt(formData.quantity, 10),
       price: parseFloat(formData.price),
@@ -194,11 +194,11 @@ export default function UpdateMaterial() {
               <InputBox
                 type="text"
                 title="Purchase Order#*"
-                name="makeOrder"
-                value={formData.makeOrder}
+                name="purchaseOrder"
+                value={formData.purchaseOrder}
                 onChange={handleInputChange}
                 labelCss={
-                  formData.makeOrder && formData.makeOrder.length > 0
+                  formData.purchaseOrder && formData.purchaseOrder.length > 0
                     ? "label-up"
                     : "label-down"
                 }

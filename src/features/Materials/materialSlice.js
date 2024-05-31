@@ -80,7 +80,7 @@ export const materialSlice = createSlice({
           "batchMaterialName": payload.materialName,
           "storageLocation": String(payload.storageLocation),
           "batchId": String(payload.batchId),
-          "purchaseOrder": String(payload.makeOrder),
+          "purchaseOrder": String(payload.purchaseOrder),
           "expiryDate": String(payload.expiryDate),
           "quantity": parseInt(payload.quantity, 10),
           "price": parseFloat(payload.price),

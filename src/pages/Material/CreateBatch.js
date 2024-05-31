@@ -23,7 +23,7 @@ export default function CreateBatch() {
     materialName: "",
     storageLocation: "",
     batchId: "",
-    makeOrder: "",
+    purchaseOrder: "",
     expiryDate: "",
     quantity: "",
     price: "",
@@ -46,7 +46,7 @@ export default function CreateBatch() {
       materialName: String(formData.materialName),
       storageLocation: String(formData.storageLocation),
       batchId: String(formData.batchId),
-      purchaseOrder: String(formData.makeOrder),
+      purchaseOrder: String(formData.purchaseOrder),
       expiryDate: String(formData.expiryDate),
       quantity: parseInt(formData.quantity, 10),
       price: parseFloat(formData.price),
@@ -212,10 +212,10 @@ export default function CreateBatch() {
               <InputBox
                 type="text"
                 title="Purchase Order#*"
-                name="makeOrder"
+                name="purchaseOrder"
                 onChange={handleInputChange}
                 labelCss={
-                  formData.makeOrder.length > 0 ? "label-up" : "label-down"
+                  formData.purchaseOrder.length > 0 ? "label-up" : "label-down"
                 }
               />
               <InputBox

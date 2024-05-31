@@ -175,6 +175,7 @@ export default function UpdateProduct() {
                 title="Storage Location*"
                 name="storageLocation"
                 onChange={handleInputChange}
+                value={formData.storageLocation}
                 options={storageLocation}
                 labelCss={
                   formData.storageLocation &&
