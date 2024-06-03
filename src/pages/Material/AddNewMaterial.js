@@ -23,7 +23,7 @@ const navigate= useNavigate();
     glNumber:'',
     minimumQuantity:'',
     measurementType:'',
-    Description:'',
+    description:'',
     refrigeration:''
   })
   const [categoryData,setCategoryData] = useState([]);
@@ -281,10 +281,10 @@ const navigate= useNavigate();
               type="text"
               title="Description (150 Words)"
               className="col-span-3"
-              name="Description"
+              name="description"
               onChange={handleInputChange}
               labelCss={
-                formData.Description.length > 0 ? 'label-up' : 'label-down'}
+                formData.description.length > 0 ? 'label-up' : 'label-down'}
             />
           </div>
         </div>

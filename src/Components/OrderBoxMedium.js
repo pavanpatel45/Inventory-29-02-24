@@ -14,15 +14,15 @@ export default function OrderBox({ order, handleChangeStatus }) {
   const getStatusMessage = (status) => {
     switch (status) {
       case "New Order Request":
-        return "Availe";
+        return "Available";
       case "Pending":
         return "Pending";
       case "In Progress":
         return "confirmed";
       case "Shipped":
         return "Shipped";
-      case "Complete":
-        return "Complete";
+      case "Confirmed":
+        return "Completed";
       case "Cancelled":
         return "Cancelled";
       default:
