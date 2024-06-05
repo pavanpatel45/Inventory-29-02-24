@@ -8,20 +8,49 @@ import dlt from '../../Icons/DeletePopup.svg';
 
 export default function ProductView() {
   const [selected, setSelected] = useState([]);
-  const [data, setData] = React.useState([]);
+  const [data, setData] = useState([]);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [category, setCategory] = useState('');
   const [location, setLocation] = useState([]);
   const [expiryDate, setExpirtyDate] = useState('');
   const [availability, setAvailability] = useState('');
+  const [images, setImages] = useState({});
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     console.log('selected Data : ', selected);
   }, [selected]);
 
+  const searchTable = async () => {
+    const url = `${api_url}/productBatch/name/${search}`;
+    try {
+      const response = await axios.get(url);
+      console.log('Searched table');
+      if (response.status === 200) {
+        setData(response?.data);
+        console.log('searched data is', response?.data);
+      } else {
+        console.log('received unexpected response', response);
+      }
+    } catch (error) {
+      console.log('Erroe fetching data', error);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    console.log('search', search);
+    if (search.length > 0) {
+      console.log('inside console');
+      searchTable();
+    } else {
+      productsTableData();
+    }
+  }, [search]);
+
   const productsTableData = async () => {
-    const url = `${api_url}/productBatch`;
+    const url = `${api_url}/productBatch/`;
     try {
       const response = await axios.get(url, {
         headers: { 'ngrok-skip-browser-warning': '69420' }
@@ -35,6 +64,7 @@ export default function ProductView() {
         }));
         console.log('API Data: at productsTableData', modifiedData);
         setData(modifiedData);
+        fetchImages(modifiedData);
       } else {
         console.error('Received unexpected response:', response);
         // Handle other status codes or unexpected responses
@@ -45,19 +75,38 @@ export default function ProductView() {
     }
   };
 
-  // const getImage = async (imageId) => {
-  //   console.log('imageId at getImage : ', imageId);
-  //   const apiUrl = `${api_url}/images/${imageId}`;
-  //   try {
-  //     if (imageId) {
-  //       console.log('apiUrl : ', imageId, ' ', apiUrl);
-  //       const response = await axios.get(apiUrl);
-  //       console.log('Get image response:', response);
-  //     }
-  //   } catch (error) {
-  //     console.error('Get image error:', error);
-  //   }
-  // };
+  const getImage = async (imageId) => {
+    console.log('imageId at getImage : ', imageId);
+    const apiUrl = `${api_url}/images/${imageId}`;
+    try {
+      if (imageId) {
+        console.log('apiUrl : ', imageId, ' ', apiUrl);
+        const response = await axios.get(apiUrl, { responseType: 'blob' });
+        if (response?.status === 200) {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            setImages((prevImages) => ({
+              ...prevImages,
+              [imageId]: reader.result
+            }));
+          };
+          reader.readAsDataURL(response.data);
+        }
+      }
+    } catch (error) {
+      console.error('Get image error:', error);
+      return null;
+    }
+  };
+
+  const fetchImages = (products) => {
+    // console.log('Hii this is called');
+    products.forEach((product) => {
+      if (product.imageId && !images[product.imageId]) {
+        getImage(product.imageId);
+      }
+    });
+  };
 
   const deleteProducts = async (id) => {
     console.log('id at deleteProducts : ', id);
@@ -68,7 +117,7 @@ export default function ProductView() {
         const response = await axios.delete(apiUrl);
         console.log('Delete response:', response);
         if (1) {
-          //response is ok
+          // response is ok
           setSelected([]);
           productsTableData();
         }
@@ -77,6 +126,7 @@ export default function ProductView() {
       console.error('Delete error:', error);
     }
   };
+
   const handleDelete = () => {
     console.log('Delete button clicked');
     setIsDeleteDialogOpen(true);
@@ -96,6 +146,7 @@ export default function ProductView() {
     setIsDeleteDialogOpen(false);
     setConfirm(false);
   };
+
   const filterDataByCategory = async () => {
     const url = `${api_url}/productBatch/category/${category?.value}`;
     console.log('inside filterDataByCategory', category?.value);
@@ -106,8 +157,13 @@ export default function ProductView() {
         });
 
         if (response?.status === 200) {
-          setData(response?.data);
-          console.log(response?.data);
+          const filteredData = response?.data.map((product) => ({
+            ...product,
+            imageId: product.imageId // Ensure imageId is included
+          }));
+          setData(filteredData);
+          fetchImages(filteredData);
+          console.log(filteredData);
         } else {
           console.error('Received unexpected response:', response);
         }
@@ -116,6 +172,7 @@ export default function ProductView() {
       console.error('Error fetching data:', error);
     }
   };
+
   const filterDataByDate = async () => {
     const url = `${api_url}/productBatch/expiryDate/${expiryDate.value}`;
     console.log('inside filterDataByExpiryDate', expiryDate.value);
@@ -126,8 +183,13 @@ export default function ProductView() {
         });
 
         if (response?.status === 200) {
-          setData(response?.data);
-          console.log(response?.data);
+          const filteredData = response?.data.map((product) => ({
+            ...product,
+            imageId: product.imageId // Ensure imageId is included
+          }));
+          setData(filteredData);
+          fetchImages(filteredData);
+          console.log(filteredData);
         } else {
           console.error('Received unexpected response:', response);
         }
@@ -136,6 +198,7 @@ export default function ProductView() {
       console.error('Error fetching data:', error);
     }
   };
+
   const filterDataByAvailability = async () => {
     const url = `${api_url}/productBatch/availability/${availability.value}`;
     console.log('inside filterDataByAvailability', availability.value);
@@ -146,8 +209,13 @@ export default function ProductView() {
         });
 
         if (response?.status === 200) {
-          setData(response?.data);
-          console.log(response?.data);
+          const filteredData = response?.data.map((product) => ({
+            ...product,
+            imageId: product.imageId // Ensure imageId is included
+          }));
+          setData(filteredData);
+          fetchImages(filteredData);
+          console.log(filteredData);
         } else {
           console.error('Received unexpected response:', response);
         }
@@ -156,6 +224,7 @@ export default function ProductView() {
       console.error('Error fetching data:', error);
     }
   };
+
   const filterDataByLocation = async () => {
     const url = `${api_url}/productBatch/location/${location}`;
     try {
@@ -165,8 +234,13 @@ export default function ProductView() {
         });
 
         if (response?.status === 200) {
-          setData(response?.data);
-          console.log(response?.data);
+          const filteredData = response?.data.map((product) => ({
+            ...product,
+            imageId: product.imageId // Ensure imageId is included
+          }));
+          setData(filteredData);
+          fetchImages(filteredData);
+          console.log(filteredData);
         } else {
           console.error('Received unexpected response:', response);
         }
@@ -210,9 +284,7 @@ export default function ProductView() {
   }, [data]);
 
   useEffect(() => {
-    // console.log("useEffect : ")
     productsTableData();
-    // getImage();
   }, []);
 
   return (
@@ -232,9 +304,13 @@ export default function ProductView() {
             select={Boolean(selected.length)}
             count={selected.length}
             handleDelete={handleDelete}
+            selected={selected}
             selectedLocation={location}
             setSelectedLocation={setLocation}
             productsTableData={productsTableData}
+            setSelected={setSelected}
+            search={search}
+            setSearch={setSearch}
           />
           <Products
             selected={selected}

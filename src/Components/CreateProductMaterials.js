@@ -1,29 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { addProductMaterial } from "../features/Product/productSlice";
-import InputBox from "./InputBox";
-import Navbar from "./NavbarForm";
-import Button from "./Button";
-import { Link } from "react-router-dom";
-import AddedMaterialsTable from "./AddedMaterialsTable";
-import axios from "axios";
-import "../CSS/NavbarMaterials.css";
-import plus from "../Icons/plus-outline.svg";
-import smallPlus from "../Icons/small-plus.svg";
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { addProductMaterial } from '../features/Product/productSlice';
+import InputBox from './InputBox';
+import Navbar from './NavbarForm';
+import Button from './Button';
+import { Link } from 'react-router-dom';
+import AddedMaterialsTable from './AddedMaterialsTable';
+import axios from 'axios';
+import '../CSS/NavbarMaterials.css';
+import smallPlus from '../Icons/small-plus.svg';
 import { toast } from 'react-toastify';
-import { api_url } from "../Data/Constants";
+import { api_url } from '../Data/Constants';
 import 'react-toastify/dist/ReactToastify.css';
-import AddThisMaterial from "./AddThisMaterial";
+import AddThisMaterial from './AddThisMaterial';
 
 export default function CreateProductMaterials() {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     materials: {
-      materialName: "",
-      materialRequiredQuantity: "",
-      materialUnit: "",
-    },
+      materialName: '',
+      materialRequiredQuantity: '',
+      materialUnit: ''
+    }
   });
   const [Data, setData] = useState([]);
   const [isFormComplete, setIsFormComplete] = useState(false);
@@ -37,16 +36,16 @@ export default function CreateProductMaterials() {
       ...prevData,
       materials: {
         ...prevData.materials,
-        [name]: value,
-      },
+        [name]: value
+      }
     }));
   };
 
-  const handleSubmit = (e) => { 
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("form Data at createProductMaterials:", formData);
+    console.log('form Data at createProductMaterials:', formData);
     dispatch(addProductMaterial(formData));
-    toast.success("New Product Successfully Added");
+    toast.success('New Product Successfully Added');
     addData();
     navigate('/products/CreateBatchProduct');
   };
@@ -55,15 +54,15 @@ export default function CreateProductMaterials() {
     const url = `${api_url}/material`;
     try {
       const response = await axios.get(url, {
-        headers: { "ngrok-skip-browser-warning": "69420" },
+        headers: { 'ngrok-skip-browser-warning': '69420' }
       });
       if (response?.status === 200) {
         setProductMaterialTableData(response?.data);
       } else {
-        console.error("Received unexpected response", response);
+        console.error('Received unexpected response', response);
       }
     } catch (error) {
-      console.log("error fetching data", error);
+      console.log('error fetching data', error);
     }
   };
 
@@ -90,7 +89,9 @@ export default function CreateProductMaterials() {
   const checkFormCompletion = () => {
     const formEntries = Object.entries(formData.materials);
     const allFieldsFilled = formEntries.every(([name, value]) => {
-      const isValidData = (typeof value === "string" || typeof value === "number") && String(value).trim() !== "";
+      const isValidData =
+        (typeof value === 'string' || typeof value === 'number') &&
+        String(value).trim() !== '';
       return isValidData;
     });
     setIsFormComplete(allFieldsFilled);
@@ -113,118 +114,173 @@ export default function CreateProductMaterials() {
     ]);
     setFormData({
       materials: {
-        materialName: "",
-        materialRequiredQuantity: "",
-        materialUnit: "",
-      },
+        materialName: '',
+        materialRequiredQuantity: '',
+        materialUnit: ''
+      }
     });
   };
 
   const handleAddMaterial = (e) => {
-    e.preventDefault(); // Prevent form submission
-    console.log("at handleAddMaterial:", formData);
+    e.preventDefault();
+    console.log('at handleAddMaterial:', formData);
     addData();
-    console.log("Table data at handleAddMaterial:", Data);
+    console.log('Table data at handleAddMaterial:', Data);
   };
 
   return (
-    <div className="bg-white">
+    <div className='bg-white'>
       <form>
-        <div className="p-8">
+        <div className='p-8'>
           <Navbar
-            title="Create Product"
-            className="NavbarForm"
-            btnStyle={{ backgroundColor: isFormComplete ? "#2CAE66" : "#B3B3B3", cursor: isFormComplete ? "pointer" : "not-allowed" }}
+            title='Create Product'
+            className='NavbarForm'
+            btnStyle={{
+              backgroundColor: isFormComplete ? '#2CAE66' : '#B3B3B3',
+              cursor: isFormComplete ? 'pointer' : 'not-allowed'
+            }}
             disabled={!isFormComplete}
-            btnTitle="Save"
+            btnTitle='Save'
             handleClick={handleSubmit}
-            backLink="/products/createProduct/"
+            backLink='/products/createProduct/'
           />
-          <div className="flex flex-row mt-7">
-            <div className="flex flex-col items-center">
+          <div className='flex flex-row mt-7'>
+            <div className='flex flex-col items-center'>
               <div
-                className="h-5 w-5 rounded-full flex items-center justify-center  text-green-500"
-                style={{ border: "1px solid", borderColor: "#2CAE66" }}
+                className='h-5 w-5 rounded-full flex items-center justify-center  text-green-500'
+                style={{ border: '1px solid', borderColor: '#2CAE66' }}
               >
                 1
               </div>
-              <div style={{ color: "black", fontSize: "12px", fontWeight: "500", lineHeight: "14.06px" }}>
+              <div
+                style={{
+                  color: 'black',
+                  fontSize: '12px',
+                  fontWeight: '500',
+                  lineHeight: '14.06px'
+                }}
+              >
                 Add Product
               </div>
             </div>
             <div
-              className="border border-1 border-black border-dashed h-0 w-64"
-              style={{ position: "relative", left: "-23px", top: "8px" }}
+              className='border border-1 border-black border-dashed h-0 w-64'
+              style={{ position: 'relative', left: '-23px', top: '8px' }}
             ></div>
             <div
-              className="flex flex-col items-center"
-              style={{ position: "relative", left: "-36px" }}
+              className='flex flex-col items-center'
+              style={{ position: 'relative', left: '-36px' }}
             >
               <div
-                className="h-5 w-5 rounded-full flex items-center justify-center text-xs text-white"
-                style={{ border: "1px", backgroundColor: "#2CAE66" }}
+                className='h-5 w-5 rounded-full flex items-center justify-center text-xs text-white'
+                style={{ border: '1px', backgroundColor: '#2CAE66' }}
               >
                 2
               </div>
-              <div style={{ fontSize: "12px", fontWeight: "500", lineHeight: "14.06px", color: "#2CAE66" }}>
+              <div
+                style={{
+                  fontSize: '12px',
+                  fontWeight: '500',
+                  lineHeight: '14.06px',
+                  color: '#2CAE66'
+                }}
+              >
                 Materials
               </div>
             </div>
           </div>
-          <div className="grid gap-y-4 pt-8">
-            <div className="flex flex-row justify-between pb-3">
-              <div style={{ color: "#2D2D2D", fontWeight: "500", lineHeight: "19px", fontSize: "16px" }}>
+          <div className='grid gap-y-4 pt-8'>
+            <div className='flex flex-row justify-between pb-3'>
+              <div
+                style={{
+                  color: '#2D2D2D',
+                  fontWeight: '500',
+                  lineHeight: '19px',
+                  fontSize: '16px'
+                }}
+              >
                 Materials
               </div>
-              <Link to="/materials/AddMaterial">
-              <div className="flex flex-row cursor-pointer" >
-                <img src={smallPlus} alt="icon" className="pr-2" />
-                <a style={{ fontSize: "14px", color: "#2DA060", fontWeight: "500" }}>Add New Material</a>
-              </div>
+              <Link to='/materials/AddMaterial'>
+                <div className='flex flex-row cursor-pointer'>
+                  <img src={smallPlus} alt='icon' className='pr-2' />
+                  <a
+                    style={{
+                      fontSize: '14px',
+                      color: '#2DA060',
+                      fontWeight: '500'
+                    }}
+                  >
+                    Add New Material
+                  </a>
+                </div>
               </Link>
             </div>
-            <div className="grid gap-2">
-              <div className="grid grid-cols-1 md:grid-cols-3 grid-flow-row gap-x-8 gap-y-8">
+            <div className='grid gap-2'>
+              <div className='grid grid-cols-1 md:grid-cols-3 grid-flow-row gap-x-8 gap-y-8'>
                 <div>
-                <InputBox
-                  type="text"
-                  title="Material Name/Code*"
-                  name="materialName"
-                  value={formData.materials.materialName}
-                  onChange={handleInputChange}
-                  labelCss={
-                    formData.materials.materialName.length > 0 ? 'label-up' : 'label-down'}
-                />
-                {showAddThisProduct && <AddThisMaterial title="material" link="/materials/AddMaterial" />}
+                  <InputBox
+                    type='text'
+                    title='Material Name/Code*'
+                    name='materialName'
+                    value={formData.materials.materialName}
+                    onChange={handleInputChange}
+                    labelCss={
+                      formData.materials.materialName.length > 0
+                        ? 'label-up'
+                        : 'label-down'
+                    }
+                  />
+                  {showAddThisProduct && (
+                    <AddThisMaterial
+                      title='material'
+                      link='/materials/AddMaterial'
+                    />
+                  )}
                 </div>
                 <InputBox
-                  type="number"
-                  title="Required Quantity*"
-                  name="materialRequiredQuantity"
+                  type='number'
+                  title='Required Quantity*'
+                  name='materialRequiredQuantity'
                   value={formData.materials.materialRequiredQuantity}
                   onChange={handleInputChange}
                   labelCss={
-                    formData.materials.materialRequiredQuantity.length > 0 ? 'label-up' : 'label-down'}
+                    formData.materials.materialRequiredQuantity.length > 0
+                      ? 'label-up'
+                      : 'label-down'
+                  }
                 />
 
                 <InputBox
-                  type="text"
-                  title="Unit*"
-                  name="materialUnit"
+                  type='text'
+                  title='Unit*'
+                  name='materialUnit'
                   value={formData.materials.materialUnit}
                   onChange={handleInputChange}
                   labelCss={
-                    formData.materials.materialUnit.length > 0 ? 'label-up' : 'label-down'}
+                    formData.materials.materialUnit.length > 0
+                      ? 'label-up'
+                      : 'label-down'
+                  }
                 />
               </div>
             </div>
           </div>
           <div>
-            <div className="flex justify-end mt-4">
+            <div className='flex justify-end mt-4'>
               <Button
-                btnTitle="Add +"
-                className="pt-0 pb-0 text-sty"
-                style={{ backgroundColor: isFormComplete && !showAddThisProduct ? "#2CAE66 " : "#B3B3B3 ", cursor: isFormComplete && !showAddThisProduct ? "pointer" : "not-allowed" }}
+                btnTitle='Add +'
+                className='pt-0 pb-0 text-sty'
+                style={{
+                  backgroundColor:
+                    isFormComplete && !showAddThisProduct
+                      ? '#2CAE66 '
+                      : '#B3B3B3 ',
+                  cursor:
+                    isFormComplete && !showAddThisProduct
+                      ? 'pointer'
+                      : 'not-allowed'
+                }}
                 disabled={!isFormComplete || showAddThisProduct}
                 onClickfunction={handleAddMaterial}
               />

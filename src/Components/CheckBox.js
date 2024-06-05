@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import checkbox from "../Icons/checkbox.svg";
-import "../CSS/CheckBox.css";
+import React, { useState } from 'react';
+import checkbox from '../Icons/checkbox.svg';
+import '../CSS/CheckBox.css';
 
-function CheckBox({formData,setFormData}) {
+function CheckBox({ formData, setFormData }) {
   const [yesChecked, setYesChecked] = useState(false);
   const [noChecked, setNoChecked] = useState(false);
 
@@ -11,7 +11,7 @@ function CheckBox({formData,setFormData}) {
     if (noChecked) {
       setNoChecked(false);
     }
-    setFormData(prevData => ({
+    setFormData((prevData) => ({
       ...prevData,
       refrigeration: true
     }));
@@ -22,54 +22,43 @@ function CheckBox({formData,setFormData}) {
     if (yesChecked) {
       setYesChecked(false);
     }
-    setFormData(prevData => ({
+    setFormData((prevData) => ({
       ...prevData,
       refrigeration: false
     }));
   };
 
   return (
-    <div className="checkbox-container">
+    <div className='checkbox-container'>
       <div>
-        <label
-          htmlFor="refrigeration"
-          className="checkbox-label"
-        >
+        <label htmlFor='refrigeration' className='checkbox-label'>
           Refrigeration
         </label>
       </div>
-      <div className="flex pb-2 mt-2 md:mt-0 md:ml-4">
-        <label className="flex items-center">
+      <div className='flex pb-2 mt-2 md:mt-0 md:ml-4'>
+        <label className='flex items-center'>
           {yesChecked && (
-            <img
-              src={checkbox}
-              alt="icon"
-              className="checkbox-image"
-            />
+            <img src={checkbox} alt='icon' className='checkbox-image' />
           )}
           <input
-            type="checkbox"
+            type='checkbox'
             checked={yesChecked}
             onChange={handleYesChange}
-            className="checkbox-input"
+            className='checkbox-input'
           />
-          <span className="checkbox-label">Yes</span>
+          <span className='checkbox-label'>Yes</span>
         </label>
-        <label className="flex items-center ml-4">
+        <label className='flex items-center ml-4'>
           {noChecked && (
-            <img
-              src={checkbox}
-              alt="icon"
-              className="checkbox-image"
-            />
+            <img src={checkbox} alt='icon' className='checkbox-image' />
           )}
           <input
-            type="checkbox"
+            type='checkbox'
             checked={noChecked}
             onChange={handleNoChange}
-            className="checkbox-input"
+            className='checkbox-input'
           />
-          <span className="checkbox-label">No</span>
+          <span className='checkbox-label'>No</span>
         </label>
       </div>
     </div>
@@ -77,4 +66,3 @@ function CheckBox({formData,setFormData}) {
 }
 
 export default CheckBox;
- 

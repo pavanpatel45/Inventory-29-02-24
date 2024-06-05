@@ -430,7 +430,7 @@ function Products({
                 />
               </div>
               <div>
-                <Link to='/materials/UpdateMaterial' state={row.original}>
+                <Link to='/products/UpdateProduct' state={row.original}>
                   <img
                     src={edit}
                     alt='icon'

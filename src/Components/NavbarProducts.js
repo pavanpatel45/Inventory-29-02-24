@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import Button from "./Button";
-import search from "../Icons/search.png";
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import Button from './Button';
 
-import plus from "../Icons/plus-outline.svg";
-import dlt from "../Icons/Delete.svg";
-import cancel from "../Icons/x.svg";
-import down from "../Icons/arrow-down.svg";
-import locationIcon from "../Icons/location.svg";
+import plus from '../Icons/plus-outline.svg';
+import dlt from '../Icons/Delete.svg';
+import cancel from '../Icons/x.svg';
+import down from '../Icons/arrow-down.svg';
+import locationIcon from '../Icons/location.svg';
 
-import "../CSS/NavbarMaterials.css";
-import Location from "./Location";
-import Export from "./Export";
-import { api_url } from "../Data/Constants";
-import axios from "axios";
+import '../CSS/NavbarMaterials.css';
+import Location from './Location';
+import Export from './Export';
+import { api_url } from '../Data/Constants';
+import axios from 'axios';
+import SearchBox from './SearchBox';
 
 export default function NavbarProducts({
   className,
@@ -21,11 +21,14 @@ export default function NavbarProducts({
   count,
   handleDelete,
   setSelected,
+  selected,
   productsTableData,
   selectedLocation,
   setSelectedLocation,
+  search,
+  setSearch
 }) {
-  const [exportOption, setExportOption] = useState("");
+  const [exportOption, setExportOption] = useState('');
   const [locations, setLocations] = useState([]);
   const [isSearchClicked, setIsSearchClicked] = useState(false);
   const [isAnyCheckboxSelected, setIsAnyCheckboxSelected] = useState(false);
@@ -48,12 +51,12 @@ export default function NavbarProducts({
     try {
       const url = `${api_url}/productCategory/getAllLocations`;
       const response = await axios.get(url, {
-        headers: { "ngrok-skip-browser-warning": "69420" },
+        headers: { 'ngrok-skip-browser-warning': '69420' }
       });
-      console.log("Response at newOrderRequest", response.data);
+      console.log('Response at newOrderRequest', response.data);
       setLocations(response.data);
     } catch (error) {
-      console.log("Error :", error);
+      console.log('Error :', error);
     }
   };
   useEffect(() => {
@@ -66,41 +69,30 @@ export default function NavbarProducts({
   };
 
   return (
-    <div className="flex flex-row justify-between items-center  ml-4 mt-3 bg-white">
-      <div className="flex flex-row gap-2 ">
-        {!select && <div className="font-medium">Product View</div>}
+    <div className='flex flex-row justify-between items-center  ml-4 mt-3 bg-white'>
+      <div className='flex flex-row gap-2 '>
+        {!select && <div className='font-medium'>Product View</div>}
         {select && (
-          <div className="flex flex-row gap-2">
-            <img src={cancel} />
-            <div style={{ color: "#343434", fontWeight: "500" }}>
+          <div className='flex flex-row gap-2'>
+            <img
+              src={cancel}
+              onClick={() => {
+                setSelected([]);
+                productsTableData();
+              }}
+              style={{ cursor: 'pointer' }}
+            />
+            <div style={{ color: '#343434', fontWeight: '500' }}>
               {count} Item(s) Selected
             </div>
           </div>
         )}
       </div>
 
-      <div className="flex justify-end">
+      <div className='flex justify-end'>
+        {!select && <SearchBox search={search} setSearch={setSearch} />}
         {!select && (
-          <div
-            className="border border-1 border-r mr-4 flex flex-row items-center relative box-style"
-            style={{ borderRadius: "100px" }}
-            onClick={handleSearch}
-          >
-            <img src={search} alt="icon" className="ml-3" />
-            <input
-              type="text"
-              className="pl-2 txt-style"
-              style={{
-                width: isSearchClicked ? "330px" : "190px",
-                fontSize: "14px",
-                color: "#A2A1A1",
-              }}
-              placeholder={isSearchClicked ? "Type here to search" : "Search"}
-            />
-          </div>
-        )}
-        {!select && (
-          <div className="mr-4">
+          <div className='mr-4'>
             <Location
               Options={locations}
               selectedLocation={selectedLocation}
@@ -112,52 +104,52 @@ export default function NavbarProducts({
               clearFilter={clearFilter}
             >
               <div
-                className="border flex flex-row items-center justify-between cursor-pointer"
+                className='border flex flex-row items-center justify-between cursor-pointer'
                 style={{
-                  width: "170px",
-                  height: "42px",
-                  borderRadius: "8px",
-                  backgroundColor: "#EFEFEF",
-                  position: "relative",
+                  width: '170px',
+                  height: '42px',
+                  borderRadius: '8px',
+                  backgroundColor: '#EFEFEF',
+                  position: 'relative'
                 }}
                 onClick={togglePopoverOpen}
               >
-                <div className="pl-2">
+                <div className='pl-2'>
                   <img
                     src={locationIcon}
-                    alt="icon"
-                    style={{ color: "black" }}
+                    alt='icon'
+                    style={{ color: 'black' }}
                   />
                 </div>
                 <div
-                  className="pr-2"
-                  style={{ fontSize: "16px", fontWeight: "500" }}
+                  className='pr-2'
+                  style={{ fontSize: '16px', fontWeight: '500' }}
                 >
                   {selectedLocation.length === 0
-                    ? "All Locations"
+                    ? 'All Locations'
                     : selectedLocation}
                 </div>
-                <div className="pr-5">
-                  <img src={down} alt="icon" />
+                <div className='pr-5'>
+                  <img src={down} alt='icon' />
                 </div>
               </div>
             </Location>
           </div>
         )}
 
-        <div className="mr-4">
-          <Export />
+        <div className='mr-4'>
+          <Export selected={selected} called='products' />
         </div>
         {!select && (
-          <Link to="CreateBatchProduct">
-            <Button btnTitle={"Add"} className="style" icon={plus}></Button>
+          <Link to='CreateBatchProduct'>
+            <Button btnTitle={'Add'} className='style' icon={plus}></Button>
           </Link>
         )}
         {/* <Link to="CreateBatchProduct"> */}
         {select && (
           <Button
-            btnTitle={"Delete"}
-            className="style1"
+            btnTitle={'Delete'}
+            className='style1'
             icon={dlt}
             onClickfunction={handleDelete}
           ></Button>

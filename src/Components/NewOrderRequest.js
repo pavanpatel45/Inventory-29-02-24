@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import OrderBox from "./OrderBox";
-import { api_url } from "../Data/Constants";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import OrderBox from './OrderBox';
+import { api_url } from '../Data/Constants';
+import axios from 'axios';
 
 export default function NewOrderRequest() {
   const [allOrders, setAllOrders] = useState([]);
@@ -12,9 +12,9 @@ export default function NewOrderRequest() {
       const resp = await axios.put(url);
       console.log('Response at createOrder', resp);
     } catch (error) {
-      console.log("Error :", error);
+      console.log('Error :', error);
     }
-  }
+  };
 
   const getData = async () => {
     try {
@@ -25,22 +25,28 @@ export default function NewOrderRequest() {
       console.log('Response at newOrderRequest', response.data);
       setAllOrders(response.data);
     } catch (error) {
-      console.log("Error :", error);
+      console.log('Error :', error);
     }
-  }
+  };
 
   useEffect(() => {
     getData();
-  }, [])
+  }, []);
 
   console.log('New Order Request is set', allOrders);
   return (
-    <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-3 gap-2">
-      {allOrders ? allOrders.map((order) => (
-        order.orderStatus === "New Order Request" ? (
-          <OrderBox order={order} key={order.orderId} updateStatus={updateStatus} />
-        ) : null
-      )) : ""}
+    <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-3 gap-2'>
+      {allOrders
+        ? allOrders.map((order) =>
+            order.orderStatus === 'New Order Request' ? (
+              <OrderBox
+                order={order}
+                key={order.orderId}
+                updateStatus={updateStatus}
+              />
+            ) : null
+          )
+        : ''}
     </div>
   );
 }

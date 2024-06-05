@@ -71,7 +71,7 @@ export default function CreateOrder() {
       Name: '',
       code: '',
       price: '',
-      quantity: ''
+      orderProductQuantity: ''
     },
     shipmentDetails: {
       Address: '',
@@ -292,17 +292,6 @@ export default function CreateOrder() {
       console.log('Error :', error);
     }
   };
-
-  // const handleQuantityChange = (e) => {
-  //   const value = Math.max(0, e.target.value);
-  //   setFormData((prevData) => ({
-  //     ...prevData,
-  //     productDetails: {
-  //       ...prevData.productDetails,
-  //       quantity: value
-  //     }
-  //   }));
-  // };
 
   const getProductsTableData = async () => {
     const url = `${api_url}/product`;

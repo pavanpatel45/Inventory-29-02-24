@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import InputBox from "../../Components/InputBox";
-import DropDown from "../../Components/Dropdown";
-import Navbar from "../../Components/NavbarCreateBatchProduct";
-import Button from "../../Components/Button";
-import "../../CSS/CreateBatch.css";
-import { Link, useLocation } from "react-router-dom";
-import { api_url } from "../../Data/Constants";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import InputBox from '../../Components/InputBox';
+import DropDown from '../../Components/Dropdown';
+import Navbar from '../../Components/NavbarCreateBatchProduct';
+import Button from '../../Components/Button';
+import '../../CSS/CreateBatch.css';
+import { Link, useLocation } from 'react-router-dom';
+import { api_url } from '../../Data/Constants';
+import axios from 'axios';
 
 export default function UpdateProduct() {
   const location = useLocation();
@@ -17,24 +17,24 @@ export default function UpdateProduct() {
 
   const navigate = useNavigate();
 
-  console.log("data at update product", data);
+  console.log('data at update product', data);
   const [formData, setFormData] = useState({
-    productName: "",
-    storageLocation: "",
-    batchId: "",
-    makeOrder: "",
-    expiryDate: "",
-    quantity: "",
-    price: "",
+    productName: '',
+    storageLocation: '',
+    batchId: '',
+    makeOrder: '',
+    expiryDate: '',
+    quantity: '',
+    price: ''
   });
 
   const handleInputChange = (e) => {
     console.log(e);
     const { name, value } = e.target;
-    console.log("Input value changed:", name, ":", value);
+    console.log('Input value changed:', name, ':', value);
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: value
     }));
   };
 
@@ -45,11 +45,11 @@ export default function UpdateProduct() {
     const allFieldsFilled = formEntries.every((formEntriesData) => {
       const [name, value] = formEntriesData;
 
-      if (typeof value === "object" && value !== null) {
+      if (typeof value === 'object' && value !== null) {
         // For objects, check each value inside the object
         const isValidData = Object.values(value).every(
           (val) =>
-            (typeof val === "string" || "number") && String(val).trim() !== ""
+            (typeof val === 'string' || 'number') && String(val).trim() !== ''
         );
         if (!isValidData) {
           console.log(name);
@@ -58,8 +58,8 @@ export default function UpdateProduct() {
       } else {
         // For non-objects, directly check the value
         const isValidData =
-          typeof (value === "string" || "number") &&
-          String(value).trim() !== "";
+          typeof (value === 'string' || 'number') &&
+          String(value).trim() !== '';
         if (!isValidData) {
           console.log(name);
         }
@@ -68,7 +68,7 @@ export default function UpdateProduct() {
     });
 
     console.log(allFieldsFilled);
-    console.log("filled forms", allFieldsFilled);
+    console.log('filled forms', allFieldsFilled);
     setIsFormComplete(allFieldsFilled);
   };
 
@@ -76,29 +76,30 @@ export default function UpdateProduct() {
     const url = `${api_url}/productCategory/getAllLocations`;
     try {
       const response = await axios.get(url, {
-        headers: { "ngrok-skip-browser-warning": "69420" },
+        headers: { 'ngrok-skip-browser-warning': '69420' }
       });
       if (response?.status === 200) {
         setStorageLocation(response?.data);
       } else {
-        console.error("Received unexpected response:", response);
+        console.error('Received unexpected response:', response);
       }
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error('Error fetching data:', error);
     }
   };
 
+  console.log('data at', data);
   useEffect(() => {
     if (data) {
       setFormData((prevData) => ({
         ...prevData, // Spread previous state
-        productName: data.productName,
-        batchId: data.batchId,
-        storageLocation: data.storageLocation,
-        makeOrder: data.makeOrder,
-        expiryDate: data.expiryDate,
-        quantity: data.quantity,
-        price: data.price,
+        productName: data.productName || '',
+        batchId: data.batchId || '',
+        storageLocation: data.location || '',
+        makeOrder: data.makeOrder || '',
+        expiryDate: data.expiryDate || '',
+        quantity: data.quantity || '',
+        price: data.price || ''
       }));
     }
     getStorageLocation();
@@ -106,23 +107,23 @@ export default function UpdateProduct() {
 
   const updateBatchData = async (Data, id) => {
     try {
-      const url = `${api_url}/productBatch/batchId/${id}`;
-      console.log("Data : ", Data);
+      const url = `${api_url}/productBatch/${id}`;
+      console.log('Data : ', Data);
       const resp = await axios.put(url, Data);
-      console.log("Response", resp);
+      console.log('Response', resp);
     } catch (error) {
-      console.log("Error :", error);
+      console.log('Error :', error);
     }
   };
 
   const postProductData = async (Data) => {
     try {
       const url = `${api_url}/product/`;
-      console.log("data : ", Data);
+      console.log('data : ', Data);
       const resp = await axios.post(url, Data);
-      console.log("Response", resp);
+      console.log('Response', resp);
     } catch (error) {
-      console.log("Error :", error);
+      console.log('Error :', error);
     }
   };
 
@@ -136,7 +137,7 @@ export default function UpdateProduct() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("formData at submit :", formData);
+    console.log('formData at submit :', formData);
     const Data = {
       productName: formData.productName,
       storageLocation: formData.storageLocation,
@@ -144,132 +145,131 @@ export default function UpdateProduct() {
       makeOrder: formData.makeOrder,
       expiryDate: formData.expiryDate,
       quantity: parseInt(formData.quantity, 10),
-      price: parseFloat(formData.price),
+      price: parseFloat(formData.price)
     };
     updateBatchData(Data, data.id);
-    navigate("/products");
+    navigate('/products');
   };
-  
 
   return (
     <form>
-      <div className="p-8 bg-white">
-        <Navbar title="Edit Batch" backLink="/products" />
-        <div className="grid gap-y-4 pt-8">
-          <div className="grid gap-2">
-            <div className="grid  grid-cols-1 md:grid-cols-3 grid-flow-row gap-x-8 gap-y-8">
+      <div className='p-8 bg-white'>
+        <Navbar title='Edit Batch' backLink='/products' />
+        <div className='grid gap-y-4 pt-8'>
+          <div className='grid gap-2'>
+            <div className='grid  grid-cols-1 md:grid-cols-3 grid-flow-row gap-x-8 gap-y-8'>
               <InputBox
-                type="text"
-                title="Product Name/Code*"
-                name="productName"
+                type='text'
+                title='Product Name/Code*'
+                name='productName'
                 value={formData.productName}
                 onChange={handleInputChange}
                 labelCss={
                   formData.productName && formData.productName.length > 0
-                    ? "label-up"
-                    : "label-down"
+                    ? 'label-up'
+                    : 'label-down'
                 }
               />
 
               <DropDown
-                title="Storage Location*"
-                name="storageLocation"
+                title='Storage Location*'
+                name='storageLocation'
                 onChange={handleInputChange}
                 value={formData.storageLocation}
                 options={storageLocation}
                 labelCss={
                   formData.storageLocation &&
                   formData.storageLocation.length > 0
-                    ? "label-up"
-                    : "label-down"
+                    ? 'label-up'
+                    : 'label-down'
                 }
               />
 
               <InputBox
-                type="text"
-                title="Batch ID*"
-                name="batchId"
+                type='text'
+                title='Batch ID*'
+                name='batchId'
                 value={formData.batchId}
                 onChange={handleInputChange}
                 labelCss={
                   formData.batchId && formData.batchId.length > 0
-                    ? "label-up"
-                    : "label-down"
+                    ? 'label-up'
+                    : 'label-down'
                 }
               />
             </div>
           </div>
 
-          <div className="grid gap-2">
-            <div className="grid grid-cols-1 md:grid-cols-3 grid-flow-row gap-x-8 gap-y-8">
+          <div className='grid gap-2'>
+            <div className='grid grid-cols-1 md:grid-cols-3 grid-flow-row gap-x-8 gap-y-8'>
               <InputBox
-                type="text"
-                title="Make Order#*"
-                name="makeOrder"
+                type='text'
+                title='Make Order#*'
+                name='makeOrder'
                 value={formData.makeOrder}
                 onChange={handleInputChange}
                 labelCss={
                   formData.makeOrder && formData.makeOrder.length > 0
-                    ? "label-up"
-                    : "label-down"
+                    ? 'label-up'
+                    : 'label-down'
                 }
               />
 
               <InputBox
-                type="date"
-                title="Expiry Date*"
-                name="expiryDate"
+                type='date'
+                title='Expiry Date*'
+                name='expiryDate'
                 value={formData.expiryDate}
                 onChange={handleInputChange}
                 labelCss={
                   formData.expiryDate && formData.expiryDate.length > 0
-                    ? "label-up"
-                    : "label-down"
+                    ? 'label-up'
+                    : 'label-down'
                 }
               />
               <InputBox
-                type="number"
-                title="Quantity(Units)*"
-                name="quantity"
+                type='number'
+                title='Quantity(Units)*'
+                name='quantity'
                 value={formData.quantity}
                 onChange={handleInputChange}
                 labelCss={
                   formData.quantity && formData.quantity.toString().length > 0
-                    ? "label-up"
-                    : "label-down"
+                    ? 'label-up'
+                    : 'label-down'
                 }
               />
             </div>
           </div>
 
-          <div className="grid gap-2">
-            <div className="grid grid-cols-1 md:grid-cols-3 grid-flow-row gap-x-8 gap-y-8">
+          <div className='grid gap-2'>
+            <div className='grid grid-cols-1 md:grid-cols-3 grid-flow-row gap-x-8 gap-y-8'>
               <InputBox
-                type="number"
-                title="Price($)*"
-                name="price"
+                type='number'
+                title='Price($)*'
+                name='price'
                 value={formData.price}
                 onChange={handleInputChange}
                 labelCss={
                   formData.price && formData.price.toString().length > 0
-                    ? "label-up"
-                    : "label-down"
+                    ? 'label-up'
+                    : 'label-down'
                 }
               />
             </div>
           </div>
-          <div className="flex flex-row justify-end">
-            <Link to="/products">
-            <Button
-              btnTitle="Save"
-              className=" pt-0 pb-0 text-sty"
-              onClickfunction={handleSubmit}
-              style={{
-                backgroundColor: isFormComplete ? "#2CAE66 " : "#B3B3B3 ",
-                cursor: isFormComplete ? "pointer" : "not-allowed",
-              }}
-              disabled={!isFormComplete}
-            />
+          <div className='flex flex-row justify-end'>
+            <Link to='/products'>
+              <Button
+                btnTitle='Save'
+                className=' pt-0 pb-0 text-sty'
+                onClickfunction={handleSubmit}
+                style={{
+                  backgroundColor: isFormComplete ? '#2CAE66 ' : '#B3B3B3 ',
+                  cursor: isFormComplete ? 'pointer' : 'not-allowed'
+                }}
+                disabled={!isFormComplete}
+              />
             </Link>
           </div>
         </div>

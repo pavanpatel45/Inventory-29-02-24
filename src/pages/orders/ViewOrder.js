@@ -22,8 +22,19 @@ export default function ViewOrder(props) {
   const navigate = useNavigate();
   // console.log("location",location.state.id);
   const order = location.state;
-  //console.log("data is",order);
+  console.log('data is', order);
+
   const updateStatus = async () => {
+    try {
+      const url = `${api_url}/order/${order.orderId}/3`;
+      const resp = await axios.put(url);
+      console.log('Response at createOrder', resp);
+    } catch (error) {
+      console.log('Error :', error);
+    }
+  };
+
+  const updateStatusCancel = async () => {
     try {
       const url = `${api_url}/order/${order.orderId}/6`;
       const resp = await axios.put(url);
@@ -48,9 +59,6 @@ export default function ViewOrder(props) {
     getData();
   }, []);
   const handleConfirmOrder = () => {
-    // console.log("at handleConfirmOrder :{id}",order.id);
-    const status = 3;
-    //  dispatch(changeStatus({id:order.id,status}))
     updateStatus();
     toast.success('Order Confirmed!');
     navigate('/sales/InProgress');
@@ -59,6 +67,9 @@ export default function ViewOrder(props) {
     // console.log("at handleConfirmOrder :{id}",order.id);
     // const status = 2;
     //  dispatch(changeStatus({id:order.id,status}))
+    updateStatusCancel();
+    toast.success('Order Cancelled!');
+    navigate('/sales/Cancelled');
   };
   return (
     <div>

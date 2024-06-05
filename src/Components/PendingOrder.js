@@ -15,7 +15,7 @@ export default function PendingOrder() {
       console.log('Response at newOrderRequest', response.data);
       setAllOrders(response.data);
     } catch (error) {
-      console.log("Error :", error);
+      console.log('Error :', error);
     }
   };
 
@@ -26,11 +26,11 @@ export default function PendingOrder() {
   return (
     <div>
       <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-3 gap-2'>
-        {allOrders.map((order, index) => (
-          order.orderStatus === "Pending" ? (
+        {allOrders.map((order, index) =>
+          order.orderStatus === 'Pending' ? (
             <OrderBoxMedium order={order} key={index} />
           ) : null
-        ))}
+        )}
       </div>
     </div>
   );
