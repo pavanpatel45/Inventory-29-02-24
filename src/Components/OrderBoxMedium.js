@@ -104,7 +104,7 @@ export default function OrderBox({ order, handleChangeStatus }) {
               <button
                 className='my-1 mx-1 py-2 rounded-md orderBoxButton'
                 style={{ border: '1px solid #2CAE66', color: '#2CAE66' }}
-                onClick={() => handleChangeStatus({ id: order.orderId })}
+                onClick={() => handleChangeStatus({ id: order.orderStatus })}
               >
                 Change Status
               </button>

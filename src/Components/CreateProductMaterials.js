@@ -14,16 +14,25 @@ import { toast } from 'react-toastify';
 import { api_url } from '../Data/Constants';
 import 'react-toastify/dist/ReactToastify.css';
 import AddThisMaterial from './AddThisMaterial';
+import { useLocation } from 'react-router-dom';
 
 export default function CreateProductMaterials() {
   const dispatch = useDispatch();
-  const [formData, setFormData] = useState({
-    materials: {
-      materialName: '',
-      materialRequiredQuantity: '',
-      materialUnit: ''
-    }
+  const location = useLocation();
+  const { productData } = location.state || {};
+  console.log('productData', productData);
+
+  const [formData1, setFormData1] = useState({
+    materialName: '',
+    materialRequiredQuantity: '',
+    materialUnit: ''
   });
+
+  const [finalData, setFinalData] = useState({
+    ...productData,
+    materials: []
+  });
+
   const [Data, setData] = useState([]);
   const [isFormComplete, setIsFormComplete] = useState(false);
   const [showAddThisProduct, setShowAddThisProduct] = useState(false);
@@ -32,21 +41,41 @@ export default function CreateProductMaterials() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
+    setFormData1((prevData) => ({
       ...prevData,
-      materials: {
-        ...prevData.materials,
-        [name]: value
-      }
+      [name]: value
     }));
   };
 
+  useEffect(() => {
+    console.log('Final data is', finalData);
+  }, [finalData]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('form Data at createProductMaterials:', formData);
-    dispatch(addProductMaterial(formData));
+
+    // Merge formData1 with finalData
+    const updatedMaterials = [
+      ...finalData.materials,
+      {
+        materialName: formData1.materialName,
+        materialRequiredQuantity: parseFloat(
+          formData1.materialRequiredQuantity
+        ),
+        materialUnit: formData1.materialUnit
+      }
+    ];
+
+    const updatedFinalData = {
+      ...finalData,
+      materials: updatedMaterials
+    };
+
+    console.log('form Data at createProductMaterials:', formData1);
+    console.log('Updated final data:', updatedFinalData);
+
+    dispatch(addProductMaterial(updatedFinalData));
     toast.success('New Product Successfully Added');
-    addData();
     navigate('/products/CreateBatchProduct');
   };
 
@@ -71,23 +100,23 @@ export default function CreateProductMaterials() {
   }, []);
 
   useEffect(() => {
-    if (!formData.materials || !formData.materials.materialName) {
+    if (!formData1.materialName) {
       return;
     }
 
     let materialFound = false;
     for (const d of productsMaterialTableData) {
-      if (d.materialName.trim() === formData.materials.materialName.trim()) {
+      if (d.materialName.trim() === formData1.materialName.trim()) {
         materialFound = true;
         break;
       }
     }
 
     setShowAddThisProduct(!materialFound);
-  }, [formData.materials.materialName, productsMaterialTableData]);
+  }, [formData1.materialName, productsMaterialTableData]);
 
   const checkFormCompletion = () => {
-    const formEntries = Object.entries(formData.materials);
+    const formEntries = Object.entries(formData1);
     const allFieldsFilled = formEntries.every(([name, value]) => {
       const isValidData =
         (typeof value === 'string' || typeof value === 'number') &&
@@ -99,33 +128,42 @@ export default function CreateProductMaterials() {
 
   useEffect(() => {
     checkFormCompletion();
-  }, [formData]);
-
-  const addData = () => {
-    setData((prevData) => [
-      ...prevData,
-      {
-        materialName: formData.materials.materialName,
-        materialCode: '',
-        quantity: formData.materials.materialRequiredQuantity,
-        unit: formData.materials.materialUnit,
-        category: ''
-      }
-    ]);
-    setFormData({
-      materials: {
-        materialName: '',
-        materialRequiredQuantity: '',
-        materialUnit: ''
-      }
-    });
-  };
+  }, [formData1]);
 
   const handleAddMaterial = (e) => {
     e.preventDefault();
-    console.log('at handleAddMaterial:', formData);
-    addData();
-    console.log('Table data at handleAddMaterial:', Data);
+
+    // Create a new material object from form data
+    const newMaterial = {
+      materialName: formData1.materialName,
+      materialRequiredQuantity: parseFloat(formData1.materialRequiredQuantity),
+      materialUnit: formData1.materialUnit
+    };
+
+    // Update finalData state with the new material
+    setFinalData((prevData) => ({
+      ...prevData,
+      materials: [...prevData.materials, newMaterial]
+    }));
+
+    // Update Data state for the table
+    setData((prevData) => [
+      ...prevData,
+      {
+        materialName: formData1.materialName,
+        materialCode: '',
+        quantity: formData1.materialRequiredQuantity,
+        unit: formData1.materialUnit,
+        category: ''
+      }
+    ]);
+
+    // Reset the form data
+    setFormData1({
+      materialName: '',
+      materialRequiredQuantity: '',
+      materialUnit: ''
+    });
   };
 
   return (
@@ -223,10 +261,10 @@ export default function CreateProductMaterials() {
                     type='text'
                     title='Material Name/Code*'
                     name='materialName'
-                    value={formData.materials.materialName}
+                    value={formData1.materialName}
                     onChange={handleInputChange}
                     labelCss={
-                      formData.materials.materialName.length > 0
+                      formData1.materialName.length > 0
                         ? 'label-up'
                         : 'label-down'
                     }
@@ -242,10 +280,10 @@ export default function CreateProductMaterials() {
                   type='number'
                   title='Required Quantity*'
                   name='materialRequiredQuantity'
-                  value={formData.materials.materialRequiredQuantity}
+                  value={formData1.materialRequiredQuantity}
                   onChange={handleInputChange}
                   labelCss={
-                    formData.materials.materialRequiredQuantity.length > 0
+                    formData1.materialRequiredQuantity.length > 0
                       ? 'label-up'
                       : 'label-down'
                   }
@@ -255,10 +293,10 @@ export default function CreateProductMaterials() {
                   type='text'
                   title='Unit*'
                   name='materialUnit'
-                  value={formData.materials.materialUnit}
+                  value={formData1.materialUnit}
                   onChange={handleInputChange}
                   labelCss={
-                    formData.materials.materialUnit.length > 0
+                    formData1.materialUnit.length > 0
                       ? 'label-up'
                       : 'label-down'
                   }

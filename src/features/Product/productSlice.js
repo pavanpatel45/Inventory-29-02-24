@@ -4,28 +4,12 @@ import axios from 'axios';
 
 const initialState = {
   product: {
-    batchProductName: 'Product ABC',
-    storageLocation: 'Warehouse A',
-    batchId: 'BATCH001',
-    makeOrder: 'ORDER123',
-    expiryDate: '2023-12-31',
-    quantity: 100,
-    price: 49.99,
-    category: 'Electronics',
-    subCategory: 'Smartphones',
-    upc: '123456789012',
-    glNumber: 'GL123',
-    refrigeration: false,
-    minimumQuantity: 10,
-    measurementType: 'Piece',
-    description: 'High-end smartphone with advanced features',
-    materialName: 'Aluminum',
-    materialRequiredQuantity: 5,
-    materialUnit: 'kg'
+    materials: []
   }
 };
 
 const postData = async (Data) => {
+  console.log('This is post api');
   try {
     const url = `${api_url}/product/`;
     console.log('data : ', Data);
@@ -51,28 +35,6 @@ export const productSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {
-    addProduct: (state, action) => {
-      if (action.payload) {
-        console.log('Initial State:', state?.product);
-        console.log('Payload Data1:', action.payload);
-
-        const payload = action.payload;
-        const Data = {
-          productName: String(payload.productName),
-          productNameCode: String(payload.productNameCode),
-          category: String(payload.category),
-          subCategory: String(payload.subCategory),
-          upc: String(payload.upc),
-          glNumber: String(payload.glNumber),
-          minimumQuantity: parseInt(payload.minimumQuantity, 10),
-          measurementType: String(payload.measurementType),
-          description: String(payload.description),
-          refrigeration: Boolean(payload.refrigeration),
-          image: payload.image
-        };
-        postData(Data);
-      }
-    },
     addProductBatch: (state, action) => {
       if (action.payload) {
         console.log('Initial State:', state?.product);
@@ -97,12 +59,18 @@ export const productSlice = createSlice({
         console.log('Payload Data3:', action.payload);
 
         const payload = action.payload;
-        const Data = {
+
+        state.product = {
           ...state.product,
-          materialName: String(payload.materialNameCode),
-          materialRequiredQuantity: parseInt(payload.requiredQuantity, 10),
-          materialUnit: String(payload.unit)
+          ...payload,
+          materials: [...payload.materials]
         };
+
+        const Data = {
+          ...state.product
+        };
+
+        console.log('Final data is ', Data);
         postData(Data);
       }
     }

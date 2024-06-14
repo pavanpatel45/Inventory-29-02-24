@@ -43,7 +43,7 @@ export default function CreateBatch() {
     }));
   };
   const handleSubmit = (e) => {
-    console.log('Hii I am rahul');
+    // console.log('Hii I am rahul');
     e.preventDefault();
     console.log('form data at createbatchproduct :', formData);
     dispatch(addProductBatch(formData));

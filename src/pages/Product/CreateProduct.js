@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { addProduct } from '../../features/Product/productSlice';
 import InputBox from '../../Components/InputBox';
 import DropDown from '../../Components/Dropdown';
 import Navbar from '../../Components/NavbarForm';
@@ -12,7 +11,6 @@ import { api_url } from '../../Data/Constants';
 
 export default function CreateProduct() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     productName: '',
     productNameCode: '',
@@ -26,6 +24,7 @@ export default function CreateProduct() {
     refrigeration: true,
     image: { id: null }
   });
+
   const [image, setImage] = useState(null);
   const [productsTableData, setProductTableData] = useState([]);
   const [showAddThisProduct, setShowAddThisProduct] = useState(false);
@@ -108,8 +107,10 @@ export default function CreateProduct() {
         ...formData,
         image: { id: id }
       };
-      dispatch(addProduct(productData));
-      navigate('/products/CreateProduct/CreateProductMaterials');
+      // dispatch(addProduct(productData));
+      navigate('/products/CreateProduct/CreateProductMaterials', {
+        state: { productData }
+      });
     } else {
       console.error('Failed to upload image.');
     }

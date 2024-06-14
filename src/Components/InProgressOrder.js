@@ -63,7 +63,7 @@ export default function InProgressOrder() {
 
   const handleCancelOrderSubmit = ({ id }) => {
     setIsOpenCancelOrder(false);
-    dispatch(changeStatus({ id, status: 1 }));
+    dispatch(changeStatus({ id, status: 6 }));
   };
 
   return (
